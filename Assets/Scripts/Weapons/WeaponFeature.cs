@@ -19,12 +19,12 @@ public abstract class WeaponFeature : MonoBehaviour
 
     public enum EFeatureState
     {
-        Active,     //In control of player behavior
+        Active,     //In control of player behavior and still reading input
         Enabled,    //Reading input but not in control
         Disabled    //Totally muted
     }
 
-    EFeatureState featureState = EFeatureState.Enabled;
+    protected EFeatureState featureState = EFeatureState.Enabled;
 
     //Public state interface
     public EFeatureState GetState() { return featureState; }
