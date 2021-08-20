@@ -370,6 +370,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponController: {fileID: 2027545085585396907}
-  drawDistance: 0.6
-  drawAngle: 80
+  drawDistance: 0.8
+  drawAngle: 90
   drawDuration: 0.5
+  swipeDistance: 1.5
+  swipeAngle: 200
+  swipeDuration: 0.35

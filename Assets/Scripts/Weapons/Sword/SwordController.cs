@@ -7,6 +7,10 @@ public class SwordController : WeaponController
     new protected void Start()
     {
         base.Start();   //Handles base class reference caching
+
+        //***TEMP DEBUG***
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void Update()

@@ -26,22 +26,25 @@ public class SwordAttackFeature : WeaponFeature
 
 
     #region Draw Phase Variables
-
     [SerializeField] float drawDistance = 0;
     [SerializeField] float drawAngle = 0;
     [SerializeField] float drawDuration = 0;
 
     float drawStartTime = 0;
-    Transform swordBeforeStage;
-
+    Vector3 finalDrawnLocalPosition;
+    Quaternion finalDrawRotation;
     #endregion
 
 
+    #region Swipe Phase Variables
+    [SerializeField] float swipeDistance = 0;
+    [SerializeField] float swipeAngle = 0;
+    [SerializeField] float swipeDuration = 0;
 
-    void Start()
-    {
+    float swipeStartTime = 0;
+    #endregion
 
-    }
+
 
     void Update()
     {
@@ -50,7 +53,6 @@ public class SwordAttackFeature : WeaponFeature
         //DEBUG
         if (Input.GetKeyDown(KeyCode.R))
         {
-            print("Reset");
             Reset();
         }
 
@@ -80,6 +82,8 @@ public class SwordAttackFeature : WeaponFeature
     }
 
 
+
+    #region Reading Methods
     protected override void ReadInput()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -111,15 +115,18 @@ public class SwordAttackFeature : WeaponFeature
         }
     }
 
+    #endregion
+
+
+
     #region Draw Methods
     void BeginDrawPhase()
     {
         weaponController.DisableAnimator();
-
         mouseSwipe.Normalize();
+
         attackPhase = EAttackPhase.Draw;
         drawStartTime = Time.time;
-        swordBeforeStage = transform;
     }
 
     void Draw()
@@ -129,10 +136,10 @@ public class SwordAttackFeature : WeaponFeature
         DrawToPosition(drawProgress);
         DrawToRotation(drawProgress);
 
-        //Complete draw
+        //When done drawing
         if (drawProgress > 1)
         {
-            attackPhase = EAttackPhase.Swipe;
+            BeginSwipePhase();
         }
     }
 
@@ -154,13 +161,16 @@ public class SwordAttackFeature : WeaponFeature
         Vector3 drawDir = new Vector3(-mouseSwipe.x, -mouseSwipe.y, 0);
 
         //Calculate target world position
-        Vector3 targetLocalPos = weaponController.defaultPosition + new Vector3(drawDir.x * drawDistance, drawDir.y * drawDistance, 0);
+        Vector3 localDelta = new Vector3(drawDir.x * drawDistance, drawDir.y * drawDistance, 0);
+        Vector3 targetLocalPos = weaponController.defaultPosition + localDelta;
         Transform skelyTransform = weaponController.ownerSkely.transform;
         Vector3 targetWorldPos = skelyTransform.position + skelyTransform.TransformDirection(targetLocalPos);
 
         //Lerp position
         Vector3 startingPos = skelyTransform.position + skelyTransform.TransformDirection(weaponController.defaultPosition);
         transform.position = Vector3.Lerp(startingPos, targetWorldPos, drawProgress);
+
+        finalDrawnLocalPosition = targetLocalPos;
     }
 
     void DrawToRotation(float drawProgress)
@@ -181,22 +191,78 @@ public class SwordAttackFeature : WeaponFeature
         Quaternion targetRotation = zeroRotation * deltaRotation;
 
         //Lerp sword rotation
-        Quaternion initialRotation = swordBeforeStage.localRotation;
+        Quaternion initialRotation = Quaternion.Euler(weaponController.defaultRotation);
         transform.localRotation = Quaternion.Lerp(initialRotation, targetRotation, drawProgress);
+
+        finalDrawRotation = targetRotation;
     }
 
     #endregion
 
+
+
+    #region Swipe Methods
+    void BeginSwipePhase()
+    {
+        attackPhase = EAttackPhase.Swipe;
+        swipeStartTime = Time.time;
+    }
+
     void Swipe()
     {
+        float swipeProgress = (Time.time - swipeStartTime) / swipeDuration; //0-1
 
+        SwipeToPosition(swipeProgress);
+        SwipeToRotation();
+
+        //When done swiping
+        if (swipeProgress > 1)
+        {
+            BeginResetPhase();
+        }
+    }
+
+    void SwipeToPosition(float swipeProgress)
+    {
+        //Calculate target world position
+        Vector3 localDelta = new Vector3(mouseSwipe.x * swipeDistance, mouseSwipe.y * swipeDistance, 0);
+        Vector3 targetLocalPos = weaponController.defaultPosition + localDelta;
+        Transform skelyTransform = weaponController.ownerSkely.transform;
+        Vector3 targetWorldPos = skelyTransform.position + skelyTransform.TransformDirection(targetLocalPos);
+
+        //Lerp position
+        Vector3 startingPos = skelyTransform.position + skelyTransform.TransformDirection(finalDrawnLocalPosition);
+        transform.position = Vector3.Lerp(startingPos, targetWorldPos, swipeProgress);
+    }
+
+    void SwipeToRotation()
+    {
+        //Calculate rotation about local X-axis
+        float rotateDirection = (mouseSwipe.x > 0) ? -1 : 1;
+        float rotationRate = (Time.deltaTime * swipeAngle) / swipeDuration;
+        float deltaX = rotateDirection * rotationRate;
+
+        //Rotate deltaX per frame
+        transform.Rotate(new Vector3(deltaX, 0, 0), Space.Self);
+    }
+    #endregion
+
+
+
+    #region Reset Methods
+    void BeginResetPhase()
+    {
+        attackPhase = EAttackPhase.Reset;
     }
 
     void Reset()
     {
+        //Restore default transform
         transform.localRotation = Quaternion.Euler(weaponController.defaultRotation);
-        attackPhase = EAttackPhase.Reading;
+        transform.localPosition = weaponController.defaultPosition;
 
+        attackPhase = EAttackPhase.Reading;
         weaponController.EnableAnimator();
     }
+    #endregion
 }
