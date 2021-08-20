@@ -13,7 +13,7 @@ using UnityEngine;
 
 public abstract class WeaponFeature : MonoBehaviour
 {
-    [SerializeField] WeaponController weaponController;
+    [SerializeField] protected WeaponController weaponController;
 
     #region Feature State
 

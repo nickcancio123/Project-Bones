@@ -9,12 +9,13 @@ using UnityEngine;
 */
 public class WeaponController : MonoBehaviour
 {
-    //Can be accessed before runtime because ref is in prefab
     [SerializeField] protected Animator weaponAnimator;
+    public Vector3 defaultPosition;
+    public Vector3 defaultRotation;
 
-    //Can't be accessed before runtime because weapon is assigned to skely at runtime
-    protected GameObject ownerSkely;
-    protected SkelyMovementController skelyMovement;
+    [HideInInspector] public GameObject ownerSkely;
+    [HideInInspector] public SkelyMovementController skelyMovement;
+
 
     protected void Start()
     {
@@ -40,6 +41,7 @@ public class WeaponController : MonoBehaviour
         }
     }
 
+
     #region Feature State Interface
     public void DisableFeatures(WeaponFeature callingFeature)
     {
@@ -61,6 +63,16 @@ public class WeaponController : MonoBehaviour
             if (feature != callingFeature)
                 feature.EnableFeature();
         }
+    }
+
+    public void DisableAnimator()
+    {
+        weaponAnimator.enabled = false;
+    }
+
+    public void EnableAnimator()
+    {
+        weaponAnimator.enabled = true;
     }
     #endregion
 }
