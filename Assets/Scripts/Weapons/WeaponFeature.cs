@@ -13,9 +13,7 @@ using UnityEngine;
 
 public abstract class WeaponFeature : MonoBehaviour
 {
-    [SerializeField] WeaponController weaponController;
-
-    #region Feature State
+    [SerializeField] protected WeaponController weaponController;
 
     public enum EFeatureState
     {
@@ -31,6 +29,7 @@ public abstract class WeaponFeature : MonoBehaviour
     public void EnableFeature() { featureState = EFeatureState.Enabled; }
     public void DisableFeature() { featureState = EFeatureState.Disabled; }
 
+
     //Self-activation
     protected void Activate()
     {
@@ -44,8 +43,6 @@ public abstract class WeaponFeature : MonoBehaviour
         EnableFeature();
         weaponController.EnableFeatures(this);
     }
-
-    #endregion
 
 
     protected abstract void ReadInput();
