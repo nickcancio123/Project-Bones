@@ -9,6 +9,8 @@ using UnityEngine;
 public class SwordAttackFeature : WeaponFeature
 {
     #region General
+    [SerializeField] TrailRenderer swipeTrail;
+
     enum EAttackPhase
     {
         Reading,
@@ -55,6 +57,10 @@ public class SwordAttackFeature : WeaponFeature
     #endregion
 
 
+    void Start()
+    {
+        SetupSwipeTrail();
+    }
 
     void Update()
     {
@@ -213,6 +219,7 @@ public class SwordAttackFeature : WeaponFeature
     {
         attackPhase = EAttackPhase.Swipe;
         swipeStartTime = Time.time;
+        swipeTrail.enabled = true;
     }
 
     void Swipe()
@@ -254,6 +261,18 @@ public class SwordAttackFeature : WeaponFeature
         //Rotate deltaX per frame
         transform.Rotate(new Vector3(deltaX, 0, 0), Space.Self);
     }
+
+    void SetupSwipeTrail()
+    {
+        if (!swipeTrail)
+        {
+            print("No swipe trail ref");
+            return;
+        }
+        swipeTrail.enabled = false;
+        swipeTrail.startWidth = 0.2f;
+        swipeTrail.endWidth = 0.02f;
+    }
     #endregion
 
 
@@ -261,6 +280,7 @@ public class SwordAttackFeature : WeaponFeature
     #region Reset Methods
     void BeginResetPhase()
     {
+        swipeTrail.enabled = false;
         finalSwipeRotation = transform.localRotation;
 
         attackPhase = EAttackPhase.Reset;

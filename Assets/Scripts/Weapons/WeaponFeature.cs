@@ -15,8 +15,6 @@ public abstract class WeaponFeature : MonoBehaviour
 {
     [SerializeField] protected WeaponController weaponController;
 
-    #region Feature State
-
     public enum EFeatureState
     {
         Active,     //In control of player behavior and still reading input
@@ -31,6 +29,7 @@ public abstract class WeaponFeature : MonoBehaviour
     public void EnableFeature() { featureState = EFeatureState.Enabled; }
     public void DisableFeature() { featureState = EFeatureState.Disabled; }
 
+
     //Self-activation
     protected void Activate()
     {
@@ -44,8 +43,6 @@ public abstract class WeaponFeature : MonoBehaviour
         EnableFeature();
         weaponController.EnableFeatures(this);
     }
-
-    #endregion
 
 
     protected abstract void ReadInput();
