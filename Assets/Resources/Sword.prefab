@@ -374,5 +374,6 @@ MonoBehaviour:
   drawAngle: 90
   drawDuration: 0.5
   swipeDistance: 1.5
-  swipeAngle: 200
-  swipeDuration: 0.35
+  swipeAngle: 170
+  swipeDuration: 0.32
+  resetDuration: 0.3

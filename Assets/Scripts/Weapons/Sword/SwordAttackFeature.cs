@@ -20,12 +20,11 @@ public class SwordAttackFeature : WeaponFeature
     EAttackPhase attackPhase = EAttackPhase.Reading;
 
     Vector3 mouseSwipe = Vector3.zero;
-
     #endregion
 
 
-
     #region Draw Phase Variables
+    [Header("Draw")]
     [SerializeField] float drawDistance = 0;
     [SerializeField] float drawAngle = 0;
     [SerializeField] float drawDuration = 0;
@@ -37,11 +36,22 @@ public class SwordAttackFeature : WeaponFeature
 
 
     #region Swipe Phase Variables
+    [Header("Swipe")]
     [SerializeField] float swipeDistance = 0;
     [SerializeField] float swipeAngle = 0;
     [SerializeField] float swipeDuration = 0;
 
     float swipeStartTime = 0;
+    Vector3 finalSwipeLocalPosition;
+    Quaternion finalSwipeRotation;
+    #endregion
+
+
+    #region Reset Phase Variables
+    [Header("Reset")]
+    [SerializeField] float resetDuration = 0;
+
+    float resetStartTime = 0;
     #endregion
 
 
@@ -92,9 +102,8 @@ public class SwordAttackFeature : WeaponFeature
             mouseSwipe = Vector3.zero;
             weaponController.skelyMovement.canRotate = false;
 
-            //*****
+            //***ACTIVATING FEATURE***
             Activate();
-            //*****
         }
 
         if (Input.GetKey(KeyCode.Mouse0))
@@ -114,7 +123,6 @@ public class SwordAttackFeature : WeaponFeature
             }
         }
     }
-
     #endregion
 
 
@@ -196,7 +204,6 @@ public class SwordAttackFeature : WeaponFeature
 
         finalDrawRotation = targetRotation;
     }
-
     #endregion
 
 
@@ -233,6 +240,8 @@ public class SwordAttackFeature : WeaponFeature
         //Lerp position
         Vector3 startingPos = skelyTransform.position + skelyTransform.TransformDirection(finalDrawnLocalPosition);
         transform.position = Vector3.Lerp(startingPos, targetWorldPos, swipeProgress);
+
+        finalSwipeLocalPosition = targetLocalPos;
     }
 
     void SwipeToRotation()
@@ -252,17 +261,35 @@ public class SwordAttackFeature : WeaponFeature
     #region Reset Methods
     void BeginResetPhase()
     {
+        finalSwipeRotation = transform.localRotation;
+
         attackPhase = EAttackPhase.Reset;
+        resetStartTime = Time.time;
     }
 
     void Reset()
     {
-        //Restore default transform
-        transform.localRotation = Quaternion.Euler(weaponController.defaultRotation);
-        transform.localPosition = weaponController.defaultPosition;
+        float resetProgress = (Time.time - resetStartTime) / resetDuration;
 
-        attackPhase = EAttackPhase.Reading;
-        weaponController.EnableAnimator();
+        //Restore default position
+        Transform skelyTransform = weaponController.ownerSkely.transform;
+        Vector3 startingPos = skelyTransform.position + skelyTransform.TransformDirection(finalSwipeLocalPosition);
+        transform.localPosition = Vector3.Lerp(finalSwipeLocalPosition, weaponController.defaultPosition, resetProgress);
+
+        //Restore default rotation
+        Quaternion initialRotation = Quaternion.Euler(weaponController.defaultRotation);
+        transform.localRotation = Quaternion.Lerp(finalSwipeRotation, Quaternion.Euler(weaponController.defaultRotation), resetProgress);
+
+
+        //Reset system
+        if (resetProgress > 1)
+        {
+            attackPhase = EAttackPhase.Reading;
+            weaponController.EnableAnimator();
+
+            //*****Deactivate*****
+            Deactivate();
+        }
     }
     #endregion
 }
