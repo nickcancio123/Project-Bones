@@ -137,6 +137,7 @@ public class SwordBlockFeature : WeaponFeature
     void BeginDraw()
     {
         weaponController.DisableAnimator();
+        weaponController.skelyMovement.canRotate = false;
 
         blockPhase = EBlockPhase.Draw;
         drawStartTime = Time.time;
@@ -170,7 +171,6 @@ public class SwordBlockFeature : WeaponFeature
     void BeginBlock()
     {
         blockPhase = EBlockPhase.Block;
-        weaponController.skelyMovement.canRotate = false;
     }
 
     void Block()
