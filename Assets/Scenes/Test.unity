@@ -791,6 +791,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 697679723}
     m_Modifications:
+    - target: {fileID: 6736431594362625561, guid: 387261eae5328ce44a7d4515ddf1c77a, type: 3}
+      propertyPath: defaultBlockRotation.x
+      value: -80
+      objectReference: {fileID: 0}
     - target: {fileID: 8617348926558089044, guid: 387261eae5328ce44a7d4515ddf1c77a, type: 3}
       propertyPath: m_Name
       value: Sword

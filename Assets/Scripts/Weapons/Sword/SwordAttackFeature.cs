@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /*
->Blade swipe direction should be in local Y-plane
+>Attack feature broken into 3 phases (not including reading state)
+    -Draw: the backswing of the attack
+    -Swipe: the actual swing of the sword
+    -Reset: moving the sword to its default state
+
+>Blade swipe direction should be in local Y-axis. Then rotate sword around X-axis to swing
 */
 
 public class SwordAttackFeature : WeaponFeature
@@ -33,7 +38,7 @@ public class SwordAttackFeature : WeaponFeature
 
     float drawStartTime = 0;
     Vector3 finalDrawnLocalPosition;
-    Quaternion finalDrawRotation;
+    Quaternion finalDrawLocalRotation;
     #endregion
 
 
@@ -45,7 +50,7 @@ public class SwordAttackFeature : WeaponFeature
 
     float swipeStartTime = 0;
     Vector3 finalSwipeLocalPosition;
-    Quaternion finalSwipeRotation;
+    Quaternion finalSwipeLocalRotation;
     #endregion
 
 
@@ -65,12 +70,6 @@ public class SwordAttackFeature : WeaponFeature
     void Update()
     {
         if (featureState == EFeatureState.Disabled) { return; }
-
-        //DEBUG
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            Reset();
-        }
 
         Behavior();
     }
@@ -127,6 +126,10 @@ public class SwordAttackFeature : WeaponFeature
             {
                 BeginDrawPhase();
             }
+            else
+            {
+                BeginResetPhase();
+            }
         }
     }
     #endregion
@@ -171,7 +174,7 @@ public class SwordAttackFeature : WeaponFeature
 
     void DrawToPosition(float drawProgress)
     {
-        //Stage sword in opposite direction as mouseSwipe
+        //Draw sword in opposite direction as mouseSwipe
         Vector3 drawDir = new Vector3(-mouseSwipe.x, -mouseSwipe.y, 0);
 
         //Calculate target world position
@@ -208,7 +211,7 @@ public class SwordAttackFeature : WeaponFeature
         Quaternion initialRotation = Quaternion.Euler(weaponController.defaultRotation);
         transform.localRotation = Quaternion.Lerp(initialRotation, targetRotation, drawProgress);
 
-        finalDrawRotation = targetRotation;
+        finalDrawLocalRotation = targetRotation;
     }
     #endregion
 
@@ -281,7 +284,7 @@ public class SwordAttackFeature : WeaponFeature
     void BeginResetPhase()
     {
         swipeTrail.enabled = false;
-        finalSwipeRotation = transform.localRotation;
+        finalSwipeLocalRotation = transform.localRotation;
 
         attackPhase = EAttackPhase.Reset;
         resetStartTime = Time.time;
@@ -292,22 +295,19 @@ public class SwordAttackFeature : WeaponFeature
         float resetProgress = (Time.time - resetStartTime) / resetDuration;
 
         //Restore default position
-        Transform skelyTransform = weaponController.ownerSkely.transform;
-        Vector3 startingPos = skelyTransform.position + skelyTransform.TransformDirection(finalSwipeLocalPosition);
         transform.localPosition = Vector3.Lerp(finalSwipeLocalPosition, weaponController.defaultPosition, resetProgress);
 
         //Restore default rotation
-        Quaternion initialRotation = Quaternion.Euler(weaponController.defaultRotation);
-        transform.localRotation = Quaternion.Lerp(finalSwipeRotation, Quaternion.Euler(weaponController.defaultRotation), resetProgress);
+        transform.localRotation =
+            Quaternion.Lerp(finalSwipeLocalRotation, Quaternion.Euler(weaponController.defaultRotation), resetProgress);
 
-
-        //Reset system
+        //Reset system 
         if (resetProgress > 1)
         {
             attackPhase = EAttackPhase.Reading;
             weaponController.EnableAnimator();
 
-            //*****Deactivate*****
+            //*****DEACTIVATE FEATURE*****
             Deactivate();
         }
     }
