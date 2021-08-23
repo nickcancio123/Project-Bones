@@ -21,24 +21,33 @@ public class SkelyMovementController : MonoBehaviour
     float rotationX = 0;
     float rotationY = 0;
     float movementDirectionY = 0;
+    Vector3 lastFramePosition = Vector3.zero;
     #endregion
 
 
     #region Public Interface
     [HideInInspector] public bool canMove = true;
     [HideInInspector] public bool canRotate = true;
+    [HideInInspector] public bool isRunning = false;
+
+    [HideInInspector] public float velocity = 0.0f;
     #endregion
 
-
+    void Start()
+    {
+        lastFramePosition = transform.position;
+    }
 
     void Update()
     {
         HandleLocomotion();
         HandleRotation();
         HandleGravity();
+
+        CalculateVelocity();
     }
 
-
+    #region Movement Update Loop
     void HandleRotation()
     {
         if (canRotate)
@@ -61,7 +70,7 @@ public class SkelyMovementController : MonoBehaviour
         Vector3 right = transform.TransformDirection(Vector3.right);
 
         // Press Left Shift to run
-        bool isRunning = Input.GetKey(KeyCode.LeftShift);
+        isRunning = Input.GetKey(KeyCode.LeftShift);
         float curSpeedX = canMove ? (isRunning ? runningSpeed : walkingSpeed) * Input.GetAxis("Vertical") : 0;
         float curSpeedY = canMove ? (isRunning ? runningSpeed : walkingSpeed) * Input.GetAxis("Horizontal") : 0;
         movementDirectionY = moveDirection.y;
@@ -92,5 +101,14 @@ public class SkelyMovementController : MonoBehaviour
         {
             moveDirection.y -= gravity * Time.deltaTime;
         }
+    }
+
+    #endregion
+
+
+    void CalculateVelocity()
+    {
+        velocity = Vector3.Magnitude(transform.position - lastFramePosition) / Time.deltaTime;
+        lastFramePosition = transform.position;
     }
 }

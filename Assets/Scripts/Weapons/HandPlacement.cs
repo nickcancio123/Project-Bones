@@ -26,7 +26,7 @@ public class HandPlacement : MonoBehaviour
         grip = isLeftHand ? weapon.leftGrip : weapon.rightGrip;
     }
 
-    void Update()
+    void LateUpdate()
     {
         if (!grip)
         {
