@@ -14,7 +14,7 @@ using UnityEngine;
 public class SwordAttackFeature : WeaponFeature
 {
     #region General
-    [SerializeField] TrailRenderer swipeTrail;
+    [SerializeField] GameObject swipeTrails;
 
     enum EAttackPhase
     {
@@ -222,7 +222,7 @@ public class SwordAttackFeature : WeaponFeature
     {
         attackPhase = EAttackPhase.Swipe;
         swipeStartTime = Time.time;
-        swipeTrail.enabled = true;
+        swipeTrails.SetActive(true);
     }
 
     void Swipe()
@@ -267,14 +267,12 @@ public class SwordAttackFeature : WeaponFeature
 
     void SetupSwipeTrail()
     {
-        if (!swipeTrail)
+        if (!swipeTrails)
         {
             print("No swipe trail ref");
             return;
         }
-        swipeTrail.enabled = false;
-        swipeTrail.startWidth = 0.2f;
-        swipeTrail.endWidth = 0.02f;
+        swipeTrails.SetActive(false);
     }
     #endregion
 
@@ -283,7 +281,7 @@ public class SwordAttackFeature : WeaponFeature
     #region Reset Methods
     void BeginResetPhase()
     {
-        swipeTrail.enabled = false;
+        swipeTrails.SetActive(false);
         finalSwipeLocalRotation = transform.localRotation;
 
         attackPhase = EAttackPhase.Reset;
