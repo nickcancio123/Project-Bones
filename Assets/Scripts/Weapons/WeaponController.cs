@@ -20,6 +20,9 @@ public class WeaponController : MonoBehaviour
     protected void Start()
     {
         CacheReferences();
+
+        transform.localPosition = defaultPosition;
+        transform.localRotation = Quaternion.Euler(defaultRotation);
     }
 
     void CacheReferences()
