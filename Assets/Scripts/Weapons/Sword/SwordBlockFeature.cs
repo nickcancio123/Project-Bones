@@ -9,7 +9,7 @@ using UnityEngine;
     -Reset: move sword back to default state
 */
 
-public class SwordBlockFeature : WeaponFeature
+public class SwordBlockFeature : BlockFeature
 {
     #region General
     enum EBlockPhase
@@ -106,7 +106,7 @@ public class SwordBlockFeature : WeaponFeature
         }
     }
 
-    protected override void ReadInput()
+    void ReadInput()
     {
         //Start blocking
         if (Input.GetKeyDown(KeyCode.Mouse1))

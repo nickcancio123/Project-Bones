@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Photon.Pun;
+
 /*
 >Goes on the weapon gameObject
 >Intended to be inherited from
@@ -11,7 +13,13 @@ using UnityEngine;
 >When deactivated, reenable other features
 */
 
-public abstract class WeaponFeature : MonoBehaviour
+public enum AttackType
+{
+    Swipe,
+    Jab
+}
+
+public abstract class WeaponFeature : MonoBehaviourPunCallbacks
 {
     [SerializeField] protected WeaponController weaponController;
 
@@ -45,5 +53,4 @@ public abstract class WeaponFeature : MonoBehaviour
     }
 
 
-    protected abstract void ReadInput();
 }

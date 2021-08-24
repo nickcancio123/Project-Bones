@@ -11,7 +11,7 @@ using UnityEngine;
 >Blade swipe direction should be in local Y-axis. Then rotate sword around X-axis to swing
 */
 
-public class SwordAttackFeature : WeaponFeature
+public class SwordAttackFeature : AttackFeature
 {
     #region General
     [SerializeField] GameObject swipeTrails;
@@ -99,7 +99,7 @@ public class SwordAttackFeature : WeaponFeature
 
 
     #region Reading Methods
-    protected override void ReadInput()
+    void ReadInput()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
