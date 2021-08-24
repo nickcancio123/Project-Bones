@@ -4,9 +4,17 @@ using UnityEngine;
 
 using Photon.Pun;
 
+public enum AttackType
+{
+    Swipe,
+    Jab
+}
+
 public class AttackFeature : WeaponFeature
 {
-    void DealDamage(AttackType attackType, float maxDamageAmount, GameObject targetPlayer)
+    public AttackType attackType;
+
+    void DealDamage(float maxDamageAmount, GameObject targetPlayer)
     {
         IHealth healthComponent = targetPlayer.GetComponent<IHealth>();
 
@@ -18,6 +26,6 @@ public class AttackFeature : WeaponFeature
 
         //Call health component's TakeDamage RPC
         GameObject attacker = weaponController.ownerSkely;
-        photonView.RPC("RPC_TakeDamage", RpcTarget.All, attackType, maxDamageAmount, attacker);
+        photonView.RPC("RPC_TakeDamage", RpcTarget.All, this, maxDamageAmount, attacker);
     }
 }

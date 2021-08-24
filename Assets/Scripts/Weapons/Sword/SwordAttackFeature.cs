@@ -64,6 +64,7 @@ public class SwordAttackFeature : AttackFeature
 
     void Start()
     {
+        attackType = AttackType.Swipe;
         SetupSwipeTrail();
     }
 

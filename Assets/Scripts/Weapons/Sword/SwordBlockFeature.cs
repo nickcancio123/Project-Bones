@@ -60,12 +60,6 @@ public class SwordBlockFeature : BlockFeature
     #endregion
 
 
-
-    void Start()
-    {
-
-    }
-
     void Update()
     {
         if (featureState == EFeatureState.Disabled) { return; }
@@ -302,6 +296,4 @@ public class SwordBlockFeature : BlockFeature
         }
     }
     #endregion
-
-
 }

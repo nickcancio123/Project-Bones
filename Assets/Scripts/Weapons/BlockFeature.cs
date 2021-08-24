@@ -8,7 +8,7 @@ public class BlockFeature : WeaponFeature
 {
     //Returns damage to be taken
     //If not implemented, damage taken is maxDamage
-    public float BlockAttack(AttackType attackType, float maxDamageAmount, GameObject attacker)
+    public float BlockAttack(AttackFeature attackScript, float maxDamageAmount, GameObject attacker)
     {
         return maxDamageAmount;
     }

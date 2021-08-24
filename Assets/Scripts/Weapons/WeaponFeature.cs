@@ -13,12 +13,6 @@ using Photon.Pun;
 >When deactivated, reenable other features
 */
 
-public enum AttackType
-{
-    Swipe,
-    Jab
-}
-
 public abstract class WeaponFeature : MonoBehaviourPunCallbacks
 {
     [SerializeField] protected WeaponController weaponController;
@@ -51,6 +45,4 @@ public abstract class WeaponFeature : MonoBehaviourPunCallbacks
         EnableFeature();
         weaponController.EnableFeatures(this);
     }
-
-
 }

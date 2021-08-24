@@ -23,7 +23,7 @@ public class IHealth : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void RPC_TakeDamage(AttackType attackType, float maxDamageAmount, GameObject attacker)
+    void RPC_TakeDamage(AttackFeature attackScript, float maxDamageAmount, GameObject attacker)
     {
         if (photonView.IsMine)
         {
@@ -37,7 +37,7 @@ public class IHealth : MonoBehaviourPunCallbacks
 
             if (blockFeature)
             {
-                damageTaken = blockFeature.BlockAttack(attackType, maxDamageAmount, attacker);
+                damageTaken = blockFeature.BlockAttack(attackScript, maxDamageAmount, attacker);
             }
 
             currentHealth -= damageTaken;
