@@ -71,6 +71,7 @@ public class SwordAttackFeature : AttackFeature
     void Update()
     {
         if (featureState == EFeatureState.Disabled) { return; }
+        if (photonView.IsMine) { return; }
 
         Behavior();
     }

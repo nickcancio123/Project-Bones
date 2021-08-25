@@ -63,12 +63,7 @@ public class SwordBlockFeature : BlockFeature
     void Update()
     {
         if (featureState == EFeatureState.Disabled) { return; }
-
-        //DEBUG
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            Reset();
-        }
+        if (!photonView.IsMine) { return; }
 
         Behavior();
     }

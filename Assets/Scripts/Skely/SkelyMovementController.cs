@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkelyMovementController : MonoBehaviour
+using Photon.Pun;
+
+public class SkelyMovementController : MonoBehaviourPunCallbacks
 {
     #region Editor Interface
     [SerializeField] CharacterController characterController;
@@ -40,6 +42,8 @@ public class SkelyMovementController : MonoBehaviour
 
     void Update()
     {
+        if (!photonView.IsMine) { return; }
+
         HandleLocomotion();
         HandleRotation();
         HandleGravity();
