@@ -314,13 +314,11 @@ public class SwordBlockFeature : BlockFeature
     #region Block Functionality
     public override float BlockAttack(float maxDamageAmount, int attackerID)
     {
-        print("Block attack");
-
         float damageTaken = maxDamageAmount;
 
         //Get attack feature from attacker ID
         PhotonView attackerPV = PhotonView.Find(attackerID);
-        GameObject weapon = attackerPV.gameObject.GetComponentInChildren<IWeapon>()?.gameObject;
+        GameObject weapon = attackerPV?.gameObject.GetComponentInChildren<IWeapon>()?.gameObject;
         AttackFeature attackFeature = weapon?.GetComponentInChildren<AttackFeature>();
 
         //Get attacker position from attackerID
@@ -371,15 +369,7 @@ public class SwordBlockFeature : BlockFeature
 
         bool gotHit = (incidentAngle < angleToHitCuttoff) ? true : false;
 
-
-        if (gotHit)
-        {
-            return maxDamageAmount;
-        }
-        else
-        {
-            return 0;
-        }
+        return (gotHit) ? maxDamageAmount : 0;
     }
     #endregion
 }

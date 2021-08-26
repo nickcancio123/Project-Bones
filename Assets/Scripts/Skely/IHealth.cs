@@ -36,22 +36,31 @@ public class IHealth : MonoBehaviourPunCallbacks
         healthBar.value = Mathf.Clamp(currentHealth / maxHealth, 0, 1);
     }
 
+
+    #region Public Interface
+    float GetCurrentHealth() { return currentHealth; }
+    float GetMaxHealth() { return maxHealth; }
+
     public void TakeWeaponDamage(float maxDamageAmount, int attackerID)
     {
         photonView.RPC("RPC_TakeWeaponDamage", RpcTarget.All, maxDamageAmount, attackerID);
     }
+
+    public void TakeDamage(float damageAmount)
+    {
+        photonView.RPC("RPC_TakeDamage", RpcTarget.All, damageAmount);
+    }
+    #endregion
+
 
     [PunRPC]
     void RPC_TakeWeaponDamage(float maxDamageAmount, int attackerID)
     {
         if (!photonView.IsMine) { return; }
 
-        //Get block feature
         GameObject weapon = gameObject.GetComponentInChildren<IWeapon>()?.gameObject;
-        if (!weapon) { return; }
-        BlockFeature blockFeature = weapon.GetComponent<BlockFeature>();
+        BlockFeature blockFeature = weapon?.GetComponent<BlockFeature>();
 
-        //Apply damage
         float damageTaken = maxDamageAmount;
 
         if (blockFeature)
@@ -59,8 +68,7 @@ public class IHealth : MonoBehaviourPunCallbacks
             damageTaken = blockFeature.BlockAttack(maxDamageAmount, attackerID);
         }
 
-        currentHealth -= damageTaken;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        currentHealth = Mathf.Clamp(currentHealth - damageTaken, 0, maxHealth);
     }
 
     [PunRPC]
@@ -68,10 +76,9 @@ public class IHealth : MonoBehaviourPunCallbacks
     {
         if (!photonView.IsMine) { return; }
 
-        //Apply damage
-        currentHealth -= damageAmount;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        currentHealth = Mathf.Clamp(currentHealth - damageAmount, 0, maxHealth);
     }
+
 
     void PollDeath()
     {

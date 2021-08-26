@@ -32,6 +32,7 @@ public class SwordAttackFeature : AttackFeature, IPunObservable
     #endregion
 
 
+
     #region Draw Phase Variables
     [Header("Draw")]
     [SerializeField] float drawDistance = 0;
@@ -42,6 +43,7 @@ public class SwordAttackFeature : AttackFeature, IPunObservable
     Vector3 finalDrawnLocalPosition;
     Quaternion finalDrawLocalRotation;
     #endregion
+
 
 
     #region Swipe Phase Variables
@@ -56,6 +58,7 @@ public class SwordAttackFeature : AttackFeature, IPunObservable
     #endregion
 
 
+
     #region Reset Phase Variables
     [Header("Reset")]
     [SerializeField] float resetDuration = 0;
@@ -65,18 +68,7 @@ public class SwordAttackFeature : AttackFeature, IPunObservable
 
 
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-            stream.SendNext(swipeTrails.activeInHierarchy);
-        }
-        else
-        {
-            swipeTrails.SetActive((bool)stream.ReceiveNext());
-        }
-    }
-
+    #region General Methods
     void Start()
     {
         attackType = AttackType.Swipe;
@@ -112,6 +104,7 @@ public class SwordAttackFeature : AttackFeature, IPunObservable
                 break;
         }
     }
+    #endregion
 
 
 
@@ -335,9 +328,22 @@ public class SwordAttackFeature : AttackFeature, IPunObservable
     #endregion
 
 
+
+    #region Networked Attack
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(swipeTrails.activeInHierarchy);
+        }
+        else
+        {
+            swipeTrails.SetActive((bool)stream.ReceiveNext());
+        }
+    }
+
     public void OnSwordCollision(Collider other)
     {
-        print("On Sword Collision");
         if (!photonView.IsMine) { return; }
 
         //Does not count if not swiping
@@ -349,8 +355,9 @@ public class SwordAttackFeature : AttackFeature, IPunObservable
         //If sword collided with another player or child of another player
         if (other.gameObject.tag == "Player")
         {
-            DealDamage(attackDamage, other.gameObject);
+            DealDamage(other.gameObject);
         }
     }
+    #endregion
 
 }

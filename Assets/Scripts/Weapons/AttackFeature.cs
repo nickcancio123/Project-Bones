@@ -12,26 +12,16 @@ public enum AttackType
 
 public class AttackFeature : WeaponFeature
 {
-    [SerializeField] protected float attackDamage = 1;
-
-
+    #region Public Interface
     public AttackType attackType;
-
-
-    //Attack information
+    [SerializeField] protected float attackDamage = 1;
     [HideInInspector] public float attackAngle = 0;
+    #endregion
 
 
-    protected void DealDamage(float maxDamageAmount, GameObject targetPlayer)
+    protected void DealDamage(GameObject targetPlayer)
     {
         IHealth healthComponent = targetPlayer.GetComponent<IHealth>();
-
-        if (!healthComponent)
-        {
-            print("No health component found!");
-            return;
-        }
-
-        healthComponent.TakeWeaponDamage(maxDamageAmount, photonView.ViewID);
+        healthComponent?.TakeWeaponDamage(attackDamage, photonView.ViewID);
     }
 }
