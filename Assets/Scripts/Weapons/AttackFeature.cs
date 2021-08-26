@@ -12,9 +12,17 @@ public enum AttackType
 
 public class AttackFeature : WeaponFeature
 {
+    [SerializeField] protected float attackDamage = 1;
+
+
     public AttackType attackType;
 
-    void DealDamage(float maxDamageAmount, GameObject targetPlayer)
+
+    //Attack information
+    [HideInInspector] public float attackAngle = 0;
+
+
+    protected void DealDamage(float maxDamageAmount, GameObject targetPlayer)
     {
         IHealth healthComponent = targetPlayer.GetComponent<IHealth>();
 
@@ -24,8 +32,6 @@ public class AttackFeature : WeaponFeature
             return;
         }
 
-        //Call health component's TakeDamage RPC
-        GameObject attacker = weaponController.ownerSkely;
-        photonView.RPC("RPC_TakeDamage", RpcTarget.All, this, maxDamageAmount, attacker);
+        healthComponent.TakeWeaponDamage(maxDamageAmount, photonView.ViewID);
     }
 }

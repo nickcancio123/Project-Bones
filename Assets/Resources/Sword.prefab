@@ -260,7 +260,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5901659323968488937}
-  - component: {fileID: 1247418126577763080}
+  - component: {fileID: 5433670459598236430}
+  - component: {fileID: 7243442237999863156}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -287,7 +288,7 @@ Transform:
   m_Father: {fileID: 8845416933422869244}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1247418126577763080
+--- !u!65 &5433670459598236430
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -295,11 +296,24 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4501940879368028148}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.45, y: 0.41, z: 2.6}
-  m_Center: {x: 0, y: 0, z: 1.02}
+  m_Center: {x: 0, y: 0, z: 1.05}
+--- !u!114 &7243442237999863156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4501940879368028148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cf02c524f285084db965ddcfeea2299, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swordAttackScript: {fileID: 5192608924676303135}
 --- !u!1 &5162245262791142244
 GameObject:
   m_ObjectHideFlags: 0
@@ -598,6 +612,7 @@ GameObject:
   - component: {fileID: 5192608924676303135}
   - component: {fileID: 6736431594362625561}
   - component: {fileID: 161673285877155116}
+  - component: {fileID: 7693195699075287465}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
@@ -683,6 +698,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponController: {fileID: 2027545085585396907}
+  attackDamage: 15
+  attackType: 0
+  attackAngle: 0
   swipeTrails: {fileID: 7227355229070367799}
   drawDistance: 0.8
   drawAngle: 90
@@ -707,6 +725,8 @@ MonoBehaviour:
   defaultBlockPosition: {x: 0, y: 0.35, z: 0.75}
   defaultBlockRotation: {x: -80, y: 0, z: 90}
   swordMidPoint: {fileID: 9185000480764449679}
+  angleToHitCuttoff: 1
+  maxAngleToFaceAttackerToBeHit: 1
   drawDuration: 0.12
   blockRotationSpeed: 5
   blockLockOnSpeed: 1
@@ -727,3 +747,27 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &7693195699075287465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8617348926558089044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 1
+    Name: isRunning
+  - Type: 1
+    SynchronizeType: 2
+    Name: velocity
+  m_SynchronizeLayers:
+  - SynchronizeType: 2
+    LayerIndex: 0

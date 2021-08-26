@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 using Photon.Pun;
 
@@ -9,6 +10,8 @@ using Photon.Pun;
 */
 public class IHealth : MonoBehaviourPunCallbacks
 {
+    [SerializeField] Slider healthBar;
+
     [SerializeField] float maxHealth = 100;
     float currentHealth = 0;
 
@@ -19,29 +22,62 @@ public class IHealth : MonoBehaviourPunCallbacks
 
     void Update()
     {
+        if (photonView.IsMine)
+        {
+            UpdateHealthBar();
+            PollDeath();
+        }
+    }
 
+    void UpdateHealthBar()
+    {
+        if (!healthBar) { return; }
+
+        healthBar.value = Mathf.Clamp(currentHealth / maxHealth, 0, 1);
+    }
+
+    public void TakeWeaponDamage(float maxDamageAmount, int attackerID)
+    {
+        photonView.RPC("RPC_TakeWeaponDamage", RpcTarget.All, maxDamageAmount, attackerID);
     }
 
     [PunRPC]
-    void RPC_TakeDamage(AttackFeature attackScript, float maxDamageAmount, GameObject attacker)
+    void RPC_TakeWeaponDamage(float maxDamageAmount, int attackerID)
     {
-        if (photonView.IsMine)
+        if (!photonView.IsMine) { return; }
+
+        //Get block feature
+        GameObject weapon = gameObject.GetComponentInChildren<IWeapon>()?.gameObject;
+        if (!weapon) { return; }
+        BlockFeature blockFeature = weapon.GetComponent<BlockFeature>();
+
+        //Apply damage
+        float damageTaken = maxDamageAmount;
+
+        if (blockFeature)
         {
-            //Get block feature
-            GameObject weapon = gameObject.GetComponentInChildren<IWeapon>()?.gameObject;
-            if (!weapon) { return; }
-            BlockFeature blockFeature = weapon.GetComponent<BlockFeature>();
+            damageTaken = blockFeature.BlockAttack(maxDamageAmount, attackerID);
+        }
 
-            //Apply damage
-            float damageTaken = maxDamageAmount;
+        currentHealth -= damageTaken;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+    }
 
-            if (blockFeature)
-            {
-                damageTaken = blockFeature.BlockAttack(attackScript, maxDamageAmount, attacker);
-            }
+    [PunRPC]
+    void RPC_TakeDamage(float damageAmount)
+    {
+        if (!photonView.IsMine) { return; }
 
-            currentHealth -= damageTaken;
-            currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        //Apply damage
+        currentHealth -= damageAmount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+    }
+
+    void PollDeath()
+    {
+        if (currentHealth <= 0)
+        {
+            GameObject.Find("GameManager").GetComponent<GameManager>().LeaveRoom();
         }
     }
 }

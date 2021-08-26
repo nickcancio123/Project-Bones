@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+using Photon.Pun;
+
+public class CameraController : MonoBehaviourPunCallbacks
 {
     [SerializeField] Vector3 followOffset;
 
     void LateUpdate()
     {
+        if (!photonView.IsMine) { return; }
         //Move with player
         Camera.main.transform.position = this.transform.position + followOffset;
 

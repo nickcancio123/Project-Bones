@@ -8,6 +8,7 @@ public class PlayerUIManager : MonoBehaviourPunCallbacks
 {
     GameManager gameManager;
     [SerializeField] GameObject pauseMenu;
+    [SerializeField] GameObject gameplayMenu;
 
 
     void Awake()
@@ -54,6 +55,8 @@ public class PlayerUIManager : MonoBehaviourPunCallbacks
 
     void ParentAllMenusToCanvas()
     {
+        //Last one parented (lowest in heirarchy) will have highest priority 
+        gameplayMenu.transform.SetParent(GameObject.Find("Canvas").GetComponent<Transform>(), false);
         pauseMenu.transform.SetParent(GameObject.Find("Canvas").GetComponent<Transform>(), false);
     }
     #endregion
@@ -94,4 +97,5 @@ public class PlayerUIManager : MonoBehaviourPunCallbacks
         }
     }
     #endregion
+
 }

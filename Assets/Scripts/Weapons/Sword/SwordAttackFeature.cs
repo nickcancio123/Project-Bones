@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Photon.Pun;
+
 /*
 >Attack feature broken into 3 phases (not including reading state)
     -Draw: the backswing of the attack
@@ -11,7 +13,7 @@ using UnityEngine;
 >Blade swipe direction should be in local Y-axis. Then rotate sword around X-axis to swing
 */
 
-public class SwordAttackFeature : AttackFeature
+public class SwordAttackFeature : AttackFeature, IPunObservable
 {
     #region General
     [SerializeField] GameObject swipeTrails;
@@ -62,6 +64,19 @@ public class SwordAttackFeature : AttackFeature
     #endregion
 
 
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(swipeTrails.activeInHierarchy);
+        }
+        else
+        {
+            swipeTrails.SetActive((bool)stream.ReceiveNext());
+        }
+    }
+
     void Start()
     {
         attackType = AttackType.Swipe;
@@ -71,7 +86,7 @@ public class SwordAttackFeature : AttackFeature
     void Update()
     {
         if (featureState == EFeatureState.Disabled) { return; }
-        if (photonView.IsMine) { return; }
+        if (!photonView.IsMine) { return; }
 
         Behavior();
     }
@@ -146,6 +161,8 @@ public class SwordAttackFeature : AttackFeature
 
         attackPhase = EAttackPhase.Draw;
         drawStartTime = Time.time;
+
+        CalculateAttackAngle();
     }
 
     void Draw()
@@ -170,7 +187,6 @@ public class SwordAttackFeature : AttackFeature
         Vector3 adjustedMouseSwipe = signAdjustment * mouseSwipe;
         float targetZAngle = Mathf.Rad2Deg * Mathf.Atan(adjustedMouseSwipe.y / adjustedMouseSwipe.x);
         targetZAngle -= 90.0f;
-
         return targetZAngle;
     }
 
@@ -214,6 +230,11 @@ public class SwordAttackFeature : AttackFeature
         transform.localRotation = Quaternion.Lerp(initialRotation, targetRotation, drawProgress);
 
         finalDrawLocalRotation = targetRotation;
+    }
+
+    void CalculateAttackAngle()
+    {
+        attackAngle = Mathf.Rad2Deg * Mathf.Atan2(mouseSwipe.x, mouseSwipe.y);
     }
     #endregion
 
@@ -312,4 +333,24 @@ public class SwordAttackFeature : AttackFeature
         }
     }
     #endregion
+
+
+    public void OnSwordCollision(Collider other)
+    {
+        print("On Sword Collision");
+        if (!photonView.IsMine) { return; }
+
+        //Does not count if not swiping
+        if (attackPhase != EAttackPhase.Swipe) { return; }
+
+        //Ignore if sword collides with self
+        if (other.gameObject == weaponController.ownerSkely) { return; }
+
+        //If sword collided with another player or child of another player
+        if (other.gameObject.tag == "Player")
+        {
+            DealDamage(attackDamage, other.gameObject);
+        }
+    }
+
 }

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Photon.Pun;
+
 /*
 >Block feature broken into 3 phases (not including idle phase)
     -Draw: move sword to block default position
@@ -25,6 +27,10 @@ public class SwordBlockFeature : BlockFeature
     [SerializeField] Vector3 defaultBlockPosition;
     [SerializeField] Vector3 defaultBlockRotation;
     [SerializeField] Transform swordMidPoint;
+    [SerializeField] float angleToHitCuttoff = 1;
+    [SerializeField] float maxAngleToFaceAttackerToBeHit = 1;
+
+    float blockAngle = 0;
     #endregion
 
 
@@ -178,16 +184,18 @@ public class SwordBlockFeature : BlockFeature
             float deltaRotation = rotationDirection * clampedMouseX * blockRotationSpeed;
             transform.RotateAround(swordMidPoint.position, rotationAxis, deltaRotation);
         }
+
+        CalculateBlockAngle();
     }
 
     bool CanRotateBlock()
     {
         Transform skelyTransform = weaponController.ownerSkely.transform;
         Vector3 swordForwardProjectedOntoYZPlane = Vector3.ProjectOnPlane(transform.forward, skelyTransform.forward);
-        float blockAngle = Vector3.Angle(Vector3.up, swordForwardProjectedOntoYZPlane);
+        float swordAngle = Vector3.Angle(Vector3.up, swordForwardProjectedOntoYZPlane);
 
         //If already a valid angle
-        if (blockAngle < 90)
+        if (swordAngle < 90)
         {
             return true;
         }
@@ -249,6 +257,15 @@ public class SwordBlockFeature : BlockFeature
         }
         return closestPlayer;
     }
+
+    void CalculateBlockAngle()
+    {
+        Transform skelyTransform = weaponController.ownerSkely.transform;
+        Vector3 swordForwardProjectedOntoYZPlane = Vector3.ProjectOnPlane(transform.forward, skelyTransform.forward);
+
+        float angleSign = (transform.localPosition.x > 0) ? -1 : 1;
+        blockAngle = angleSign * Vector3.Angle(Vector3.up, swordForwardProjectedOntoYZPlane);
+    }
     #endregion
 
 
@@ -288,6 +305,80 @@ public class SwordBlockFeature : BlockFeature
             //*****DEACTIVATE FEATURE*****
             Deactivate();
 
+        }
+    }
+    #endregion
+
+
+
+    #region Block Functionality
+    public override float BlockAttack(float maxDamageAmount, int attackerID)
+    {
+        print("Block attack");
+
+        float damageTaken = maxDamageAmount;
+
+        //Get attack feature from attacker ID
+        PhotonView attackerPV = PhotonView.Find(attackerID);
+        GameObject weapon = attackerPV.gameObject.GetComponentInChildren<IWeapon>()?.gameObject;
+        AttackFeature attackFeature = weapon?.GetComponentInChildren<AttackFeature>();
+
+        //Get attacker position from attackerID
+        Vector3 attackerPosition = attackerPV.gameObject.transform.position;
+
+        switch (attackFeature.attackType)
+        {
+            case AttackType.Swipe:
+                {
+                    damageTaken = BlockSwipeAttack(maxDamageAmount, attackFeature, attackerPosition);
+                    break;
+                }
+
+            case AttackType.Jab:
+                {
+                    break;
+                }
+        }
+
+        return damageTaken;
+    }
+
+    float BlockSwipeAttack(float maxDamageAmount, AttackFeature attackFeature, Vector3 attackerPosition)
+    {
+        //If not facing enemy, take full damage
+        Transform skelyTransform = weaponController.ownerSkely.transform;
+
+        Vector3 directionFacingAttacker = attackerPosition - skelyTransform.position;
+        Quaternion rotationFacingAttacker = Quaternion.LookRotation(directionFacingAttacker, skelyTransform.up);
+        float deltaAngleToFaceAttacker = (rotationFacingAttacker * Quaternion.Inverse(skelyTransform.rotation)).eulerAngles.y;
+
+        if (deltaAngleToFaceAttacker > maxAngleToFaceAttackerToBeHit)
+        {
+            //Your back is to the attacker, you did not block the attack
+            return maxDamageAmount;
+        }
+
+
+        //Negated to make local space
+        float attackAngle = -attackFeature.attackAngle;
+
+        float incidentAngle = Mathf.Abs(blockAngle - attackAngle);
+
+        if (incidentAngle > 90)
+        {
+            incidentAngle = Mathf.Abs(180 - incidentAngle);
+        }
+
+        bool gotHit = (incidentAngle < angleToHitCuttoff) ? true : false;
+
+
+        if (gotHit)
+        {
+            return maxDamageAmount;
+        }
+        else
+        {
+            return 0;
         }
     }
     #endregion
