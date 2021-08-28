@@ -698,8 +698,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponController: {fileID: 2027545085585396907}
-  attackDamage: 15
   attackType: 0
+  attackDamage: 15
   attackAngle: 0
   swipeTrails: {fileID: 7227355229070367799}
   drawDistance: 0.8
@@ -725,11 +725,11 @@ MonoBehaviour:
   defaultBlockPosition: {x: 0, y: 0.35, z: 0.75}
   defaultBlockRotation: {x: -80, y: 0, z: 90}
   swordMidPoint: {fileID: 9185000480764449679}
-  angleToHitCuttoff: 1
-  maxAngleToFaceAttackerToBeHit: 1
+  angleToHitCuttoff: 40
+  maxAngleToFaceAttackerToBeHit: 100
   drawDuration: 0.12
   blockRotationSpeed: 5
-  blockLockOnSpeed: 1
+  blockLockOnSpeed: 0.05
   resetDuration: 0.15
 --- !u!114 &161673285877155116
 MonoBehaviour:

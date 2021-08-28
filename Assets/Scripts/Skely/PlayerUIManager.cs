@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
-
 using Photon.Pun;
 
 public class PlayerUIManager : MonoBehaviourPunCallbacks
 {
     GameManager gameManager;
+
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject gameplayMenu;
 
@@ -98,4 +99,21 @@ public class PlayerUIManager : MonoBehaviourPunCallbacks
     }
     #endregion
 
+
+
+    #region Gameplay Menu
+    void TakeDamageEffectStart()
+    {
+        Image gameplayMenuBackground = gameplayMenu.GetComponent<Image>();
+        gameplayMenuBackground.color = new Color(200, 0, 0, 0.3f);
+        StartCoroutine(TakeDamageEffectEnd());
+    }
+
+    IEnumerator TakeDamageEffectEnd()
+    {
+        Image gameplayMenuBackground = gameplayMenu.GetComponent<Image>();
+        gameplayMenuBackground.color = Color.clear;
+        yield return new WaitForSeconds(0.2f);
+    }
+    #endregion
 }

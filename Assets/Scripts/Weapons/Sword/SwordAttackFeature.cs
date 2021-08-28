@@ -335,10 +335,12 @@ public class SwordAttackFeature : AttackFeature, IPunObservable
         if (stream.IsWriting)
         {
             stream.SendNext(swipeTrails.activeInHierarchy);
+            stream.SendNext(attackAngle);
         }
         else
         {
             swipeTrails.SetActive((bool)stream.ReceiveNext());
+            attackAngle = (float)stream.ReceiveNext();
         }
     }
 

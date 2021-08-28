@@ -166,6 +166,7 @@ public class SwordBlockFeature : BlockFeature
     void BeginBlock()
     {
         blockPhase = EBlockPhase.Block;
+        isBlocking = true;
     }
 
     void Block()
@@ -273,6 +274,7 @@ public class SwordBlockFeature : BlockFeature
     void BeginReset()
     {
         blockPhase = EBlockPhase.Reset;
+        isBlocking = false;
         resetStartTime = Time.time;
 
         //Unlock rotation
@@ -314,6 +316,8 @@ public class SwordBlockFeature : BlockFeature
     #region Block Functionality
     public override float BlockAttack(float maxDamageAmount, int attackerID)
     {
+        if (!isBlocking) { return maxDamageAmount; }
+
         float damageTaken = maxDamageAmount;
 
         //Get attack feature from attacker ID
@@ -352,6 +356,7 @@ public class SwordBlockFeature : BlockFeature
 
         if (deltaAngleToFaceAttacker > maxAngleToFaceAttackerToBeHit)
         {
+            print("Not facing enemy");
             //Your back is to the attacker, you did not block the attack
             return maxDamageAmount;
         }
@@ -368,7 +373,9 @@ public class SwordBlockFeature : BlockFeature
         }
 
         bool gotHit = (incidentAngle < angleToHitCuttoff) ? true : false;
+        print("Attack Angle: " + attackAngle + "; Block Angle: " + blockAngle + "; Incident Angle: " + incidentAngle + "; Got Hit? " + gotHit);
 
+        print("Tried to block");
         return (gotHit) ? maxDamageAmount : 0;
     }
     #endregion

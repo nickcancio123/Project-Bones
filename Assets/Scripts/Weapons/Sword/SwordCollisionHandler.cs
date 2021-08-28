@@ -8,7 +8,6 @@ public class SwordCollisionHandler : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        print("On trigger enter");
         swordAttackScript.OnSwordCollision(other);
     }
 }

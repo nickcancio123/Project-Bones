@@ -21,7 +21,7 @@ public class AttackFeature : WeaponFeature
 
     protected void DealDamage(GameObject targetPlayer)
     {
-        IHealth healthComponent = targetPlayer.GetComponent<IHealth>();
+        Health healthComponent = targetPlayer.GetComponent<Health>();
         healthComponent?.TakeWeaponDamage(attackDamage, photonView.ViewID);
     }
 }
