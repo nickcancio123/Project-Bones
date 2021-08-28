@@ -1,7 +1,7 @@
 using UnityEngine;
-
 using Photon.Realtime;
 using Photon.Pun;
+using System.Collections;
 
 /*
 >Connects you to the network
@@ -13,21 +13,28 @@ public class Launcher : MonoBehaviourPunCallbacks
     [SerializeField] GameObject joiningRoomText;
     [SerializeField] GameObject playButton;
 
-    void Connect()
-    {
-        PhotonNetwork.ConnectUsingSettings();
-    }
-
     void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
     }
 
+    void Connect()
+    {
+        PhotonNetwork.ConnectUsingSettings();
+    }
+
     void Start()
     {
+        playButton.SetActive(false);
+        joiningRoomText.SetActive(false);
         Connect();
     }
 
+    public override void OnConnectedToMaster()
+    {
+        base.OnConnectedToMaster();
+        playButton.SetActive(true);
+    }
 
     public void Play()
     {
@@ -41,22 +48,13 @@ public class Launcher : MonoBehaviourPunCallbacks
         else
         {
             Connect();
-            Play();
         }
-    }
-
-
-    public override void OnConnectedToMaster()
-    {
-        base.OnConnectedToMaster();
-
-        joiningRoomText.SetActive(false);
-        playButton.SetActive(true);
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         base.OnJoinRandomFailed(returnCode, message);
+
         PhotonNetwork.CreateRoom(null, new RoomOptions());
     }
 

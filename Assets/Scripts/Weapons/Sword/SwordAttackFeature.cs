@@ -330,17 +330,17 @@ public class SwordAttackFeature : AttackFeature, IPunObservable
 
 
     #region Networked Attack
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    new public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
+        base.OnPhotonSerializeView(stream, info);
+
         if (stream.IsWriting)
         {
             stream.SendNext(swipeTrails.activeInHierarchy);
-            stream.SendNext(attackAngle);
         }
         else
         {
             swipeTrails.SetActive((bool)stream.ReceiveNext());
-            attackAngle = (float)stream.ReceiveNext();
         }
     }
 

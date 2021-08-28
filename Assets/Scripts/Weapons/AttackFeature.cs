@@ -24,4 +24,17 @@ public class AttackFeature : WeaponFeature
         Health healthComponent = targetPlayer.GetComponent<Health>();
         healthComponent?.TakeWeaponDamage(attackDamage, photonView.ViewID);
     }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(attackAngle);
+        }
+        else
+        {
+            attackAngle = (float)stream.ReceiveNext();
+        }
+    }
+
 }

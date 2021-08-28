@@ -611,8 +611,9 @@ GameObject:
   - component: {fileID: 2027545085585396907}
   - component: {fileID: 5192608924676303135}
   - component: {fileID: 6736431594362625561}
+  - component: {fileID: 4903467417027535773}
   - component: {fileID: 161673285877155116}
-  - component: {fileID: 7693195699075287465}
+  - component: {fileID: 7334431570754885671}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
@@ -681,6 +682,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponAnimator: {fileID: 8405865516380447889}
+  weaponAnimatorViewer: {fileID: 7334431570754885671}
   defaultPosition: {x: 0, y: 1, z: 0.5}
   defaultRotation: {x: -35, y: 70, z: -80}
   ownerSkely: {fileID: 0}
@@ -731,6 +733,31 @@ MonoBehaviour:
   blockRotationSpeed: 5
   blockLockOnSpeed: 0.05
   resetDuration: 0.15
+--- !u!114 &4903467417027535773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8617348926558089044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 5192608924676303135}
+  - {fileID: 161673285877155116}
+  - {fileID: 7334431570754885671}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!114 &161673285877155116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -747,7 +774,7 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
---- !u!114 &7693195699075287465
+--- !u!114 &7334431570754885671
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -769,5 +796,5 @@ MonoBehaviour:
     SynchronizeType: 2
     Name: velocity
   m_SynchronizeLayers:
-  - SynchronizeType: 2
+  - SynchronizeType: 1
     LayerIndex: 0

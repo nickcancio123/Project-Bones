@@ -41,6 +41,8 @@ MonoBehaviour:
   - RespawnSpaceship
   - RPC_TakeDamage
   - RPC_TakeWeaponDamage
+  - RPC_DisableWeaponAnimator
+  - RPC_EnableWeaponAnimator
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

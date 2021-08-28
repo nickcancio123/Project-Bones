@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (skelyPrefab)
         {
             Vector3 spawnPoint = new Vector3(Random.Range(-5, 5), 5, Random.Range(-5, 5));
-            GameObject skely = PhotonNetwork.Instantiate(this.skelyPrefab.name, new Vector3(0f, 5f, 0f), Quaternion.identity, 0);
+            GameObject skely = PhotonNetwork.Instantiate(this.skelyPrefab.name, spawnPoint, Quaternion.identity, 0);
 
             Health skelyHealth = skely.GetComponent<Health>();
             if (skelyHealth)
