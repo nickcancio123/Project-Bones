@@ -12,6 +12,7 @@ public class WeaponController : MonoBehaviourPunCallbacks
 {
     [SerializeField] protected Animator weaponAnimator;
 
+    public AudioSource weaponAudioSource;
     public Vector3 defaultPosition;
     public Vector3 defaultRotation;
 

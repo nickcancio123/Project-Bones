@@ -350,17 +350,14 @@ public class SwordBlockFeature : BlockFeature
         //If not facing enemy, take full damage
         Transform skelyTransform = weaponController.ownerSkely.transform;
 
-        Vector3 directionFacingAttacker = attackerPosition - skelyTransform.position;
-        Quaternion rotationFacingAttacker = Quaternion.LookRotation(directionFacingAttacker, skelyTransform.up);
-        float deltaAngleToFaceAttacker = (rotationFacingAttacker * Quaternion.Inverse(skelyTransform.rotation)).eulerAngles.y;
+        Vector3 directionToAttacker = attackerPosition - skelyTransform.position;
+        float deltaAngleToFaceAttacker = Vector3.Angle(skelyTransform.forward, directionToAttacker);
 
         if (deltaAngleToFaceAttacker > maxAngleToFaceAttackerToBeHit)
         {
-            print("Not facing enemy");
             //Your back is to the attacker, you did not block the attack
             return maxDamageAmount;
         }
-
 
         //Negated to make local space
         float attackAngle = -attackFeature.attackAngle;
@@ -373,10 +370,16 @@ public class SwordBlockFeature : BlockFeature
         }
 
         bool gotHit = (incidentAngle < angleToHitCuttoff) ? true : false;
-        print("Attack Angle: " + attackAngle + "; Block Angle: " + blockAngle + "; Incident Angle: " + incidentAngle + "; Got Hit? " + gotHit);
 
-        print("Tried to block");
-        return (gotHit) ? maxDamageAmount : 0;
+        if (gotHit)
+        {
+            return maxDamageAmount;
+        }
+        else
+        {
+            PlayBlockEffects();
+            return 0;
+        }
     }
     #endregion
 }

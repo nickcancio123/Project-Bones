@@ -15,8 +15,10 @@ public class Health : MonoBehaviourPunCallbacks
     [SerializeField] float maxHealth = 100;
     float currentHealth = 0;
 
-    public event Action deathEvent;
+    [SerializeField] AudioSource playerAudioSource;
+    [SerializeField] AudioClip damageAudioClip;
 
+    public event Action deathEvent;
 
 
     void Start()
@@ -76,21 +78,29 @@ public class Health : MonoBehaviourPunCallbacks
             damageTaken = blockFeature.BlockAttack(maxDamageAmount, attackerID);
         }
 
+        photonView.RPC("RPC_TakeDamage", RpcTarget.All, damageTaken);
+    }
+
+    [PunRPC]
+    void RPC_TakeDamage(float damageTaken)
+    {
+        if (!photonView.IsMine) { return; }
+
         currentHealth = Mathf.Clamp(currentHealth - damageTaken, 0, maxHealth);
+
+        if (damageTaken > 0)
+        {
+            photonView.RPC("RPC_PlayDamageEffects", RpcTarget.All);
+        }
 
         if (currentHealth <= 0)
             deathEvent();
     }
 
     [PunRPC]
-    void RPC_TakeDamage(float damageAmount)
+    void RPC_PlayDamageEffects()
     {
-        if (!photonView.IsMine) { return; }
-
-        currentHealth = Mathf.Clamp(currentHealth - damageAmount, 0, maxHealth);
-
-        if (currentHealth <= 0)
-            deathEvent();
+        playerAudioSource.PlayOneShot(damageAudioClip);
     }
     #endregion    
 }
