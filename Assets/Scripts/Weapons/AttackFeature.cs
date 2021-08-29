@@ -18,7 +18,6 @@ public class AttackFeature : WeaponFeature
     [HideInInspector] public float attackAngle = 0;
     #endregion
 
-
     protected void DealDamage(GameObject targetPlayer)
     {
         Health healthComponent = targetPlayer.GetComponent<Health>();
@@ -36,5 +35,4 @@ public class AttackFeature : WeaponFeature
             attackAngle = (float)stream.ReceiveNext();
         }
     }
-
 }

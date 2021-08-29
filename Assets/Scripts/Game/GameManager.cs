@@ -23,12 +23,17 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void LeaveRoom()
     {
-        PhotonNetwork.LoadLevel(0);
         PhotonNetwork.LeaveRoom();
     }
 
     void OnPlayerDeath()
     {
         LeaveRoom();
+    }
+
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom();
+        PhotonNetwork.LoadLevel(0);
     }
 }
