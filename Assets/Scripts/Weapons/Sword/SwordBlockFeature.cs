@@ -330,7 +330,7 @@ public class SwordBlockFeature : BlockFeature
 
         switch (attackFeature.attackType)
         {
-            case AttackType.Swipe:
+            case AttackType.Slash:
                 {
                     damageTaken = BlockSwipeAttack(maxDamageAmount, attackFeature, attackerPosition);
                     break;

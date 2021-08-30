@@ -32,6 +32,11 @@ public abstract class WeaponFeature : MonoBehaviourPunCallbacks
     public void DisableFeature() { featureState = EFeatureState.Disabled; }
 
 
+    void Start()
+    {
+        weaponController.collisionEvent += OnWeaponCollision;
+    }
+
     //Self-activation
     protected void Activate()
     {
@@ -45,4 +50,6 @@ public abstract class WeaponFeature : MonoBehaviourPunCallbacks
         EnableFeature();
         weaponController.EnableFeatures(this);
     }
+
+    virtual public void OnWeaponCollision(Collider other) { return; }
 }

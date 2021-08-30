@@ -5126,7 +5126,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5901659323968488937}
   - component: {fileID: 5433670459598236430}
-  - component: {fileID: 7243442237999863156}
+  - component: {fileID: 644876346421269914}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -5166,7 +5166,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.45, y: 0.41, z: 2.6}
   m_Center: {x: 0, y: 0, z: 1.05}
---- !u!114 &7243442237999863156
+--- !u!114 &644876346421269914
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5175,10 +5175,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4501940879368028148}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cf02c524f285084db965ddcfeea2299, type: 3}
+  m_Script: {fileID: 11500000, guid: a01ce4498a506ba47b24cf1057483087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swordAttackScript: {fileID: 5192608924676303135}
+  weaponController: {fileID: 2027545085585396907}
 --- !u!1 &5162245262791142244
 GameObject:
   m_ObjectHideFlags: 0
@@ -5570,13 +5570,13 @@ MonoBehaviour:
   attackType: 0
   attackDamage: 15
   attackAngle: 0
-  swipeTrails: {fileID: 7227355229070367799}
+  slashTrails: {fileID: 7227355229070367799}
   drawDistance: 0.8
   drawAngle: 90
   drawDuration: 0.4
-  swipeDistance: 1.5
-  swipeAngle: 170
-  swipeDuration: 0.28
+  slashDistance: 1.5
+  slashAngle: 170
+  slashDuration: 0.25
   resetDuration: 0.3
 --- !u!114 &6736431594362625561
 MonoBehaviour:

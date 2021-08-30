@@ -6,7 +6,7 @@ using Photon.Pun;
 
 public enum AttackType
 {
-    Swipe,
+    Slash,
     Jab
 }
 
@@ -18,8 +18,9 @@ public class AttackFeature : WeaponFeature
     [HideInInspector] public float attackAngle = 0;
     #endregion
 
-    protected void DealDamage(GameObject targetPlayer)
+    protected void Attack(GameObject targetPlayer)
     {
+        //Override and call base to add functionality
         Health healthComponent = targetPlayer.GetComponent<Health>();
         healthComponent?.TakeWeaponDamage(attackDamage, photonView.ViewID);
     }

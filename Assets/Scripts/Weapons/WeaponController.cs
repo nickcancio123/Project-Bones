@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using Photon.Pun;
 
 /*
@@ -71,8 +72,17 @@ public class WeaponController : MonoBehaviourPunCallbacks
         }
     }
 
+    #endregion
 
 
+    #region Collision
+    public delegate void collisionEventCallback(Collider other);
+    public event collisionEventCallback collisionEvent;
+
+    public void OnWeaponCollision(Collider other)
+    {
+        collisionEvent(other);
+    }
     #endregion
 
 
