@@ -27,6 +27,8 @@ public class SlashAttackFeature : AttackFeature
     protected EAttackPhase attackPhase = EAttackPhase.Reading;
 
     protected Vector3 mouseSwipe = Vector3.zero;
+
+    protected bool canDealDamage = false;
     #endregion
 
 
@@ -38,8 +40,8 @@ public class SlashAttackFeature : AttackFeature
     [SerializeField] protected float drawDuration = 0;
 
     protected float drawStartTime = 0;
-    protected Vector3 finalDrawnLocalPosition;
-    protected Quaternion finalDrawLocalRotation;
+    protected Vector3 drawnLocalPosition;
+    protected Quaternion drawnLocalRotation;
     #endregion
 
 
@@ -83,6 +85,14 @@ public class SlashAttackFeature : AttackFeature
 
     void Behavior()
     {
+        if (stopDefaultBehavior)
+        {
+            if (isRecoiling)
+                RecoilFromBlock();
+            return;
+        }
+
+        //Default behavior
         switch (attackPhase)
         {
             case EAttackPhase.Reading:
@@ -196,7 +206,7 @@ public class SlashAttackFeature : AttackFeature
         Vector3 startingPos = skelyTransform.position + skelyTransform.TransformDirection(weaponController.defaultPosition);
         transform.position = Vector3.Lerp(startingPos, targetWorldPos, drawProgress);
 
-        finalDrawnLocalPosition = targetLocalPos;
+        drawnLocalPosition = targetLocalPos;
     }
 
     void DrawToRotation(float drawProgress)
@@ -220,7 +230,7 @@ public class SlashAttackFeature : AttackFeature
         Quaternion initialRotation = Quaternion.Euler(weaponController.defaultRotation);
         transform.localRotation = Quaternion.Lerp(initialRotation, targetRotation, drawProgress);
 
-        finalDrawLocalRotation = targetRotation;
+        drawnLocalRotation = targetRotation;
     }
 
     void CalculateAttackAngle()
@@ -235,6 +245,8 @@ public class SlashAttackFeature : AttackFeature
     void BeginSlashPhase()
     {
         attackPhase = EAttackPhase.Slash;
+        canDealDamage = false;
+
         slashStartTime = Time.time;
         slashTrails.SetActive(true);
     }
@@ -262,10 +274,8 @@ public class SlashAttackFeature : AttackFeature
         Vector3 targetWorldPos = skelyTransform.position + skelyTransform.TransformDirection(targetLocalPos);
 
         //Lerp position
-        Vector3 startingPos = skelyTransform.position + skelyTransform.TransformDirection(finalDrawnLocalPosition);
+        Vector3 startingPos = skelyTransform.position + skelyTransform.TransformDirection(drawnLocalPosition);
         transform.position = Vector3.Lerp(startingPos, targetWorldPos, slashProgress);
-
-        finalSlashLocalPosition = targetLocalPos;
     }
 
     void SlashToRotation()
@@ -297,6 +307,7 @@ public class SlashAttackFeature : AttackFeature
     {
         slashTrails.SetActive(false);
         finalSlashLocalRotation = transform.localRotation;
+        finalSlashLocalPosition = transform.localPosition;
 
         attackPhase = EAttackPhase.Reset;
         resetStartTime = Time.time;
@@ -327,7 +338,26 @@ public class SlashAttackFeature : AttackFeature
 
 
 
-    #region Networked Attack
+    #region Recoil Methods
+    override protected void RecoilFromBlock()
+    {
+        float percentRecoiled = (Time.time - recoilStartTime / recoilDuration);
+
+        transform.localPosition = Vector3.Lerp(recoilStartLocalPos, drawnLocalPosition, percentRecoiled);
+        transform.localRotation = Quaternion.Lerp(recoilStartLocalRotation, drawnLocalRotation, percentRecoiled);
+
+        if (percentRecoiled >= 1)
+        {
+            stopDefaultBehavior = false;
+
+            BeginResetPhase();
+        }
+    }
+    #endregion
+
+
+
+    #region Attack Network Interaction
     new public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         base.OnPhotonSerializeView(stream, info);
@@ -346,8 +376,7 @@ public class SlashAttackFeature : AttackFeature
     {
         if (!photonView.IsMine) { return; }
 
-        //Does not count if not swiping
-        if (attackPhase != EAttackPhase.Slash) { return; }
+        if (!canDealDamage) { return; }
 
         //Ignore if weapon collides with self
         if (other.gameObject == weaponController.ownerSkely) { return; }
