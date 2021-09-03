@@ -19,7 +19,7 @@ MonoBehaviour:
     AppIdVoice: 
     AppVersion: 
     UseNameServer: 1
-    FixedRegion: 
+    FixedRegion: us
     Server: 
     Port: 0
     ProxyServer: 
@@ -28,7 +28,7 @@ MonoBehaviour:
     AuthMode: 0
     EnableLobbyStatistics: 0
     NetworkLogging: 1
-  DevRegion: 
+  DevRegion: us
   PunLogging: 0
   EnableSupportLogger: 0
   RunInBackground: 1
@@ -39,6 +39,12 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
+  - RPC_TakeDamage
+  - RPC_TakeWeaponDamage
+  - RPC_DisableWeaponAnimator
+  - RPC_EnableWeaponAnimator
+  - RPC_PlayBlockEffects
+  - RPC_PlayDamageEffects
   DisableAutoOpenWizard: 1
-  ShowSettings: 0
-  DevRegionSetOnce: 0
+  ShowSettings: 1
+  DevRegionSetOnce: 1

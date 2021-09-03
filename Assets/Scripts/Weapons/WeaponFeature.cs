@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Photon.Pun;
+
 /*
 >Goes on the weapon gameObject
 >Intended to be inherited from
@@ -11,7 +13,7 @@ using UnityEngine;
 >When deactivated, reenable other features
 */
 
-public abstract class WeaponFeature : MonoBehaviour
+public abstract class WeaponFeature : MonoBehaviourPunCallbacks
 {
     [SerializeField] protected WeaponController weaponController;
 
@@ -30,6 +32,11 @@ public abstract class WeaponFeature : MonoBehaviour
     public void DisableFeature() { featureState = EFeatureState.Disabled; }
 
 
+    void Start()
+    {
+        weaponController.collisionEvent += OnWeaponCollision;
+    }
+
     //Self-activation
     protected void Activate()
     {
@@ -44,6 +51,5 @@ public abstract class WeaponFeature : MonoBehaviour
         weaponController.EnableFeatures(this);
     }
 
-
-    protected abstract void ReadInput();
+    virtual public void OnWeaponCollision(Collider other) { return; }
 }

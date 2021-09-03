@@ -1,15 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using Photon.Pun;
 
 /*
 >Goes on the weapon gameObject
 >Manages the features on a weapon
 >Manages weapon animation
 */
-public class WeaponController : MonoBehaviour
+public class WeaponController : MonoBehaviourPunCallbacks
 {
     [SerializeField] protected Animator weaponAnimator;
+
+    public AudioSource weaponAudioSource;
     public Vector3 defaultPosition;
     public Vector3 defaultRotation;
 
@@ -20,6 +24,9 @@ public class WeaponController : MonoBehaviour
     protected void Start()
     {
         CacheReferences();
+
+        transform.localPosition = defaultPosition;
+        transform.localRotation = Quaternion.Euler(defaultRotation);
     }
 
     void CacheReferences()
@@ -65,14 +72,45 @@ public class WeaponController : MonoBehaviour
         }
     }
 
+    #endregion
+
+
+    #region Collision
+    public delegate void collisionEventCallback(Collider other);
+    public event collisionEventCallback collisionEvent;
+
+    public void OnWeaponCollision(Collider other)
+    {
+        collisionEvent(other);
+    }
+    #endregion
+
+
+    #region Weapon Animator
     public void DisableAnimator()
     {
-        weaponAnimator.enabled = false;
+        photonView.RPC("RPC_DisableWeaponAnimator", RpcTarget.All);
     }
 
     public void EnableAnimator()
     {
-        weaponAnimator.enabled = true;
+        photonView.RPC("RPC_EnableWeaponAnimator", RpcTarget.All);
+    }
+
+    [PunRPC]
+    protected void RPC_DisableWeaponAnimator()
+    {
+        Animator weaponAnimator = gameObject.GetComponent<Animator>();
+        if (weaponAnimator)
+            weaponAnimator.enabled = false;
+    }
+
+    [PunRPC]
+    protected void RPC_EnableWeaponAnimator()
+    {
+        Animator weaponAnimator = gameObject.GetComponent<Animator>();
+        if (weaponAnimator)
+            weaponAnimator.enabled = true;
     }
     #endregion
 }
