@@ -123,7 +123,7 @@ public class SlashAttackFeature : AttackFeature
         {
             //Start attack input
             mouseSwipe = Vector3.zero;
-            weaponController.skelyMovement.canRotate = false;
+            weaponController.playerMovement.canRotate = false;
 
             //***ACTIVATING FEATURE***
             Activate();
@@ -137,7 +137,7 @@ public class SlashAttackFeature : AttackFeature
 
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {
-            weaponController.skelyMovement.canRotate = true;
+            weaponController.playerMovement.canRotate = true;
 
             //If nonzero input, begin draw phase
             if (mouseSwipe.magnitude > 0.1)
@@ -199,7 +199,7 @@ public class SlashAttackFeature : AttackFeature
         //Calculate target world position
         Vector3 localDelta = new Vector3(drawDir.x * drawDistance, drawDir.y * drawDistance, 0);
         Vector3 targetLocalPos = weaponController.defaultPosition + localDelta;
-        Transform skelyTransform = weaponController.ownerSkely.transform;
+        Transform skelyTransform = weaponController.ownerPlayer.transform;
         Vector3 targetWorldPos = skelyTransform.position + skelyTransform.TransformDirection(targetLocalPos);
 
         //Lerp position
@@ -270,7 +270,7 @@ public class SlashAttackFeature : AttackFeature
         //Calculate target world position
         Vector3 localDelta = new Vector3(mouseSwipe.x * slashDistance, mouseSwipe.y * slashDistance, 0);
         Vector3 targetLocalPos = weaponController.defaultPosition + localDelta;
-        Transform skelyTransform = weaponController.ownerSkely.transform;
+        Transform skelyTransform = weaponController.ownerPlayer.transform;
         Vector3 targetWorldPos = skelyTransform.position + skelyTransform.TransformDirection(targetLocalPos);
 
         //Lerp position
@@ -379,7 +379,7 @@ public class SlashAttackFeature : AttackFeature
         if (!canDealDamage) { return; }
 
         //Ignore if weapon collides with self
-        if (other.gameObject == weaponController.ownerSkely) { return; }
+        if (other.gameObject == weaponController.ownerPlayer) { return; }
 
         //If weapon collided with another player or child of another player
         if (other.gameObject.tag == "Player")

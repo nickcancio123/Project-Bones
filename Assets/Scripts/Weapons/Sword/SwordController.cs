@@ -23,7 +23,7 @@ public class SwordController : WeaponController
             return;
         }
 
-        weaponAnimator.SetFloat("velocity", skelyMovement.velocity);
-        weaponAnimator.SetBool("isRunning", skelyMovement.isRunning);
+        weaponAnimator.SetFloat("velocity", playerMovement.velocity);
+        weaponAnimator.SetBool("isRunning", playerMovement.isRunning);
     }
 }

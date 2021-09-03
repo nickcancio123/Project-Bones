@@ -4,7 +4,7 @@ using UnityEngine;
 
 using Photon.Pun;
 
-public class SkelyMovementController : MonoBehaviourPunCallbacks
+public class PlayerMovementController : MonoBehaviourPunCallbacks
 {
     #region Editor Interface
     [SerializeField] CharacterController characterController;

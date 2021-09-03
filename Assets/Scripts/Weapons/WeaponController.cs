@@ -17,8 +17,8 @@ public class WeaponController : MonoBehaviourPunCallbacks
     public Vector3 defaultPosition;
     public Vector3 defaultRotation;
 
-    [HideInInspector] public GameObject ownerSkely;
-    [HideInInspector] public SkelyMovementController skelyMovement;
+    [HideInInspector] public GameObject ownerPlayer;
+    [HideInInspector] public PlayerMovementController playerMovement;
 
 
     protected void Start()
@@ -31,17 +31,17 @@ public class WeaponController : MonoBehaviourPunCallbacks
 
     void CacheReferences()
     {
-        ownerSkely = gameObject.transform.parent.gameObject;
+        ownerPlayer = gameObject.transform.parent.gameObject;
 
-        if (!ownerSkely)
+        if (!ownerPlayer)
         {
             print("No owner skely ref");
             return;
         }
 
-        skelyMovement = ownerSkely.GetComponent<SkelyMovementController>();
+        playerMovement = ownerPlayer.GetComponent<PlayerMovementController>();
 
-        if (!skelyMovement)
+        if (!playerMovement)
         {
             print("No skely movement ref");
             return;
