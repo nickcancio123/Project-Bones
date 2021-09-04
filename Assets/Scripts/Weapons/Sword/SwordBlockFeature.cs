@@ -132,7 +132,7 @@ public class SwordBlockFeature : BlockFeature
     void BeginDraw()
     {
         weaponController.DisableAnimator();
-        weaponController.playerMovement.canRotate = false;
+        weaponController.movementManager.canRotate = false;
 
         blockPhase = EBlockPhase.Draw;
         drawStartTime = Time.time;
@@ -278,7 +278,7 @@ public class SwordBlockFeature : BlockFeature
         resetStartTime = Time.time;
 
         //Unlock rotation
-        weaponController.playerMovement.canRotate = true;
+        weaponController.movementManager.canRotate = true;
 
         finalBlockLocalPos = transform.localPosition;
         finalBlockLocalRotation = transform.localRotation;

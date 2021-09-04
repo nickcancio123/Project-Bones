@@ -1,0 +1,36 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Gravity : MovementModifier
+{
+    [SerializeField] float groundedPullForce = 10;
+
+    readonly float gravityMagnitude = Physics.gravity.y;
+    bool wasGroundedLastFrame = false;
+
+    new void OnEnable() => movementManager.AddModifier(this);
+    new void OnDisable() => movementManager.RemoveModifier(this);
+
+    void Update() => ApplyGravity();
+
+    void ApplyGravity()
+    {
+        if (!photonView.IsMine) { return; }
+
+        if (movementManager.characterController.isGrounded)
+        {
+            value = new Vector3(value.x, -groundedPullForce, value.z);
+        }
+        else if (wasGroundedLastFrame)
+        {
+            value = Vector3.zero;
+        }
+        else
+        {
+            value = new Vector3(value.x, value.y + gravityMagnitude * Time.deltaTime, value.z);
+        }
+
+        wasGroundedLastFrame = movementManager.characterController.isGrounded;
+    }
+}

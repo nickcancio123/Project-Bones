@@ -123,7 +123,7 @@ public class SlashAttackFeature : AttackFeature
         {
             //Start attack input
             mouseSwipe = Vector3.zero;
-            weaponController.playerMovement.canRotate = false;
+            weaponController.movementManager.canRotate = false;
 
             //***ACTIVATING FEATURE***
             Activate();
@@ -137,7 +137,7 @@ public class SlashAttackFeature : AttackFeature
 
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {
-            weaponController.playerMovement.canRotate = true;
+            weaponController.movementManager.canRotate = true;
 
             //If nonzero input, begin draw phase
             if (mouseSwipe.magnitude > 0.1)

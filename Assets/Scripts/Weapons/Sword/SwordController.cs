@@ -23,7 +23,7 @@ public class SwordController : WeaponController
             return;
         }
 
-        weaponAnimator.SetFloat("velocity", playerMovement.velocity);
-        weaponAnimator.SetBool("isRunning", playerMovement.isRunning);
+        weaponAnimator.SetFloat("velocity", movementManager.GetSpeed());
+        weaponAnimator.SetBool("isRunning", movementManager.isRunning);
     }
 }

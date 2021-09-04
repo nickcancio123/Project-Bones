@@ -4,19 +4,20 @@ using UnityEngine;
 
 using Photon.Pun;
 
+//This script goes on the player game object
 public class CameraController : MonoBehaviourPunCallbacks
 {
     [SerializeField] Vector3 followOffset;
 
+    Camera mainCam;
+
+    private void Start() => mainCam = Camera.main;
+
     void LateUpdate()
     {
         if (!photonView.IsMine) { return; }
-        //Move with player
-        Camera.main.transform.position = this.transform.position + followOffset;
 
-        //Rotate yaw to match player
-        Vector3 cameraEulerAngles = Camera.main.transform.rotation.eulerAngles;
-        Vector3 playerEulerAngles = this.transform.rotation.eulerAngles;
-        Camera.main.transform.rotation = Quaternion.Euler(cameraEulerAngles.x, playerEulerAngles.y, cameraEulerAngles.z);
+        //Follow player by follow offset
+        mainCam.transform.position = transform.position + followOffset;
     }
 }

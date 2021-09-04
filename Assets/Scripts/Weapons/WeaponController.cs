@@ -18,7 +18,7 @@ public class WeaponController : MonoBehaviourPunCallbacks
     public Vector3 defaultRotation;
 
     [HideInInspector] public GameObject ownerPlayer;
-    [HideInInspector] public PlayerMovementController playerMovement;
+    [HideInInspector] public MovementManager movementManager;
 
 
     protected void Start()
@@ -35,15 +35,15 @@ public class WeaponController : MonoBehaviourPunCallbacks
 
         if (!ownerPlayer)
         {
-            print("No owner skely ref");
+            print("No owner player ref");
             return;
         }
 
-        playerMovement = ownerPlayer.GetComponent<PlayerMovementController>();
+        movementManager = ownerPlayer.GetComponent<MovementManager>();
 
-        if (!playerMovement)
+        if (!movementManager)
         {
-            print("No skely movement ref");
+            print("No movement manager ref");
             return;
         }
     }
