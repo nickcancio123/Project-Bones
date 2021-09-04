@@ -20,15 +20,16 @@ public class Gravity : MovementModifier
 
         if (movementManager.characterController.isGrounded)
         {
-            value = new Vector3(value.x, -groundedPullForce, value.z);
+            value = new Vector3(0, -groundedPullForce, 0);
         }
         else if (wasGroundedLastFrame)
         {
+            //On just left ground, reset gravity
             value = Vector3.zero;
         }
         else
         {
-            value = new Vector3(value.x, value.y + gravityMagnitude * Time.deltaTime, value.z);
+            value = new Vector3(0, value.y + gravityMagnitude * Time.deltaTime, 0);
         }
 
         wasGroundedLastFrame = movementManager.characterController.isGrounded;

@@ -36,8 +36,6 @@ public class MovementManager : MonoBehaviourPunCallbacks
     {
         if (!photonView.IsMine) { return; }
 
-        print(characterController.velocity.magnitude);
-
         Move();
         Look();
     }

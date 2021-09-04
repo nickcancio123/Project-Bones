@@ -16,19 +16,16 @@ public class ForceReceiver : MovementModifier
     {
         if (!photonView.IsMine) { return; }
 
-        // if (!wasGroundedLastFrame && movementManager.characterController.isGrounded)
-        // {
-        //     value = new Vector3(value.x, 0, value.z);
-        // }
-
         //Cutoff value to zero
-        if (value.magnitude < 0.1)
+        if (value.magnitude < 0.25)
         {
             value = Vector3.zero;
         }
 
         //Implement drag
         value = Vector3.Lerp(value, Vector3.zero, drag * Time.deltaTime);
+
+        wasGroundedLastFrame = movementManager.characterController.isGrounded;
     }
 
     public void AddForce(Vector3 force) => value += force / mass;
