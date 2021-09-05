@@ -19,5 +19,10 @@ public class CameraController : MonoBehaviourPunCallbacks
 
         //Follow player by follow offset
         mainCam.transform.position = transform.position + followOffset;
+
+        //Rotate camera yaw to player yaw
+        Vector3 cameraEulers = mainCam.transform.rotation.eulerAngles;
+        Vector3 playerEulers = transform.rotation.eulerAngles;
+        mainCam.transform.rotation = Quaternion.Euler(cameraEulers.x, playerEulers.y, cameraEulers.z);
     }
 }

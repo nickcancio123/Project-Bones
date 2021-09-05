@@ -7,8 +7,6 @@ public class ForceReceiver : MovementModifier
     [SerializeField] float mass = 100;
     [SerializeField] float drag = 1;
 
-    bool wasGroundedLastFrame = false;
-
     new void OnEnable() => movementManager.AddModifier(this);
     new void OnDisable() => movementManager.RemoveModifier(this);
 
@@ -24,8 +22,6 @@ public class ForceReceiver : MovementModifier
 
         //Implement drag
         value = Vector3.Lerp(value, Vector3.zero, drag * Time.deltaTime);
-
-        wasGroundedLastFrame = movementManager.characterController.isGrounded;
     }
 
     public void AddForce(Vector3 force) => value += force / mass;

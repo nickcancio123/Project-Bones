@@ -335,9 +335,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 7
-  runSpeed: 13
-  groundAcceleration: 0.2
-  airDrag: 0.2
+  runSpeed: 14
+  acceleration: 0.18
+  airDrag: 0.08
+  airTurnRate: 0.15
 --- !u!114 &6085650787613079027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -364,7 +365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4efb114687bfdf4e82f28f352499d7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 2000
+  jumpForce: 1200
 --- !u!114 &5465881070108690935
 MonoBehaviour:
   m_ObjectHideFlags: 0
