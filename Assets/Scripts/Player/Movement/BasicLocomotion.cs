@@ -12,6 +12,10 @@ public class BasicLocomotion : MovementModifier
     [SerializeField] float airTurnRate = 1;
 
 
+    void Start() => SetModType();
+
+    protected override void SetModType() => modType = EMovementModType.Basic_Locomotion;
+
     new void OnEnable() => movementManager.AddModifier(this);
     new void OnDisable() => movementManager.RemoveModifier(this);
 

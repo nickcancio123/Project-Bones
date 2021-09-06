@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 6085650787613079027}
   - component: {fileID: 4929532452773966344}
   - component: {fileID: 5465881070108690935}
+  - component: {fileID: 1390537536433176007}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -334,6 +335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 016b2039a5f5878488d3660bd357ca7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  compatibleModTypes: 
   walkSpeed: 7
   runSpeed: 14
   acceleration: 0.18
@@ -351,6 +353,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5728f879dffe799418608f05ab8513cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  compatibleModTypes: 
   mass: 100
   drag: 2.5
 --- !u!114 &4929532452773966344
@@ -365,6 +368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4efb114687bfdf4e82f28f352499d7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  compatibleModTypes: 
   jumpForce: 1200
 --- !u!114 &5465881070108690935
 MonoBehaviour:
@@ -378,7 +382,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 597dc1096ae1f55459019e96c5dd93ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundedPullForce: 10
+  compatibleModTypes: 
+  groundedPullForce: 7
+--- !u!114 &1390537536433176007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1198865837923144447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 878b1bc323b164242b31a89a069b1927, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  compatibleModTypes: 
+  dashDuration: 0.4
+  dashSpeed: 26
 --- !u!1 &1962348075081257687
 GameObject:
   m_ObjectHideFlags: 0

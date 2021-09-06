@@ -46,9 +46,34 @@ public class MovementManager : MonoBehaviourPunCallbacks
 
         Vector3 movement = Vector3.zero;
 
+        //Find first exclusive modifier
+        bool containsExclusiveMod = false;
+        MovementModifier exclusiveMod = null;
         foreach (MovementModifier modifier in modifiers)
         {
-            movement += modifier.GetValue();
+            if (modifier.IsExclusive())
+            {
+                containsExclusiveMod = true;
+                exclusiveMod = modifier;
+                break;
+            }
+        }
+
+        foreach (MovementModifier modifier in modifiers)
+        {
+            if (containsExclusiveMod)
+            {
+                //Only affect movement if is the exclusive mod or is compatible with the exclusive mod
+                if (modifier == exclusiveMod || exclusiveMod.compatibleModTypes.Contains(modifier.GetModType()))
+                {
+                    movement += modifier.GetValue();
+                }
+            }
+            else
+            {
+                //If no exclusive mod, every mod affects movement
+                movement += modifier.GetValue();
+            }
         }
 
         characterController.Move(movement * Time.deltaTime);

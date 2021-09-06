@@ -6,6 +6,10 @@ public class Jump : MovementModifier
 {
     [SerializeField] float jumpForce = 10;
 
+    void Start() => SetModType();
+
+    protected override void SetModType() => modType = EMovementModType.Jump;
+
     new void OnEnable() => movementManager.AddModifier(this);
     new void OnDisable() => movementManager.RemoveModifier(this);
 
