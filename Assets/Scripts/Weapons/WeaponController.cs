@@ -49,6 +49,11 @@ public class WeaponController : MonoBehaviourPunCallbacks
     }
 
 
+    private void Update()
+    {
+        UpdateAnimationParams();
+    }
+
     #region Feature State Interface
     public void DisableFeatures(WeaponFeature callingFeature)
     {
@@ -113,4 +118,17 @@ public class WeaponController : MonoBehaviourPunCallbacks
             weaponAnimator.enabled = true;
     }
     #endregion
+
+
+    void UpdateAnimationParams()
+    {
+        if (!weaponAnimator)
+        {
+            print("No weapon animator ref");
+            return;
+        }
+
+        weaponAnimator.SetFloat("velocity", movementManager.GetSpeed());
+        weaponAnimator.SetBool("isRunning", movementManager.isRunning);
+    }
 }
