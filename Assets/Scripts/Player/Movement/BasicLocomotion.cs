@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class BasicLocomotion : MovementModifier
 {
+    [SerializeField] Stamina staminaComp;
+
     [SerializeField] float walkSpeed = 5;
     [SerializeField] float runSpeed = 8;
+    [SerializeField] float runStaminaDrain = 10; //Per second
     [SerializeField] float acceleration = 1;
 
     [SerializeField] float airDrag = 1;
@@ -37,7 +40,10 @@ public class BasicLocomotion : MovementModifier
     {
         Vector3 inputDirection = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0).normalized;
 
-        movementManager.isRunning = Input.GetKey(KeyCode.LeftShift);
+        movementManager.isRunning = Input.GetKey(KeyCode.LeftShift) && CanRun();
+
+        if (movementManager.isRunning && movementManager.characterController.velocity.magnitude > 4)
+            staminaComp.DrainStamina(runStaminaDrain * Time.deltaTime);
 
         float targetSpeed = (movementManager.isRunning ? runSpeed : walkSpeed);
         targetSpeed = (inputDirection.magnitude == 0) ? 0 : targetSpeed;
@@ -50,11 +56,17 @@ public class BasicLocomotion : MovementModifier
         value = Vector3.Lerp(value, targetValue, acceleration);
     }
 
+    bool CanRun()
+    {
+        return (staminaComp.CanDrainStaminaBy(runStaminaDrain * Time.deltaTime));
+    }
+
 
     void AirMove()
     {
         Vector3 velocity = movementManager.characterController.velocity;
         float currentSpeed = new Vector3(velocity.x, 0, velocity.z).magnitude;
+        currentSpeed = Mathf.Clamp(currentSpeed, 0, runSpeed);
         currentSpeed = Mathf.Lerp(currentSpeed, 0, airDrag * Time.deltaTime);
 
         Vector3 forward = movementManager.ownerPlayer.transform.forward;
