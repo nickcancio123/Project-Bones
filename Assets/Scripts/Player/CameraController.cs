@@ -18,7 +18,10 @@ public class CameraController : MonoBehaviourPunCallbacks
         if (!photonView.IsMine) { return; }
 
         //Follow player by follow offset
-        mainCam.transform.position = transform.position + followOffset;
+        Vector3 forward = transform.forward;
+        Vector3 right = transform.right;
+        Vector3 worldOffset = forward * followOffset.z + right * followOffset.x + Vector3.up * followOffset.y;
+        mainCam.transform.position = transform.position + worldOffset;
 
         //Rotate camera yaw to player yaw
         Vector3 cameraEulers = mainCam.transform.rotation.eulerAngles;

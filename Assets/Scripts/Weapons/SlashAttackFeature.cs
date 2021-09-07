@@ -358,7 +358,7 @@ public class SlashAttackFeature : AttackFeature
 
 
     #region Attack Network Interaction
-    new public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         base.OnPhotonSerializeView(stream, info);
 

@@ -19,40 +19,43 @@ public class GroundParticlesController : MonoBehaviourPunCallbacks, IPunObservab
     {
         if (!particles) { return; }
 
-        if (photonView.IsMine)
-            UpdateParticles();
+        UpdateParticles();
+    }
 
-        Synchronize();
+    bool ShouldEmit()
+    {
+        float speed = movementManager.characterController.velocity.magnitude;
+
+        bool shouldEmit = (movementManager.isRunning && movementManager.characterController.isGrounded && speed > 1);
+        return shouldEmit;
     }
 
     void UpdateParticles()
     {
-        float speed = movementManager.characterController.velocity.magnitude;
+        if (photonView.IsMine)
+            emitting = ShouldEmit();
 
-        if (movementManager.isRunning && movementManager.characterController.isGrounded && speed > 1)
-            emitting = true;
-        else
-            emitting = false;
-    }
-
-    void Synchronize()
-    {
         if (emitting)
-            particles.Play();
+        {
+            if (!particles.isPlaying)
+                particles.Play();
+        }
         else
-            particles.Stop();
+        {
+            if (!particles.isStopped)
+                particles.Stop();
+        }
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
         {
-            stream.SendNext(emitting);
+            stream.SendNext(ShouldEmit());
         }
         else
         {
             emitting = (bool)stream.ReceiveNext();
         }
     }
-
 }

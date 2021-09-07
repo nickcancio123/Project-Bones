@@ -51,7 +51,11 @@ public class Dash : MovementModifier
             Vector3 inputDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
             Vector3 forward = movementManager.ownerPlayer.transform.forward;
             Vector3 right = movementManager.ownerPlayer.transform.right;
-            dashDirection = right * inputDirection.x + forward * inputDirection.z;
+
+            if (inputDirection.magnitude > 0.1)
+                dashDirection = right * inputDirection.x + forward * inputDirection.z;
+            else
+                dashDirection = forward;
         }
 
         value = dashDirection * ((isDashing) ? dashSpeed : 0);

@@ -18,8 +18,6 @@ public class MovementManager : MonoBehaviourPunCallbacks
 
     List<MovementModifier> modifiers = new List<MovementModifier>();
 
-    float pitch = 0;
-    float yaw = 0;
     Camera mainCam;
 
 
@@ -83,9 +81,13 @@ public class MovementManager : MonoBehaviourPunCallbacks
     {
         if (!canRotate) { return; }
 
-        pitch += -Input.GetAxis("Mouse Y") * lookSpeed * Time.deltaTime;
+        float deltaPitch = -Input.GetAxis("Mouse Y") * lookSpeed * Time.deltaTime;
+        float currentPitch = Vector3.SignedAngle(transform.forward, mainCam.transform.forward, transform.right);
+        float pitch = currentPitch + deltaPitch;
         pitch = Mathf.Clamp(pitch, -pitchLimit, pitchLimit);
-        yaw += Input.GetAxis("Mouse X") * lookSpeed * Time.deltaTime;
+
+        float deltaYaw = Input.GetAxis("Mouse X") * lookSpeed * Time.deltaTime;
+        float yaw = transform.rotation.eulerAngles.y + deltaYaw;
 
         transform.rotation = Quaternion.Euler(0, yaw, 0);
         mainCam.transform.rotation = Quaternion.Euler(pitch, yaw, 0);
