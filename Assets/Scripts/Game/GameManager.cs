@@ -6,18 +6,18 @@ using Photon.Pun;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
-    [SerializeField] GameObject skelyPrefab;
+    [SerializeField] GameObject playerPrefab;
 
     void Start()
     {
-        if (skelyPrefab)
+        if (playerPrefab)
         {
             Vector3 spawnPoint = new Vector3(Random.Range(-5, 5), 5, Random.Range(-5, 5));
-            GameObject skely = PhotonNetwork.Instantiate(this.skelyPrefab.name, spawnPoint, Quaternion.identity, 0);
+            GameObject player = PhotonNetwork.Instantiate(this.playerPrefab.name, spawnPoint, Quaternion.identity, 0);
 
-            Health skelyHealth = skely.GetComponent<Health>();
-            if (skelyHealth)
-                skelyHealth.deathEvent += OnPlayerDeath;
+            Health playerHealth = player.GetComponent<Health>();
+            if (playerHealth)
+                playerHealth.deathEvent += OnPlayerDeath;
         }
     }
 

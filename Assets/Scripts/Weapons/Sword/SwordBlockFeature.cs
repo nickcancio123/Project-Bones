@@ -132,7 +132,7 @@ public class SwordBlockFeature : BlockFeature
     void BeginDraw()
     {
         weaponController.DisableAnimator();
-        weaponController.skelyMovement.canRotate = false;
+        weaponController.movementManager.canRotate = false;
 
         blockPhase = EBlockPhase.Draw;
         drawStartTime = Time.time;
@@ -143,7 +143,7 @@ public class SwordBlockFeature : BlockFeature
         float drawProgress = (Time.time - drawStartTime) / drawDuration;
 
         //Draw to position
-        Transform skelyTransform = weaponController.ownerSkely.transform;
+        Transform skelyTransform = weaponController.ownerPlayer.transform;
         Vector3 targetWorldPos = skelyTransform.position + skelyTransform.TransformDirection(defaultBlockPosition);
         Vector3 startingPos = skelyTransform.position + skelyTransform.TransformDirection(weaponController.defaultPosition);
         transform.position = Vector3.Lerp(startingPos, targetWorldPos, drawProgress);
@@ -181,7 +181,7 @@ public class SwordBlockFeature : BlockFeature
             float clampedMouseX = Mathf.Clamp(mouseX, -5, 5);
 
             //Rotate sword about player forward
-            Vector3 rotationAxis = weaponController.ownerSkely.transform.forward;
+            Vector3 rotationAxis = weaponController.ownerPlayer.transform.forward;
             float deltaRotation = rotationDirection * clampedMouseX * blockRotationSpeed;
             transform.RotateAround(swordMidPoint.position, rotationAxis, deltaRotation);
         }
@@ -191,7 +191,7 @@ public class SwordBlockFeature : BlockFeature
 
     bool CanRotateBlock()
     {
-        Transform skelyTransform = weaponController.ownerSkely.transform;
+        Transform skelyTransform = weaponController.ownerPlayer.transform;
         Vector3 swordForwardProjectedOntoYZPlane = Vector3.ProjectOnPlane(transform.forward, skelyTransform.forward);
         float swordAngle = Vector3.Angle(Vector3.up, swordForwardProjectedOntoYZPlane);
 
@@ -225,7 +225,7 @@ public class SwordBlockFeature : BlockFeature
         if (!closestPlayer) { return; }
 
         //Rotate towards closest player
-        Transform skelyTransform = weaponController.ownerSkely.transform;
+        Transform skelyTransform = weaponController.ownerPlayer.transform;
         Vector3 directionToClosestPlayer = closestPlayer.transform.position - skelyTransform.position;
         Quaternion targetRotation = Quaternion.LookRotation(directionToClosestPlayer, Vector3.up);
         skelyTransform.rotation = Quaternion.Lerp(skelyTransform.rotation, targetRotation, blockLockOnSpeed);
@@ -236,7 +236,7 @@ public class SwordBlockFeature : BlockFeature
         GameObject closestPlayer = null;
         shortestDistance = 1000;
 
-        Transform skelyTransform = weaponController.ownerSkely.transform;
+        Transform skelyTransform = weaponController.ownerPlayer.transform;
 
         foreach (GameObject otherPlayer in players)
         {
@@ -261,7 +261,7 @@ public class SwordBlockFeature : BlockFeature
 
     void CalculateBlockAngle()
     {
-        Transform skelyTransform = weaponController.ownerSkely.transform;
+        Transform skelyTransform = weaponController.ownerPlayer.transform;
         Vector3 swordForwardProjectedOntoYZPlane = Vector3.ProjectOnPlane(transform.forward, skelyTransform.forward);
 
         float angleSign = (transform.localPosition.x > 0) ? -1 : 1;
@@ -278,7 +278,7 @@ public class SwordBlockFeature : BlockFeature
         resetStartTime = Time.time;
 
         //Unlock rotation
-        weaponController.skelyMovement.canRotate = true;
+        weaponController.movementManager.canRotate = true;
 
         finalBlockLocalPos = transform.localPosition;
         finalBlockLocalRotation = transform.localRotation;
@@ -288,7 +288,7 @@ public class SwordBlockFeature : BlockFeature
     {
         float resetProgress = (Time.time - resetStartTime) / resetDuration;
 
-        Transform skelyTransform = weaponController.ownerSkely.transform;
+        Transform skelyTransform = weaponController.ownerPlayer.transform;
 
         //Reset to default position
         transform.localPosition = Vector3.Lerp(finalBlockLocalPos, weaponController.defaultPosition, resetProgress);
@@ -348,7 +348,7 @@ public class SwordBlockFeature : BlockFeature
     float BlockSwipeAttack(float maxDamageAmount, AttackFeature attackFeature, Vector3 attackerPosition)
     {
         //If not facing enemy, take full damage
-        Transform skelyTransform = weaponController.ownerSkely.transform;
+        Transform skelyTransform = weaponController.ownerPlayer.transform;
 
         Vector3 directionToAttacker = attackerPosition - skelyTransform.position;
         float deltaAngleToFaceAttacker = Vector3.Angle(skelyTransform.forward, directionToAttacker);

@@ -826,7 +826,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5736a71911fe1bd4e9c625b5b2b5e136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skelyPrefab: {fileID: 1198865837923144447, guid: 31cfa27b64b117740b07cf039cbe4efb, type: 3}
+  playerPrefab: {fileID: 1198865837923144447, guid: 31cfa27b64b117740b07cf039cbe4efb, type: 3}
 --- !u!4 &732397693
 Transform:
   m_ObjectHideFlags: 0
@@ -1093,7 +1093,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294967231
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

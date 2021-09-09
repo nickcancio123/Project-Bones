@@ -17,8 +17,8 @@ public class WeaponController : MonoBehaviourPunCallbacks
     public Vector3 defaultPosition;
     public Vector3 defaultRotation;
 
-    [HideInInspector] public GameObject ownerSkely;
-    [HideInInspector] public SkelyMovementController skelyMovement;
+    [HideInInspector] public GameObject ownerPlayer;
+    [HideInInspector] public MovementManager movementManager;
 
 
     protected void Start()
@@ -31,23 +31,28 @@ public class WeaponController : MonoBehaviourPunCallbacks
 
     void CacheReferences()
     {
-        ownerSkely = gameObject.transform.parent.gameObject;
+        ownerPlayer = gameObject.transform.parent.gameObject;
 
-        if (!ownerSkely)
+        if (!ownerPlayer)
         {
-            print("No owner skely ref");
+            print("No owner player ref");
             return;
         }
 
-        skelyMovement = ownerSkely.GetComponent<SkelyMovementController>();
+        movementManager = ownerPlayer.GetComponent<MovementManager>();
 
-        if (!skelyMovement)
+        if (!movementManager)
         {
-            print("No skely movement ref");
+            print("No movement manager ref");
             return;
         }
     }
 
+
+    private void Update()
+    {
+        UpdateAnimationParams();
+    }
 
     #region Feature State Interface
     public void DisableFeatures(WeaponFeature callingFeature)
@@ -113,4 +118,17 @@ public class WeaponController : MonoBehaviourPunCallbacks
             weaponAnimator.enabled = true;
     }
     #endregion
+
+
+    void UpdateAnimationParams()
+    {
+        if (!weaponAnimator)
+        {
+            print("No weapon animator ref");
+            return;
+        }
+
+        weaponAnimator.SetFloat("velocity", movementManager.GetSpeed());
+        weaponAnimator.SetBool("isRunning", movementManager.isRunning);
+    }
 }
