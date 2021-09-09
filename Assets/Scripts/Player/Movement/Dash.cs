@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class Dash : MovementModifier
+public class Dash : MovementModifier, IPunObservable
 {
     [SerializeField] Stamina staminaComp;
+    [SerializeField] GameObject dashTrails;
 
     [SerializeField] float dashDuration = 0.6f;
     [SerializeField] float dashSpeed = 30;
@@ -40,7 +42,7 @@ public class Dash : MovementModifier
     {
         if (!photonView.IsMine) { return; }
 
-        if (CanDash())
+        if (CanDash())  //Start dash
         {
             isDashing = true;
             isExclusive = true;
@@ -48,6 +50,10 @@ public class Dash : MovementModifier
 
             staminaComp.DrainStamina(dashStaminaDrain);
 
+            dashTrails.SetActive(true);
+            StartCoroutine(StopDashTrails());
+
+            //Calculate dash direction
             Vector3 inputDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
             Vector3 forward = movementManager.ownerPlayer.transform.forward;
             Vector3 right = movementManager.ownerPlayer.transform.right;
@@ -65,6 +71,7 @@ public class Dash : MovementModifier
         {
             isDashing = false;
             isExclusive = false;
+            //dashTrails.SetActive(false);
         }
     }
 
@@ -76,5 +83,32 @@ public class Dash : MovementModifier
                     return true;
 
         return false;
+    }
+
+    void SetupDashTrails()
+    {
+        if (!dashTrails) { return; }
+
+        dashTrails.SetActive(false);
+    }
+
+    IEnumerator StopDashTrails()
+    {
+        yield return new WaitForSeconds(dashDuration + dashCoolDown - 0.05f);
+        //yield return new WaitForSeconds(1);
+        dashTrails.SetActive(false);
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(dashTrails.activeInHierarchy);
+        }
+        else
+        {
+            if (!photonView.IsMine)
+                dashTrails.SetActive((bool)stream.ReceiveNext());
+        }
     }
 }
