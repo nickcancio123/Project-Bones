@@ -17,6 +17,7 @@ public abstract class WeaponFeature : MonoBehaviourPunCallbacks
 {
     public WeaponController weaponController;
 
+    #region  Feature Phases
     public enum EFeaturePhase
     {
         Active,     //In control of player behavior and still reading input
@@ -29,41 +30,46 @@ public abstract class WeaponFeature : MonoBehaviourPunCallbacks
     public EFeaturePhase GetPhase() { return featurePhase; }
     public void EnableFeature() { featurePhase = EFeaturePhase.Enabled; }
     public void DisableFeature() { featurePhase = EFeaturePhase.Disabled; }
+    #endregion
 
+
+    #region Feature States
     protected FeatureState activeState = null;
     protected FeatureState initialState = null;
 
     public void TransitionState(FeatureState oldState, FeatureState newState)
     {
         activeState = newState;
-        Destroy(oldState);
+        if (oldState)
+            Destroy(oldState);
+        newState.BeginState();
     }
+    #endregion
+
+
 
     void Start()
     {
         weaponController.collisionEvent += OnWeaponCollision;
     }
 
-    void Update()
+    protected virtual void Update()
     {
         if (featurePhase == EFeaturePhase.Disabled) { return; }
-
         if (!photonView.IsMine) { return; }
 
-
-        if (activeState && featurePhase == EFeaturePhase.Active)
+        if (activeState != null && featurePhase == EFeaturePhase.Active)
         {
             activeState.Behave();
         }
     }
 
-
     protected void Activate()
     {
         featurePhase = EFeaturePhase.Active;
         weaponController.DisableFeatures(this);
-        if (initialState)
-            activeState = initialState;
+        SetInitialState();
+        TransitionState(null, initialState);
     }
 
     public void Deactivate()

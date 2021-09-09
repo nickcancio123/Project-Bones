@@ -14,11 +14,13 @@ public class Slash_Reset_State : FeatureState
 
     void Awake()
     {
+        wFeature = GetComponent<SlashAttackFeature>();
         resetDuration = wFeature.resetDuration;
     }
 
     public override void BeginState()
     {
+        print("reset");
         resetStartTime = Time.time;
         startLocalPos = transform.localPosition;
         startLocalRotation = transform.localRotation;
@@ -30,11 +32,9 @@ public class Slash_Reset_State : FeatureState
         //*****DEACTIVATE FEATURE*****
         wFeature.Deactivate();
 
-        FeatureState slash_swing_state = gameObject.AddComponent<Slash_Swing_State>();
-        wFeature.TransitionState(this, slash_swing_state);
+        // FeatureState slash_draw_state = gameObject.AddComponent<Slash_Draw_State>();
+        // wFeature.TransitionState(this, slash_draw_state);
     }
-
-    public void Initialize(SlashAttackFeature _wFeature) => wFeature = _wFeature;
 
     public override void Behave()
     {

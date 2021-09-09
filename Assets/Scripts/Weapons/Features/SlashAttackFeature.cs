@@ -30,6 +30,8 @@ public class SlashAttackFeature : AttackFeature
     [Header("Reset")]
     public float resetDuration = 0;
 
+    Slash_Draw_State draw_State;
+
 
     void Start()
     {
@@ -39,21 +41,31 @@ public class SlashAttackFeature : AttackFeature
 
     protected override void SetInitialState()
     {
-        initialState = gameObject.AddComponent<Slash_Draw_State>();
+        draw_State = gameObject.AddComponent<Slash_Draw_State>();
+        draw_State.Initialize(mouseSwipe);
+        initialState = draw_State;
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+
+        if (!photonView.IsMine) { return; }
+        if (featurePhase == EFeaturePhase.Disabled) { return; }
+
+        ReadInput();
     }
 
     void ReadInput()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            //Start attack input
             mouseSwipe = Vector3.zero;
             weaponController.skelyMovement.canRotate = false;
         }
 
         if (Input.GetKey(KeyCode.Mouse0))
         {
-            //Record mouse input
             mouseSwipe += new Vector3(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"), 0);
         }
 
@@ -61,7 +73,6 @@ public class SlashAttackFeature : AttackFeature
         {
             weaponController.skelyMovement.canRotate = true;
 
-            //If nonzero input, begin draw phase
             if (mouseSwipe.magnitude > 0.1)
             {
                 //***ACTIVATING FEATURE***
@@ -81,7 +92,10 @@ public class SlashAttackFeature : AttackFeature
         }
         else
         {
-            slashTrails.SetActive((bool)stream.ReceiveNext());
+            if (!photonView.IsMine)
+            {
+                slashTrails.SetActive((bool)stream.ReceiveNext());
+            }
         }
     }
 

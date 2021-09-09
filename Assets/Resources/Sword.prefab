@@ -5570,7 +5570,9 @@ MonoBehaviour:
   attackType: 0
   attackDamage: 15
   attackAngle: 0
+  recoilDuration: 1
   slashTrails: {fileID: 7227355229070367799}
+  canDealDamage: 0
   drawDistance: 0.8
   drawAngle: 90
   drawDuration: 0.4

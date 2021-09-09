@@ -16,6 +16,7 @@ public class Slash_Swing_State : FeatureState
 
     void Awake()
     {
+        wFeature = GetComponent<SlashAttackFeature>();
         slashDistance = wFeature.slashDistance;
         slashAngle = wFeature.slashAngle;
         slashDuration = wFeature.slashDuration;
@@ -23,6 +24,7 @@ public class Slash_Swing_State : FeatureState
 
     public override void BeginState()
     {
+        print("slash");
         slashStartTime = Time.time;
         drawnLocalPosition = transform.localPosition;
         wFeature.canDealDamage = true;
@@ -34,15 +36,12 @@ public class Slash_Swing_State : FeatureState
         wFeature.canDealDamage = false;
         wFeature.slashTrails.SetActive(false);
 
-        FeatureState slash_swing_state = gameObject.AddComponent<Slash_Swing_State>();
-        wFeature.TransitionState(this, slash_swing_state);
+        FeatureState slash_reset_state = gameObject.AddComponent<Slash_Reset_State>();
+        wFeature.TransitionState(this, slash_reset_state);
     }
 
-    public void Initialize(
-    SlashAttackFeature _wFeature,
-    Vector3 _mouseSwipe)
+    public void Initialize(Vector3 _mouseSwipe)
     {
-        wFeature = _wFeature;
         mouseSwipe = _mouseSwipe;
     }
 

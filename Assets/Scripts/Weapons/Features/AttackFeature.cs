@@ -40,6 +40,8 @@ public abstract class AttackFeature : WeaponFeature
         }
     }
 
+    protected override void Update() => base.Update();
+
 
     #region Recoil Methods
     [SerializeField] protected float recoilDuration = 1;

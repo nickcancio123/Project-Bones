@@ -33,7 +33,6 @@ public class SwordBlockFeature : BlockFeature
     float blockAngle = 0;
     #endregion
 
-    int debug = 0;
 
     #region Draw Variables
     [Header("Draw")]

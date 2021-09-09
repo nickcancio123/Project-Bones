@@ -19,6 +19,7 @@ public class Slash_Draw_State : FeatureState
 
     void Awake()
     {
+        wFeature = GetComponent<SlashAttackFeature>();
         drawDistance = wFeature.drawDistance;
         drawAngle = wFeature.drawAngle;
         drawDuration = wFeature.drawDuration;
@@ -26,6 +27,7 @@ public class Slash_Draw_State : FeatureState
 
     public override void BeginState()
     {
+        print("draw");
         wFeature.weaponController.DisableAnimator();
         mouseSwipe.Normalize();
         drawStartTime = Time.time;
@@ -35,14 +37,11 @@ public class Slash_Draw_State : FeatureState
     {
         Slash_Swing_State slash_swing_state = gameObject.AddComponent<Slash_Swing_State>();
         wFeature.TransitionState(this, slash_swing_state);
-        slash_swing_state.Initialize(wFeature, mouseSwipe);
+        slash_swing_state.Initialize(mouseSwipe);
     }
 
-    public void Initialize(
-        SlashAttackFeature _wFeature,
-        Vector3 _mouseSwipe)
+    public void Initialize(Vector3 _mouseSwipe)
     {
-        wFeature = _wFeature;
         mouseSwipe = _mouseSwipe;
     }
 
