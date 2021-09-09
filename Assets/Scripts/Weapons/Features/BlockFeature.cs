@@ -16,6 +16,11 @@ public class BlockFeature : WeaponFeature
     public bool IsBlocking() { return isBlocking; }
 
 
+    protected override void SetInitialState()
+    {
+        initialState = null;
+    }
+
     public virtual float BlockAttack(float maxDamageAmount, int attackerID)
     {
         //Returns damage to be taken

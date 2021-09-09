@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 6631679481019888689}
   - component: {fileID: 4101946578034775751}
   m_Layer: 0
-  m_Name: Skely
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

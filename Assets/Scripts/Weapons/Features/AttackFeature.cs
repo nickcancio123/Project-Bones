@@ -60,8 +60,6 @@ public abstract class AttackFeature : WeaponFeature
         isRecoiling = true;
     }
 
-    protected abstract void RecoilFromBlock();
-
     protected void StopRecoiling()
     {
         stopDefaultBehavior = false;

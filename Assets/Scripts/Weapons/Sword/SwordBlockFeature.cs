@@ -33,7 +33,7 @@ public class SwordBlockFeature : BlockFeature
     float blockAngle = 0;
     #endregion
 
-
+    int debug = 0;
 
     #region Draw Variables
     [Header("Draw")]
@@ -68,7 +68,7 @@ public class SwordBlockFeature : BlockFeature
 
     void Update()
     {
-        if (featureState == EFeatureState.Disabled) { return; }
+        if (featurePhase == EFeaturePhase.Disabled) { return; }
         if (!photonView.IsMine) { return; }
 
         Behavior();
