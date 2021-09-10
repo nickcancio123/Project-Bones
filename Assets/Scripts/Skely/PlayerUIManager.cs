@@ -102,8 +102,9 @@ public class PlayerUIManager : MonoBehaviourPunCallbacks
 
 
     #region Gameplay Menu
-    void TakeDamageEffectStart()
+    public void TakeDamageEffectStart()
     {
+        print("effect");
         Image gameplayMenuBackground = gameplayMenu.GetComponent<Image>();
         gameplayMenuBackground.color = new Color(200, 0, 0, 0.3f);
         StartCoroutine(TakeDamageEffectEnd());

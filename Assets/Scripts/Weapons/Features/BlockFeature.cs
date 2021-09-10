@@ -12,9 +12,9 @@ public class BlockFeature : WeaponFeature
 
     [SerializeField] ParticleSystem blockParticles;
 
-    protected bool isBlocking = false;
-    public bool IsBlocking() { return isBlocking; }
+    public bool isBlocking = false;
 
+    protected override void Update() => base.Update();
 
     protected override void SetInitialState()
     {

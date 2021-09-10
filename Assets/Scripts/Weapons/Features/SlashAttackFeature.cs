@@ -35,6 +35,7 @@ public class SlashAttackFeature : AttackFeature
     {
         attackType = AttackType.Slash;
         slashTrails.SetActive(false);
+        weaponController.collisionEvent += OnWeaponCollision;
     }
 
     protected override void SetInitialState()
@@ -102,7 +103,6 @@ public class SlashAttackFeature : AttackFeature
         if (!photonView.IsMine) { return; }
         if (!canDealDamage) { return; }
         if (other.gameObject == weaponController.ownerSkely) { return; }
-
         if (other.gameObject.tag == "Player")
         {
             Attack(other.gameObject);

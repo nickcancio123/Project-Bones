@@ -15,6 +15,7 @@ public class Health : MonoBehaviourPunCallbacks
     [SerializeField] float maxHealth = 100;
     float currentHealth = 0;
 
+    [SerializeField] PlayerUIManager playerUIManager;
     [SerializeField] AudioSource playerAudioSource;
     [SerializeField] AudioClip damageAudioClip;
 
@@ -76,7 +77,6 @@ public class Health : MonoBehaviourPunCallbacks
         if (blockFeature)
         {
             damageTaken = blockFeature.BlockAttack(maxDamageAmount, attackerID);
-
             if (damageTaken == 0)
             {
                 PhotonView attackerPV = PhotonView.Find(attackerID);
@@ -109,6 +109,7 @@ public class Health : MonoBehaviourPunCallbacks
     void RPC_PlayDamageEffects()
     {
         playerAudioSource.PlayOneShot(damageAudioClip);
+        playerUIManager.TakeDamageEffectStart();
     }
     #endregion    
 }

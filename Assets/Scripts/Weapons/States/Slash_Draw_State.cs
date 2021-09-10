@@ -28,6 +28,7 @@ public class Slash_Draw_State : FeatureState
     public override void BeginState()
     {
         wFeature.weaponController.DisableAnimator();
+        wFeature.attackAngle = CalculateTargetSlashAngle();
         mouseSwipe.Normalize();
         drawStartTime = Time.time;
     }

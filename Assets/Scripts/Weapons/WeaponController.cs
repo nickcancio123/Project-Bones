@@ -81,7 +81,8 @@ public class WeaponController : MonoBehaviourPunCallbacks
 
     public void OnWeaponCollision(Collider other)
     {
-        collisionEvent(other);
+        if (collisionEvent != null)
+            collisionEvent(other);
     }
     #endregion
 

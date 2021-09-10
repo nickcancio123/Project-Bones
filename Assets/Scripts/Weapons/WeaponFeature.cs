@@ -36,14 +36,6 @@ public abstract class WeaponFeature : MonoBehaviourPunCallbacks
     #region Feature States
     protected FeatureState activeState = null;
     protected FeatureState initialState = null;
-
-    public void TransitionState(FeatureState oldState, FeatureState newState)
-    {
-        activeState = newState;
-        if (oldState)
-            Destroy(oldState);
-        newState.BeginState();
-    }
     #endregion
 
 
@@ -79,10 +71,18 @@ public abstract class WeaponFeature : MonoBehaviourPunCallbacks
     {
         EnableFeature();
         weaponController.EnableFeatures(this);
+        Destroy(initialState);
     }
 
     protected abstract void SetInitialState();
 
+    public void TransitionState(FeatureState oldState, FeatureState newState)
+    {
+        activeState = newState;
+        if (oldState)
+            Destroy(oldState);
+        newState.BeginState();
+    }
 
     virtual public void OnWeaponCollision(Collider other) { return; }
 }

@@ -19,6 +19,7 @@ public class Recoil_State : FeatureState
 
     public override void BeginState()
     {
+        print("Recoil");
         startTime = Time.time;
         startLocalPos = transform.localPosition;
         startLocalRotation = transform.localRotation;

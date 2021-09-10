@@ -224,6 +224,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 4975151195829565158}
   maxHealth: 100
+  playerUIManager: {fileID: 1015280196622429111}
   playerAudioSource: {fileID: 4101946578034775751}
   damageAudioClip: {fileID: 8300000, guid: 599fe45bda430b64b9c46c74390c6743, type: 3}
 --- !u!82 &4101946578034775751
