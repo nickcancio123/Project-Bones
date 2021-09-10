@@ -56,13 +56,7 @@ public class SwordBlockFeature : BlockFeature
     #endregion
 
 
-
-    #region Reset Variables
-    [Header("Reset")]
-    [SerializeField] float resetDuration = 1;
-
     float resetStartTime = 0;
-    #endregion
 
 
     void Update()

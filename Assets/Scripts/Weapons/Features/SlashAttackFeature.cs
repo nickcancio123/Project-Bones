@@ -27,10 +27,8 @@ public class SlashAttackFeature : AttackFeature
     public float slashAngle = 0;
     public float slashDuration = 0;
 
-    [Header("Reset")]
-    public float resetDuration = 0;
-
     Slash_Draw_State draw_State;
+    public Transform drawnTransform;
 
 
     void Start()

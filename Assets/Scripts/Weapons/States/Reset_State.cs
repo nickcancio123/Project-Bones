@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Slash_Reset_State : FeatureState
+public class Reset_State : FeatureState
 {
-    SlashAttackFeature wFeature;
+    WeaponFeature wFeature;
 
     float resetDuration = 0;
     float resetStartTime = 0;
@@ -14,13 +14,12 @@ public class Slash_Reset_State : FeatureState
 
     void Awake()
     {
-        wFeature = GetComponent<SlashAttackFeature>();
+        wFeature = GetComponent<WeaponFeature>();
         resetDuration = wFeature.resetDuration;
     }
 
     public override void BeginState()
     {
-        print("reset");
         resetStartTime = Time.time;
         startLocalPos = transform.localPosition;
         startLocalRotation = transform.localRotation;
@@ -31,9 +30,6 @@ public class Slash_Reset_State : FeatureState
         wFeature.weaponController.EnableAnimator();
         //*****DEACTIVATE FEATURE*****
         wFeature.Deactivate();
-
-        // FeatureState slash_draw_state = gameObject.AddComponent<Slash_Draw_State>();
-        // wFeature.TransitionState(this, slash_draw_state);
     }
 
     public override void Behave()

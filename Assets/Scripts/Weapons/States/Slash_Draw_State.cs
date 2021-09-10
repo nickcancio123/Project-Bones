@@ -27,7 +27,6 @@ public class Slash_Draw_State : FeatureState
 
     public override void BeginState()
     {
-        print("draw");
         wFeature.weaponController.DisableAnimator();
         mouseSwipe.Normalize();
         drawStartTime = Time.time;
@@ -35,6 +34,8 @@ public class Slash_Draw_State : FeatureState
 
     protected override void EndState()
     {
+        wFeature.drawnTransform = transform;
+
         Slash_Swing_State slash_swing_state = gameObject.AddComponent<Slash_Swing_State>();
         wFeature.TransitionState(this, slash_swing_state);
         slash_swing_state.Initialize(mouseSwipe);

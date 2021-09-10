@@ -24,7 +24,6 @@ public class Slash_Swing_State : FeatureState
 
     public override void BeginState()
     {
-        print("slash");
         slashStartTime = Time.time;
         drawnLocalPosition = transform.localPosition;
         wFeature.canDealDamage = true;
@@ -36,8 +35,8 @@ public class Slash_Swing_State : FeatureState
         wFeature.canDealDamage = false;
         wFeature.slashTrails.SetActive(false);
 
-        FeatureState slash_reset_state = gameObject.AddComponent<Slash_Reset_State>();
-        wFeature.TransitionState(this, slash_reset_state);
+        FeatureState reset_state = gameObject.AddComponent<Reset_State>();
+        wFeature.TransitionState(this, reset_state);
     }
 
     public void Initialize(Vector3 _mouseSwipe)

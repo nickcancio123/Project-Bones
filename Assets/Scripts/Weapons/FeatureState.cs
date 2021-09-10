@@ -4,8 +4,6 @@ using UnityEngine;
 
 public abstract class FeatureState : MonoBehaviour
 {
-    protected bool isActiveState = false;
-
     public abstract void BeginState();
     public abstract void Behave();
     protected abstract void EndState();

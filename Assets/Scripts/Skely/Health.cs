@@ -76,6 +76,14 @@ public class Health : MonoBehaviourPunCallbacks
         if (blockFeature)
         {
             damageTaken = blockFeature.BlockAttack(maxDamageAmount, attackerID);
+
+            if (damageTaken == 0)
+            {
+                PhotonView attackerPV = PhotonView.Find(attackerID);
+                GameObject attackerWeapon = attackerPV?.gameObject.GetComponentInChildren<IWeapon>()?.gameObject;
+                AttackFeature attackFeature = attackerWeapon?.GetComponentInChildren<AttackFeature>();
+                attackFeature.BeginRecoil();
+            }
         }
 
         photonView.RPC("RPC_TakeDamage", RpcTarget.All, damageTaken);

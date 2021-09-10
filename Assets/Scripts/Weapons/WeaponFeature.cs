@@ -47,6 +47,9 @@ public abstract class WeaponFeature : MonoBehaviourPunCallbacks
     #endregion
 
 
+    [Header("Reset")]
+    public float resetDuration = 0;
+
 
     void Start()
     {
