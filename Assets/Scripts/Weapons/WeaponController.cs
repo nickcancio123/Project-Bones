@@ -32,27 +32,9 @@ public class WeaponController : MonoBehaviourPunCallbacks
     void CacheReferences()
     {
         ownerPlayer = gameObject.transform.parent.gameObject;
-
-        if (!ownerPlayer)
-        {
-            print("No owner player ref");
-            return;
-        }
-
-        movementManager = ownerPlayer.GetComponent<MovementManager>();
-
-        if (!movementManager)
-        {
-            print("No movement manager ref");
-            return;
-        }
+        movementManager = ownerPlayer?.GetComponent<MovementManager>();
     }
 
-
-    private void Update()
-    {
-        UpdateAnimationParams();
-    }
 
     #region Feature State Interface
     public void DisableFeatures(WeaponFeature callingFeature)
@@ -86,7 +68,8 @@ public class WeaponController : MonoBehaviourPunCallbacks
 
     public void OnWeaponCollision(Collider other)
     {
-        collisionEvent(other);
+        if (collisionEvent != null)
+            collisionEvent(other);
     }
     #endregion
 
@@ -118,17 +101,4 @@ public class WeaponController : MonoBehaviourPunCallbacks
             weaponAnimator.enabled = true;
     }
     #endregion
-
-
-    void UpdateAnimationParams()
-    {
-        if (!weaponAnimator)
-        {
-            print("No weapon animator ref");
-            return;
-        }
-
-        weaponAnimator.SetFloat("velocity", movementManager.GetSpeed());
-        weaponAnimator.SetBool("isRunning", movementManager.isRunning);
-    }
 }
