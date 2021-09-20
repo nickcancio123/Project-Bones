@@ -5552,8 +5552,8 @@ MonoBehaviour:
   weaponAudioSource: {fileID: 1161622664083154927}
   defaultPosition: {x: 0, y: 1, z: 0.5}
   defaultRotation: {x: -35, y: 70, z: -80}
-  ownerSkely: {fileID: 0}
-  skelyMovement: {fileID: 0}
+  ownerPlayer: {fileID: 0}
+  movementManager: {fileID: 0}
 --- !u!114 &5192608924676303135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5567,17 +5567,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponController: {fileID: 2027545085585396907}
+  resetDuration: 0.3
   attackType: 0
+  recoilDuration: 1
   attackDamage: 15
   attackAngle: 0
+  drawnLocalPos: {x: 0, y: 0, z: 0}
+  drawnLocalRotation: {x: 0, y: 0, z: 0, w: 0}
   slashTrails: {fileID: 7227355229070367799}
+  mouseSwipe: {x: 0, y: 0, z: 0}
+  canDealDamage: 0
   drawDistance: 0.8
   drawAngle: 90
-  drawDuration: 0.4
+  drawDuration: 0.34
   slashDistance: 1.5
   slashAngle: 170
   slashDuration: 0.25
-  resetDuration: 0.3
 --- !u!114 &6736431594362625561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5591,21 +5596,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponController: {fileID: 2027545085585396907}
+  resetDuration: 0.15
   audioClipNames:
   - Block
   audioClips:
   - {fileID: 8300000, guid: 55fb277acd23e4e48870e85db77ceade, type: 3}
   blockAudioClip: {fileID: 8300000, guid: 55fb277acd23e4e48870e85db77ceade, type: 3}
   blockParticles: {fileID: 6910945204807252691}
+  isBlocking: 0
   defaultBlockPosition: {x: 0, y: 0.35, z: 0.75}
   defaultBlockRotation: {x: -80, y: 0, z: 90}
   swordMidPoint: {fileID: 9185000480764449679}
   angleToHitCuttoff: 40
   maxAngleToFaceAttackerToBeHit: 100
+  blockAngle: 0
   drawDuration: 0.12
   blockRotationSpeed: 5
   blockLockOnSpeed: 0.05
-  resetDuration: 0.15
 --- !u!114 &4903467417027535773
 MonoBehaviour:
   m_ObjectHideFlags: 0

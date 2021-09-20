@@ -28,8 +28,6 @@ public class SlashAttackFeature : AttackFeature
     public float slashDuration = 0;
 
     Slash_Draw_State draw_State;
-    public Transform drawnTransform;
-
 
     void Start()
     {

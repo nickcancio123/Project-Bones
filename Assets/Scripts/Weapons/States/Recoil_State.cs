@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Recoil_State : FeatureState
 {
-    SlashAttackFeature wFeature;
+    AttackFeature wFeature;
     float recoilDuration = 0;
 
     float startTime = 0;
@@ -28,19 +28,17 @@ public class Recoil_State : FeatureState
     {
         float recoilProgress = (Time.time - startTime) / recoilDuration;
 
-        transform.localPosition = Vector3.Lerp(startLocalPos, wFeature.drawnTransform.localPosition, recoilProgress);
-        transform.localRotation = Quaternion.Lerp(startLocalRotation, wFeature.drawnTransform.localRotation, recoilProgress);
+        transform.localPosition = Vector3.Lerp(startLocalPos, wFeature.drawnLocalPos, recoilProgress);
+        transform.localRotation = Quaternion.Lerp(startLocalRotation, wFeature.drawnLocalRotation, recoilProgress);
 
         if (recoilProgress >= 1)
-        {
             EndState();
-        }
     }
 
     void Initialize()
     {
-        wFeature = GetComponent<SlashAttackFeature>();
-        recoilDuration = wFeature.recoilDuration;
+        wFeature = (AttackFeature) GetComponent<WeaponController>()?.GetActiveFeatureAsComponent();
+        if (wFeature)
+            recoilDuration = wFeature.recoilDuration;
     }
-    
 }

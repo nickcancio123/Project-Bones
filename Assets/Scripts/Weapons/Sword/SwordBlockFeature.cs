@@ -20,10 +20,7 @@ public class SwordBlockFeature : BlockFeature
     public float blockLockOnSpeed = 1;
 
 
-    protected override void SetInitialState()
-    {
-        initialState = gameObject.AddComponent<Sword_Block_Draw_State>();
-    }
+    protected override void SetInitialState() => initialState = gameObject.AddComponent<Sword_Block_Draw_State>();
 
     protected override void Update()
     {

@@ -2,25 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a6d2f109-c5c8-41b7-80f4-9dc1c632e8db" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Down to The Bone/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Down to The Bone/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapons/FeatureState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapons/FeatureState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapons/Features/AttackFeature.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapons/Features/AttackFeature.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapons/Features/BlockFeature.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapons/Features/BlockFeature.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapons/Features/SlashAttackFeature.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapons/Features/SlashAttackFeature.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapons/States/Recoil_State.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapons/States/Recoil_State.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapons/States/Reset_State.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapons/States/Reset_State.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapons/States/Slash_Draw_State.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapons/States/Slash_Draw_State.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapons/States/Slash_Swing_State.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapons/States/Slash_Swing_State.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapons/States/Sword_Block_Draw_State.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapons/States/Sword_Block_Draw_State.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapons/States/Sword_Block_State.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapons/States/Sword_Block_State.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapons/Sword/SwordBlockFeature.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapons/Sword/SwordBlockFeature.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapons/WeaponController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapons/WeaponController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/AssetImportWorker0.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/AssetImportWorker0.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-AssetImportWorker0.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/shadercompiler-AssetImportWorker0.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe0.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe0.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe1.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe2.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe3.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe4.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe5.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe6.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe7.log" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +20,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Weapons/States/Draw_State.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="1yD1qmPaQwoc94773fEsqq8m9nJ" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -76,13 +70,14 @@
       <updated>1631771546618</updated>
       <workItem from="1631771547449" duration="6582000" />
       <workItem from="1631778306743" duration="118000" />
-      <workItem from="1632140076336" duration="3765000" />
+      <workItem from="1632140076336" duration="13713000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
   <component name="VcsManagerConfiguration">

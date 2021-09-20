@@ -17,6 +17,8 @@ public abstract class AttackFeature : WeaponFeature
     public float recoilDuration = 1;
     [SerializeField] protected float attackDamage = 1;
     [HideInInspector] public float attackAngle = 0;
+    [HideInInspector] public Vector3 drawnLocalPos;
+    [HideInInspector] public Quaternion drawnLocalRotation;
     #endregion
 
 

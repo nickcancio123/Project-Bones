@@ -5,12 +5,23 @@ using UnityEngine;
 
 public abstract class FeatureState : MonoBehaviour
 {
-    WeaponFeature baseFeature;
-
+    protected WeaponFeature baseFeature;
+    
     protected FeatureState nextState;
     protected abstract void CreateNextState();
 
-    private void Awake() => baseFeature = GetComponent<WeaponController>()?.GetActiveFeature();
+    private void Awake()
+    {
+        Component comp = GetComponent<WeaponController>()?.GetActiveFeatureAsComponent();
+        if (comp)
+        {
+            baseFeature = (WeaponFeature) comp;
+        }
+        else
+        {
+            print("No comp");
+        }
+    }
 
     public abstract void BeginState();
     public abstract void Behave();

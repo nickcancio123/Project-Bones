@@ -60,19 +60,16 @@ public class WeaponController : MonoBehaviourPunCallbacks
         }
     }
 
-    public WeaponFeature GetActiveFeature()
+    public Component GetActiveFeatureAsComponent()  //Can be casted to preferred type by caller
     {
-        WeaponFeature[] allMyFeatures = GetComponentsInChildren<WeaponFeature>(true);
-        foreach (WeaponFeature feature in allMyFeatures)
+        WeaponFeature[] features = GetComponents<WeaponFeature>();
+        foreach (WeaponFeature feature in features)
         {
             if (feature.GetPhase() == WeaponFeature.EFeaturePhase.Active)
-                return feature;
+                return (Component) feature;
         }
-
         return null;
     }
-    
-
     #endregion
 
 
