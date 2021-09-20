@@ -32,11 +32,12 @@ public class WeaponController : MonoBehaviourPunCallbacks
     void CacheReferences()
     {
         ownerPlayer = gameObject.transform.parent.gameObject;
-        movementManager = ownerPlayer?.GetComponent<MovementManager>();
+        movementManager = ownerPlayer.GetComponent<MovementManager>();
+        weaponAnimator = gameObject.GetComponent<Animator>();
     }
 
 
-    #region Feature State Interface
+    #region Feature Phase Interface
     public void DisableFeatures(WeaponFeature callingFeature)
     {
         WeaponFeature[] allMyFeatures = GetComponentsInChildren<WeaponFeature>(true);
@@ -58,6 +59,19 @@ public class WeaponController : MonoBehaviourPunCallbacks
                 feature.EnableFeature();
         }
     }
+
+    public WeaponFeature GetActiveFeature()
+    {
+        WeaponFeature[] allMyFeatures = GetComponentsInChildren<WeaponFeature>(true);
+        foreach (WeaponFeature feature in allMyFeatures)
+        {
+            if (feature.GetPhase() == WeaponFeature.EFeaturePhase.Active)
+                return feature;
+        }
+
+        return null;
+    }
+    
 
     #endregion
 
@@ -88,7 +102,7 @@ public class WeaponController : MonoBehaviourPunCallbacks
     [PunRPC]
     protected void RPC_DisableWeaponAnimator()
     {
-        Animator weaponAnimator = gameObject.GetComponent<Animator>();
+        weaponAnimator = gameObject.GetComponent<Animator>();
         if (weaponAnimator)
             weaponAnimator.enabled = false;
     }
@@ -96,7 +110,7 @@ public class WeaponController : MonoBehaviourPunCallbacks
     [PunRPC]
     protected void RPC_EnableWeaponAnimator()
     {
-        Animator weaponAnimator = gameObject.GetComponent<Animator>();
+        weaponAnimator = gameObject.GetComponent<Animator>();
         if (weaponAnimator)
             weaponAnimator.enabled = true;
     }

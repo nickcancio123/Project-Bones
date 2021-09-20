@@ -10,14 +10,11 @@ public class Sword_Block_State : FeatureState
     float mouseX = 0;
     float netMouseX = 0;
 
-    void Awake()
-    {
-        wFeature = GetComponent<SwordBlockFeature>();
-        wController = wFeature.weaponController;
-    }
+    protected override void CreateNextState() => nextState = gameObject.AddComponent<Reset_State>();
 
     public override void BeginState()
     {
+        Initialize();
         wFeature.isBlocking = true;
     }
 
@@ -25,9 +22,7 @@ public class Sword_Block_State : FeatureState
     {
         wFeature.isBlocking = false;
         wController.movementManager.canRotate = true;
-
-        Reset_State reset_state = gameObject.AddComponent<Reset_State>();
-        wFeature.TransitionState(this, reset_state);
+        TransitionState();
     }
 
     public override void Behave()
@@ -37,6 +32,12 @@ public class Sword_Block_State : FeatureState
         FaceNearestPlayer();
     }
 
+    void Initialize()
+    {
+        wFeature = GetComponent<SwordBlockFeature>();
+        wController = wFeature.weaponController;
+    }
+    
     void ReadInput()
     {
         if (Input.GetKey(KeyCode.Mouse1))
@@ -45,11 +46,8 @@ public class Sword_Block_State : FeatureState
             mouseX = Input.GetAxis("Mouse X");
             netMouseX += mouseX;
         }
-
-        if (Input.GetKeyUp(KeyCode.Mouse1))
-        {
+        else
             EndState();
-        }
     }
 
     void Block()
@@ -85,7 +83,7 @@ public class Sword_Block_State : FeatureState
         }
 
         //If out of bound but rotating back into bounds
-        if (Mathf.Sign(mouseX) != Mathf.Sign(netMouseX))
+        if ((int)Mathf.Sign(mouseX) != (int)Mathf.Sign(netMouseX))
         {
             return true;
         }
@@ -95,23 +93,19 @@ public class Sword_Block_State : FeatureState
 
     void FaceNearestPlayer()
     {
-        //Get all players
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 
-        //Get closest player
         GameObject closestPlayer = null;
         float shortestDistanceToPlayer = 10000.0f;
-
         closestPlayer = GetClosestPlayer(players, out shortestDistanceToPlayer);
 
-        //If no valid player, return
         if (!closestPlayer) { return; }
 
         //Rotate towards closest player
-        Transform skelyTransform = wController.ownerPlayer.transform;
-        Vector3 directionToClosestPlayer = closestPlayer.transform.position - skelyTransform.position;
+        Transform playerTransform = wController.ownerPlayer.transform;
+        Vector3 directionToClosestPlayer = closestPlayer.transform.position - playerTransform.position;
         Quaternion targetRotation = Quaternion.LookRotation(directionToClosestPlayer, Vector3.up);
-        skelyTransform.rotation = Quaternion.Lerp(skelyTransform.rotation, targetRotation, wFeature.blockLockOnSpeed);
+        playerTransform.rotation = Quaternion.Lerp(playerTransform.rotation, targetRotation, wFeature.blockLockOnSpeed);
     }
 
     GameObject GetClosestPlayer(GameObject[] players, out float shortestDistance)
@@ -119,20 +113,20 @@ public class Sword_Block_State : FeatureState
         GameObject closestPlayer = null;
         shortestDistance = 1000;
 
-        Transform skelyTransform = wController.ownerPlayer.transform;
+        Transform playerTransform = wController.ownerPlayer.transform;
 
         foreach (GameObject otherPlayer in players)
         {
             //Omit self
-            if (otherPlayer.transform.root == skelyTransform) { continue; }
+            if (otherPlayer.transform.root == playerTransform) { continue; }
 
-            Renderer renderer = otherPlayer.GetComponentInChildren<Renderer>();
+            Renderer playerRenderer = otherPlayer.GetComponentInChildren<Renderer>();
 
             //Only check players within view
-            if (!renderer) { continue; }
-            if (!renderer.isVisible) { continue; }
+            if (!playerRenderer) { continue; }
+            if (!playerRenderer.isVisible) { continue; }
 
-            float distanceToPlayer = Vector3.Distance(skelyTransform.position, otherPlayer.transform.position);
+            float distanceToPlayer = Vector3.Distance(playerTransform.position, otherPlayer.transform.position);
             if (distanceToPlayer < shortestDistance)
             {
                 closestPlayer = otherPlayer;
@@ -144,8 +138,9 @@ public class Sword_Block_State : FeatureState
 
     void CalculateBlockAngle()
     {
-        Transform skelyTransform = wController.ownerPlayer.transform;
-        Vector3 swordForwardProjectedOntoYZPlane = Vector3.ProjectOnPlane(transform.forward, skelyTransform.forward);
+        Transform playerTransform = wController.ownerPlayer.transform;
+        Vector3 swordForwardProjectedOntoYZPlane = 
+            Vector3.ProjectOnPlane(transform.forward, playerTransform.forward);
 
         float angleSign = (transform.localPosition.x > 0) ? -1 : 1;
         wFeature.blockAngle = angleSign * Vector3.Angle(Vector3.up, swordForwardProjectedOntoYZPlane);

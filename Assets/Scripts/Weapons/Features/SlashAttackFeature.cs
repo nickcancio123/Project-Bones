@@ -14,7 +14,7 @@ using Photon.Pun;
 public class SlashAttackFeature : AttackFeature
 {
     public GameObject slashTrails;
-    protected Vector3 mouseSwipe = Vector3.zero;
+    [HideInInspector] public Vector3 mouseSwipe = Vector3.zero;
     public bool canDealDamage = false;
 
     [Header("Draw")]
@@ -41,7 +41,6 @@ public class SlashAttackFeature : AttackFeature
     protected override void SetInitialState()
     {
         draw_State = gameObject.AddComponent<Slash_Draw_State>();
-        draw_State.Initialize(mouseSwipe);
         initialState = draw_State;
     }
 
@@ -74,6 +73,7 @@ public class SlashAttackFeature : AttackFeature
 
             if (mouseSwipe.magnitude > 0.1)
             {
+                mouseSwipe.Normalize();
                 //***ACTIVATING FEATURE***
                 Activate();
             }
@@ -81,7 +81,7 @@ public class SlashAttackFeature : AttackFeature
     }
 
     #region Attack Network Interaction
-    new public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    public new void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         base.OnPhotonSerializeView(stream, info);
 
@@ -103,7 +103,7 @@ public class SlashAttackFeature : AttackFeature
         if (!photonView.IsMine) { return; }
         if (!canDealDamage) { return; }
         if (other.gameObject == weaponController.ownerPlayer) { return; }
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.CompareTag("Player"))
         {
             Attack(other.gameObject);
         }

@@ -12,28 +12,19 @@ public class Sword_Block_Draw_State : FeatureState
     Vector3 targetLocalRotation;
 
     float drawStartTime = 0;
-
-    void Awake()
-    {
-        wFeature = GetComponent<SwordBlockFeature>();
-        wController = wFeature.weaponController;
-        drawDuration = wFeature.drawDuration;
-        targetLocalPos = wFeature.defaultBlockPosition;
-        targetLocalRotation = wFeature.defaultBlockRotation;
-    }
+    
+    protected override void CreateNextState() => nextState = gameObject.AddComponent<Sword_Block_State>();
 
     public override void BeginState()
     {
+        Initialize();
+        
         wController.DisableAnimator();
         wController.movementManager.canRotate = false;
         drawStartTime = Time.time;
     }
 
-    protected override void EndState()
-    {
-        Sword_Block_State sword_block_state = gameObject.AddComponent<Sword_Block_State>();
-        wFeature.TransitionState(this, sword_block_state);
-    }
+    protected override void EndState() => TransitionState();
 
     public override void Behave()
     {
@@ -50,10 +41,16 @@ public class Sword_Block_Draw_State : FeatureState
         Quaternion targetRotation = Quaternion.Euler(targetLocalRotation);
         transform.localRotation = Quaternion.Lerp(initialRotation, targetRotation, drawProgress);
 
-        //Once sword is drawn
         if (drawProgress > 1)
-        {
             EndState();
-        }
+    }
+
+    void Initialize()
+    {
+        wFeature = GetComponent<SwordBlockFeature>();
+        wController = wFeature.weaponController;
+        drawDuration = wFeature.drawDuration;
+        targetLocalPos = wFeature.defaultBlockPosition;
+        targetLocalRotation = wFeature.defaultBlockRotation;
     }
 }

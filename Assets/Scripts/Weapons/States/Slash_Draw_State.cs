@@ -16,19 +16,14 @@ public class Slash_Draw_State : FeatureState
 
     Vector3 drawnLocalPosition;
     Quaternion drawnLocalRotation;
-
-
-    void Awake()
-    {
-        wFeature = GetComponent<SlashAttackFeature>();
-        wController = wFeature.weaponController;
-        drawDistance = wFeature.drawDistance;
-        drawAngle = wFeature.drawAngle;
-        drawDuration = wFeature.drawDuration;
-    }
+    
+    
+    protected override void CreateNextState() => nextState = gameObject.AddComponent<Slash_Swing_State>();
 
     public override void BeginState()
     {
+        Initialize();
+        
         wController.DisableAnimator();
         wFeature.attackAngle = CalculateTargetSlashAngle();
         mouseSwipe.Normalize();
@@ -39,14 +34,7 @@ public class Slash_Draw_State : FeatureState
     {
         wFeature.drawnTransform = transform;
 
-        Slash_Swing_State slash_swing_state = gameObject.AddComponent<Slash_Swing_State>();
-        wFeature.TransitionState(this, slash_swing_state);
-        slash_swing_state.Initialize(mouseSwipe);
-    }
-
-    public void Initialize(Vector3 _mouseSwipe)
-    {
-        mouseSwipe = _mouseSwipe;
+        TransitionState();
     }
 
     public override void Behave()
@@ -56,11 +44,18 @@ public class Slash_Draw_State : FeatureState
         DrawToPosition(drawProgress);
         DrawToRotation(drawProgress);
 
-        //When done drawing
         if (drawProgress >= 1)
-        {
             EndState();
-        }
+    }
+
+    void Initialize()
+    {
+        wFeature = GetComponent<SlashAttackFeature>();
+        wController = wFeature.weaponController;
+        drawDistance = wFeature.drawDistance;
+        drawAngle = wFeature.drawAngle;
+        drawDuration = wFeature.drawDuration;
+        mouseSwipe = wFeature.mouseSwipe;
     }
 
     float CalculateTargetSlashAngle()

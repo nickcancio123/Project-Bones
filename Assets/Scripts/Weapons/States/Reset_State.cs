@@ -11,15 +11,13 @@ public class Reset_State : FeatureState
 
     Vector3 startLocalPos;
     Quaternion startLocalRotation;
-
-    void Awake()
-    {
-        wFeature = GetComponent<WeaponFeature>();
-        resetDuration = wFeature.resetDuration;
-    }
-
+    
+    protected override void CreateNextState() => nextState = null;
+    
     public override void BeginState()
     {
+        Initialize();
+        
         resetStartTime = Time.time;
         startLocalPos = transform.localPosition;
         startLocalRotation = transform.localRotation;
@@ -40,10 +38,13 @@ public class Reset_State : FeatureState
         transform.localRotation =
             Quaternion.Lerp(startLocalRotation, Quaternion.Euler(wFeature.weaponController.defaultRotation), resetProgress);
 
-        //Reset system 
-        if (resetProgress > 1)
-        {
+        if (resetProgress >= 1)
             EndState();
-        }
+    }
+
+    void Initialize()
+    {
+        wFeature = GetComponent<WeaponFeature>();
+        resetDuration = wFeature.resetDuration;
     }
 }

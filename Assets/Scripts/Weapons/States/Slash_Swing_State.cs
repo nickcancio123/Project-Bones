@@ -15,18 +15,13 @@ public class Slash_Swing_State : FeatureState
     float slashStartTime = 0;
     Vector3 drawnLocalPosition = Vector3.zero;
 
-    void Awake()
-    {
-        wFeature = GetComponent<SlashAttackFeature>();
-        wController = wFeature.weaponController;
 
-        slashDistance = wFeature.slashDistance;
-        slashAngle = wFeature.slashAngle;
-        slashDuration = wFeature.slashDuration;
-    }
+    protected override void CreateNextState() => nextState = gameObject.AddComponent<Reset_State>();
 
     public override void BeginState()
     {
+        Initialize();
+        
         slashStartTime = Time.time;
         drawnLocalPosition = transform.localPosition;
         wFeature.canDealDamage = true;
@@ -37,14 +32,8 @@ public class Slash_Swing_State : FeatureState
     {
         wFeature.canDealDamage = false;
         wFeature.slashTrails.SetActive(false);
-
-        FeatureState reset_state = gameObject.AddComponent<Reset_State>();
-        wFeature.TransitionState(this, reset_state);
-    }
-
-    public void Initialize(Vector3 _mouseSwipe)
-    {
-        mouseSwipe = _mouseSwipe;
+        
+        TransitionState();
     }
 
     public override void Behave()
@@ -54,13 +43,21 @@ public class Slash_Swing_State : FeatureState
         SlashToPosition(slashProgress);
         SlashToRotation();
 
-        //When done slash
         if (slashProgress > 1)
-        {
             EndState();
-        }
     }
 
+    void Initialize()
+    {
+        wFeature = GetComponent<SlashAttackFeature>();
+        wController = wFeature.weaponController;
+
+        mouseSwipe = wFeature.mouseSwipe;
+        slashDistance = wFeature.slashDistance;
+        slashAngle = wFeature.slashAngle;
+        slashDuration = wFeature.slashDuration;
+    }
+    
     void SlashToPosition(float slashProgress)
     {
         //Calculate target world position
