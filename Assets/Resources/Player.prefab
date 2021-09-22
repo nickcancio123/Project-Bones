@@ -5081,11 +5081,11 @@ GameObject:
   - component: {fileID: 6792882927358263478}
   - component: {fileID: 4101946578034775751}
   - component: {fileID: 5056551562191249568}
-  - component: {fileID: 5722072655149004363}
-  - component: {fileID: 6085650787613079027}
-  - component: {fileID: 4929532452773966344}
   - component: {fileID: 5465881070108690935}
+  - component: {fileID: 5722072655149004363}
+  - component: {fileID: 4929532452773966344}
   - component: {fileID: 1390537536433176007}
+  - component: {fileID: 7586362622569129799}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -5165,6 +5165,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 823497381377892001}
+  - {fileID: 1390537536433176007}
   - {fileID: 3235017959651233969}
   - {fileID: 7657447504588118095}
   - {fileID: 8191058890992163017}
@@ -5334,6 +5335,20 @@ MonoBehaviour:
   canMove: 1
   canRotate: 1
   isRunning: 0
+--- !u!114 &5465881070108690935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1198865837923144447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 597dc1096ae1f55459019e96c5dd93ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  compatibleModTypes: 
+  groundedPullForce: 7
 --- !u!114 &5722072655149004363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5354,21 +5369,6 @@ MonoBehaviour:
   acceleration: 0.18
   airDrag: 0.08
   airTurnRate: 0.15
---- !u!114 &6085650787613079027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1198865837923144447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5728f879dffe799418608f05ab8513cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  compatibleModTypes: 
-  mass: 100
-  drag: 2.5
 --- !u!114 &4929532452773966344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5382,21 +5382,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   compatibleModTypes: 
+  mass: 100
+  drag: 2.5
   jumpForce: 1200
---- !u!114 &5465881070108690935
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1198865837923144447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 597dc1096ae1f55459019e96c5dd93ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  compatibleModTypes: 
-  groundedPullForce: 7
 --- !u!114 &1390537536433176007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5416,6 +5404,21 @@ MonoBehaviour:
   dashSpeed: 23.5
   dashCoolDown: 0.4
   dashStaminaDrain: 35
+--- !u!114 &7586362622569129799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1198865837923144447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0604e2e01e5490348a36bd51b87d270e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  compatibleModTypes: 
+  mass: 100
+  drag: 2.5
 --- !u!1 &1665334117750949264
 GameObject:
   m_ObjectHideFlags: 0

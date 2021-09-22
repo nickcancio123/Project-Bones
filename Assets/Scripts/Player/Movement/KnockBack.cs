@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Jump : ForceReceiver
+public class KnockBack : ForceReceiver
 {
-    [SerializeField] float jumpForce = 10;
-
     void Start() => SetModType();
 
     protected override void SetModType() => modType = EMovementModType.Jump;
@@ -13,16 +11,16 @@ public class Jump : ForceReceiver
     new void OnEnable() => movementManager.AddModifier(this);
     new void OnDisable() => movementManager.RemoveModifier(this);
 
+
     protected override void Update()
     {
         if (!photonView.IsMine) { return; }
         base.Update();
-        PollJump();
     }
 
-    void PollJump()
+    public void ApplyKnockBack(float force, Vector3 direction)
     {
-        if (Input.GetKeyDown(KeyCode.Space) && movementManager.characterController.isGrounded)
-            AddForce(Vector3.up * jumpForce);
+        if (photonView.IsMine)
+            AddForce(force * direction);
     }
 }

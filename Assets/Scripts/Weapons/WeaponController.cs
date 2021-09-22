@@ -32,29 +32,12 @@ public class WeaponController : MonoBehaviourPunCallbacks
     void CacheReferences()
     {
         ownerPlayer = gameObject.transform.parent.gameObject;
-
-        if (!ownerPlayer)
-        {
-            print("No owner player ref");
-            return;
-        }
-
         movementManager = ownerPlayer.GetComponent<MovementManager>();
-
-        if (!movementManager)
-        {
-            print("No movement manager ref");
-            return;
-        }
+        weaponAnimator = gameObject.GetComponent<Animator>();
     }
 
 
-    private void Update()
-    {
-        UpdateAnimationParams();
-    }
-
-    #region Feature State Interface
+    #region Feature Phase Interface
     public void DisableFeatures(WeaponFeature callingFeature)
     {
         WeaponFeature[] allMyFeatures = GetComponentsInChildren<WeaponFeature>(true);
@@ -77,6 +60,16 @@ public class WeaponController : MonoBehaviourPunCallbacks
         }
     }
 
+    public Component GetActiveFeatureAsComponent()  //Can be casted to preferred type by caller
+    {
+        WeaponFeature[] features = GetComponents<WeaponFeature>();
+        foreach (WeaponFeature feature in features)
+        {
+            if (feature.GetPhase() == WeaponFeature.EFeaturePhase.Active)
+                return (Component) feature;
+        }
+        return null;
+    }
     #endregion
 
 
@@ -86,7 +79,8 @@ public class WeaponController : MonoBehaviourPunCallbacks
 
     public void OnWeaponCollision(Collider other)
     {
-        collisionEvent(other);
+        if (collisionEvent != null)
+            collisionEvent(other);
     }
     #endregion
 
@@ -105,7 +99,7 @@ public class WeaponController : MonoBehaviourPunCallbacks
     [PunRPC]
     protected void RPC_DisableWeaponAnimator()
     {
-        Animator weaponAnimator = gameObject.GetComponent<Animator>();
+        weaponAnimator = gameObject.GetComponent<Animator>();
         if (weaponAnimator)
             weaponAnimator.enabled = false;
     }
@@ -113,22 +107,9 @@ public class WeaponController : MonoBehaviourPunCallbacks
     [PunRPC]
     protected void RPC_EnableWeaponAnimator()
     {
-        Animator weaponAnimator = gameObject.GetComponent<Animator>();
+        weaponAnimator = gameObject.GetComponent<Animator>();
         if (weaponAnimator)
             weaponAnimator.enabled = true;
     }
     #endregion
-
-
-    void UpdateAnimationParams()
-    {
-        if (!weaponAnimator)
-        {
-            print("No weapon animator ref");
-            return;
-        }
-
-        weaponAnimator.SetFloat("velocity", movementManager.GetSpeed());
-        weaponAnimator.SetBool("isRunning", movementManager.isRunning);
-    }
 }
