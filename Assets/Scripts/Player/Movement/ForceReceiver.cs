@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ForceReceiver : MovementModifier
 {
-    [SerializeField] float mass = 100;
-    [SerializeField] float drag = 1;
+    [SerializeField] protected float mass = 100;
+    [SerializeField] protected float drag = 1;
 
     void Start() => SetModType();
 
@@ -14,7 +14,7 @@ public class ForceReceiver : MovementModifier
     new void OnEnable() => movementManager.AddModifier(this);
     new void OnDisable() => movementManager.RemoveModifier(this);
 
-    void Update()
+    protected virtual void Update()
     {
         if (!photonView.IsMine) { return; }
 
@@ -28,5 +28,5 @@ public class ForceReceiver : MovementModifier
         value = Vector3.Lerp(value, Vector3.zero, drag * Time.deltaTime);
     }
 
-    public void AddForce(Vector3 force) => value += force / mass;
+    protected void AddForce(Vector3 force) => value += force / mass;
 }

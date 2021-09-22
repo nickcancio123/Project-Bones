@@ -22,7 +22,7 @@ public abstract class AttackFeature : WeaponFeature
     #endregion
 
 
-    protected void Attack(GameObject targetPlayer)
+    protected virtual void Attack(GameObject targetPlayer)
     {
         //Override and call base to add functionality
         Health healthComponent = targetPlayer.GetComponent<Health>();

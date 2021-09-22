@@ -78,7 +78,7 @@ public class SlashAttackFeature : AttackFeature
         }
     }
 
-    #region Attack Network Interaction
+
     public new void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         base.OnPhotonSerializeView(stream, info);
@@ -106,6 +106,4 @@ public class SlashAttackFeature : AttackFeature
             Attack(other.gameObject);
         }
     }
-    #endregion
-
 }

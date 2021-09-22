@@ -9,25 +9,21 @@ public enum EMovementModType
     Dash,
     Force_Receiver,
     Gravity,
-    Jump
+    Jump,
+    Knock_Back
 }
 
 public abstract class MovementModifier : MonoBehaviourPunCallbacks
 {
     protected MovementManager movementManager;
 
-    void Awake()
-    {
-        movementManager = GetComponent<MovementManager>();
-    }
-
+    void Awake() => movementManager = GetComponent<MovementManager>();
 
     protected Vector3 value = Vector3.zero;
 
     public Vector3 GetValue() { return value; }
 
-
-
+    
     //If a modifier is exclusive, it will be the only modifier to affect player 
     //movement with exception to modifiers of types compatibleModTypes
     protected bool isExclusive = false;
