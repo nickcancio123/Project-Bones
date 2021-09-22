@@ -52,7 +52,7 @@ public class SwordBlockFeature : BlockFeature
         GameObject weapon = attackerPV?.gameObject.GetComponentInChildren<IWeapon>()?.gameObject;
         AttackFeature attackFeature = weapon?.GetComponentInChildren<AttackFeature>();
         Vector3 attackerPosition = attackerPV.gameObject.transform.position;
-
+        
         switch (attackFeature.attackType)
         {
             case AttackType.Slash:
@@ -67,16 +67,22 @@ public class SwordBlockFeature : BlockFeature
                 }
         }
 
+        if (damageTaken > 0)
+        {
+            GameObject attacker = photonView.gameObject;   
+            PlayBlockEffects(attacker);
+        }
+
         return damageTaken;
     }
 
     float BlockSwipeAttack(float maxDamageAmount, AttackFeature attackFeature, Vector3 attackerPosition)
     {
         //If not facing enemy, take full damage
-        Transform skelyTransform = weaponController.ownerPlayer.transform;
+        Transform playerTransform = weaponController.ownerPlayer.transform;
 
-        Vector3 directionToAttacker = attackerPosition - skelyTransform.position;
-        float deltaAngleToFaceAttacker = Vector3.Angle(skelyTransform.forward, directionToAttacker);
+        Vector3 directionToAttacker = attackerPosition - playerTransform.position;
+        float deltaAngleToFaceAttacker = Vector3.Angle(playerTransform.forward, directionToAttacker);
 
         if (deltaAngleToFaceAttacker > maxAngleToFaceAttackerToBeHit)
         {
@@ -90,21 +96,11 @@ public class SwordBlockFeature : BlockFeature
         float incidentAngle = Mathf.Abs(blockAngle - attackAngle);
 
         if (incidentAngle > 90)
-        {
             incidentAngle = Mathf.Abs(180 - incidentAngle);
-        }
 
         bool gotHit = (incidentAngle < angleToHitCuttoff) ? true : false;
 
-        if (gotHit)
-        {
-            return maxDamageAmount;
-        }
-        else
-        {
-            PlayBlockEffects();
-            return 0;
-        }
+        return (gotHit) ? maxDamageAmount : 0;
     }
     #endregion
 }

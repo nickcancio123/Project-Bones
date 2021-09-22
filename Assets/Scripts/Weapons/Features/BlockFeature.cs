@@ -9,10 +9,13 @@ public class BlockFeature : WeaponFeature
     [SerializeField] List<string> audioClipNames;
     [SerializeField] List<AudioClip> audioClips;
     [SerializeField] AudioClip blockAudioClip;
-
     [SerializeField] ParticleSystem blockParticles;
+    [SerializeField] float knockBackForce = 400;
+    
+    
+    [HideInInspector] public bool isBlocking = false;
 
-    public bool isBlocking = false;
+    GameObject attacker = null;
 
     protected override void Update() => base.Update();
 
@@ -20,13 +23,14 @@ public class BlockFeature : WeaponFeature
 
     public virtual float BlockAttack(float maxDamageAmount, int attackerID) => maxDamageAmount;
 
-    protected void PlayBlockEffects()
+    protected void PlayBlockEffects(GameObject _attacker)
     {
-        photonView.RPC("RPC_PlayBlockEffects", RpcTarget.All, "Block");
+        attacker = _attacker;
+        photonView.RPC("RPC_PlayBlockEffects", RpcTarget.All);
     }
 
     [PunRPC]
-    protected void RPC_PlayBlockEffects(string blockAudioClipName)
+    protected void RPC_PlayBlockEffects()
     {
         //Play Block SFX
         AudioSource weaponAudioSource = weaponController.weaponAudioSource;
@@ -36,5 +40,13 @@ public class BlockFeature : WeaponFeature
         //Play particle system
         blockParticles.gameObject.SetActive(true);
         blockParticles.Play();
+        
+        //Knock back
+        KnockBack attackerKnockBack = attacker?.GetComponent<KnockBack>();
+        if (attackerKnockBack)
+        {
+            Vector3 force = knockBackForce * weaponController.ownerPlayer.transform.forward;            
+            attackerKnockBack.TakeKnockBack(force);
+        }
     }
 }

@@ -15,7 +15,6 @@ public class SlashAttackFeature : AttackFeature
 {
     public GameObject slashTrails;
     [HideInInspector] public Vector3 mouseSwipe = Vector3.zero;
-    public bool canDealDamage = false;
 
     [Header("Draw")]
     public float drawDistance = 0;

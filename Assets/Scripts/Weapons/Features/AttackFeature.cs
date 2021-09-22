@@ -13,12 +13,15 @@ public enum AttackType
 public abstract class AttackFeature : WeaponFeature
 {
     #region Public Interface
+    [Header("Attack")]
     public AttackType attackType;
     public float recoilDuration = 1;
     [SerializeField] protected float attackDamage = 1;
     [HideInInspector] public float attackAngle = 0;
     [HideInInspector] public Vector3 drawnLocalPos;
     [HideInInspector] public Quaternion drawnLocalRotation;
+    
+    [HideInInspector] public bool canDealDamage = false;
     #endregion
 
 
