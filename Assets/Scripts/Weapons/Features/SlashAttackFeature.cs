@@ -14,7 +14,7 @@ using Photon.Pun;
 public class SlashAttackFeature : AttackFeature
 {
     public GameObject slashTrails;
-    [HideInInspector] public Vector3 mouseSwipe = Vector3.zero;
+    [HideInInspector] public Vector3 slashDirection = Vector3.zero;
 
     [Header("Draw")]
     public float drawDistance = 0;
@@ -27,6 +27,7 @@ public class SlashAttackFeature : AttackFeature
     public float slashDuration = 0;
 
     Slash_Draw_State draw_State;
+    Vector3 mouseSwipe = Vector3.zero;
 
     void Start()
     {
@@ -47,11 +48,12 @@ public class SlashAttackFeature : AttackFeature
 
         if (!photonView.IsMine) { return; }
         if (featurePhase == EFeaturePhase.Disabled) { return; }
-
-        ReadInput();
+        
+        if (featurePhase == EFeaturePhase.Enabled)  //Can't attack while already attacking
+            ReadInput();
     }
 
-    void ReadInput()
+    protected virtual void ReadInput()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
@@ -70,7 +72,8 @@ public class SlashAttackFeature : AttackFeature
 
             if (mouseSwipe.magnitude > 0.1)
             {
-                mouseSwipe.Normalize();
+                slashDirection = mouseSwipe.normalized;
+                
                 //***ACTIVATING FEATURE***
                 Activate();
             }

@@ -2,29 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HammerSlashFeature : SlashAttackFeature
+public class HammerHeavySlashFeature : SlashAttackFeature
 {
     [Header("Knock Back")]
-    [SerializeField] float knockBackForce = 1000;
-    
+    [SerializeField] float knockBackForce = 3000;
+
+    protected override void ReadInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            slashDirection = Vector3.down;
+                
+            //***ACTIVATING FEATURE***
+            Activate();
+        }
+    }
+
     protected override void Attack(GameObject targetPlayer)
     {
         base.Attack(targetPlayer);
         ApplyKnockBack(targetPlayer);
     }
-
+    
     void ApplyKnockBack(GameObject targetPlayer)
     {
         KnockBack targetKnockBack = targetPlayer.GetComponent<KnockBack>();
         if (!targetKnockBack) { return; }
 
         Transform playerTransform = weaponController.ownerPlayer.transform;
-        Vector3 right = playerTransform.right * mouseSwipe.x;
-        Vector3 up = playerTransform.up * ((mouseSwipe.y > 0) ? mouseSwipe.y : 0);    //Swipe up pushes player up
-        Vector3 forward = playerTransform.forward * ((mouseSwipe.y < 0) ? -mouseSwipe.y : 0);  //Swipe down pushes player back
-
-        Vector3 force = forward + right + up;
+        Vector3 knockBackDirection = playerTransform.forward + playerTransform.up;
             
-        targetKnockBack.TakeKnockBack(force * knockBackForce);
+        targetKnockBack.TakeKnockBack(knockBackDirection * knockBackForce);
     }
 }

@@ -34,7 +34,7 @@ public class Sword_Block_State : FeatureState
 
     void Initialize()
     {
-        wFeature = GetComponent<SwordBlockFeature>();
+        wFeature = (SwordBlockFeature) GetComponent<WeaponController>()?.GetActiveFeatureAsComponent();
         wController = wFeature.weaponController;
     }
     

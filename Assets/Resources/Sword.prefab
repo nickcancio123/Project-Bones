@@ -5164,7 +5164,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.6, y: 0.41, z: 2.6}
+  m_Size: {x: 0.7, y: 0.41, z: 2.6}
   m_Center: {x: 0, y: 0, z: 1.05}
 --- !u!114 &644876346421269914
 MonoBehaviour:
@@ -5576,7 +5576,7 @@ MonoBehaviour:
   drawnLocalRotation: {x: 0, y: 0, z: 0, w: 0}
   canDealDamage: 0
   slashTrails: {fileID: 7227355229070367799}
-  mouseSwipe: {x: 0, y: 0, z: 0}
+  slashDirection: {x: 0, y: 0, z: 0}
   drawDistance: 0.8
   drawAngle: 90
   drawDuration: 0.34

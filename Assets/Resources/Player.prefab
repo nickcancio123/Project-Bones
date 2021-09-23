@@ -5365,6 +5365,7 @@ MonoBehaviour:
   staminaComp: {fileID: 6792882927358263478}
   walkSpeed: 4.5
   runSpeed: 10
+  backwardRatio: 0.7
   runStaminaDrain: 8
   acceleration: 0.18
   airDrag: 0.08
@@ -5403,7 +5404,7 @@ MonoBehaviour:
   dashDuration: 0.22
   dashSpeed: 23.5
   dashCoolDown: 0.4
-  dashStaminaDrain: 35
+  dashStaminaDrain: 40
 --- !u!114 &7586362622569129799
 MonoBehaviour:
   m_ObjectHideFlags: 0
