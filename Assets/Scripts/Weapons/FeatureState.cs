@@ -13,14 +13,7 @@ public abstract class FeatureState : MonoBehaviour
     private void Awake()
     {
         Component comp = GetComponent<WeaponController>()?.GetActiveFeatureAsComponent();
-        if (comp)
-        {
-            baseFeature = (WeaponFeature) comp;
-        }
-        else
-        {
-            print("No comp");
-        }
+        baseFeature = (WeaponFeature) comp;
     }
 
     public abstract void BeginState();

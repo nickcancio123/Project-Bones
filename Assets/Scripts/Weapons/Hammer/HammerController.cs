@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
 
-public class SwordController : WeaponController
+public class HammerController : WeaponController
 {
     protected new void Start() => base.Start();   //Base class reference caching
 

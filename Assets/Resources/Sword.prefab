@@ -5164,7 +5164,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.45, y: 0.41, z: 2.6}
+  m_Size: {x: 0.7, y: 0.41, z: 2.6}
   m_Center: {x: 0, y: 0, z: 1.05}
 --- !u!114 &644876346421269914
 MonoBehaviour:
@@ -5574,9 +5574,9 @@ MonoBehaviour:
   attackAngle: 0
   drawnLocalPos: {x: 0, y: 0, z: 0}
   drawnLocalRotation: {x: 0, y: 0, z: 0, w: 0}
-  slashTrails: {fileID: 7227355229070367799}
-  mouseSwipe: {x: 0, y: 0, z: 0}
   canDealDamage: 0
+  slashTrails: {fileID: 7227355229070367799}
+  slashDirection: {x: 0, y: 0, z: 0}
   drawDistance: 0.8
   drawAngle: 90
   drawDuration: 0.34
@@ -5603,6 +5603,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 55fb277acd23e4e48870e85db77ceade, type: 3}
   blockAudioClip: {fileID: 8300000, guid: 55fb277acd23e4e48870e85db77ceade, type: 3}
   blockParticles: {fileID: 6910945204807252691}
+  knockBackForce: 400
   isBlocking: 0
   defaultBlockPosition: {x: 0, y: 0.35, z: 0.75}
   defaultBlockRotation: {x: -80, y: 0, z: 90}

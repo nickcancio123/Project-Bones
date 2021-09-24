@@ -16,7 +16,8 @@ public class Sword_Block_Draw_State : Draw_State
     
     protected override void Initialize()
     {
-        wFeature = GetComponent<SwordBlockFeature>();
+        wFeature = (SwordBlockFeature) GetComponent<WeaponController>()?.GetActiveFeatureAsComponent();
+
     }
 
     protected override void SetTargetLocalPosition() => targetLocalPos = wFeature.defaultBlockPosition;

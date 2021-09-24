@@ -44,7 +44,7 @@ public class Reset_State : FeatureState
 
     void Initialize()
     {
-        wFeature = GetComponent<WeaponFeature>();
+        wFeature = (WeaponFeature) GetComponent<WeaponController>()?.GetActiveFeatureAsComponent();
         resetDuration = wFeature.resetDuration;
     }
 }

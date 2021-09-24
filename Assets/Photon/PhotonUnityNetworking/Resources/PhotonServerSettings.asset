@@ -45,6 +45,7 @@ MonoBehaviour:
   - RPC_EnableWeaponAnimator
   - RPC_PlayBlockEffects
   - RPC_PlayDamageEffects
+  - RPC_TakeKnockBack
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

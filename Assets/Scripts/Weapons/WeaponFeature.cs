@@ -71,7 +71,7 @@ public abstract class WeaponFeature : MonoBehaviourPunCallbacks
     {
         EnableFeature();
         weaponController.EnableFeatures(this);
-        Destroy(initialState);
+        Destroy(activeState);
     }
 
     protected abstract void SetInitialState();

@@ -8,6 +8,7 @@ public class BasicLocomotion : MovementModifier
 
     [SerializeField] float walkSpeed = 5;
     [SerializeField] float runSpeed = 8;
+    [SerializeField] float backwardRatio = 0.7f;
     [SerializeField] float runStaminaDrain = 10; //Per second
     [SerializeField] float acceleration = 1;
 
@@ -39,7 +40,8 @@ public class BasicLocomotion : MovementModifier
     void GroundMove()
     {
         Vector3 inputDirection = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0).normalized;
-
+        inputDirection.y = Mathf.Clamp(inputDirection.y, -backwardRatio, 1);
+        
         movementManager.isRunning = Input.GetKey(KeyCode.LeftShift) && CanRun();
 
         if (movementManager.isRunning && movementManager.characterController.velocity.magnitude > 4)
@@ -72,15 +74,16 @@ public class BasicLocomotion : MovementModifier
         Vector3 forward = movementManager.ownerPlayer.transform.forward;
 
         float forwardInput = Input.GetAxis("Vertical");
-        bool givingInput = (Mathf.Abs(forwardInput) > 0.25) ? true : false;
+        bool givingInput = Mathf.Abs(forwardInput) > 0.25;
 
         //Calculates how much one can turn: the faster you turn, the less you can turn
-        float turnAngle = Vector3.Angle(value, forward) * Time.deltaTime;
+        Vector3 desiredDirection = forward * Mathf.Sign(forwardInput);
+        float turnAngle = Vector3.Angle(value, desiredDirection) * Time.deltaTime;
         float turnThrottle = Mathf.Cos(Mathf.Deg2Rad * turnAngle);
         turnThrottle = (turnThrottle < 0) ? 0 : turnThrottle;
 
         float turnSpeed = airTurnRate * turnThrottle;
-        Vector3 lerpedForwardValue = Vector3.Lerp(value.normalized * currentSpeed, forward * currentSpeed, turnSpeed);
+        Vector3 lerpedForwardValue = Vector3.Lerp(value.normalized * currentSpeed,desiredDirection * currentSpeed, turnSpeed);
 
         value = givingInput ? lerpedForwardValue : value.normalized * currentSpeed;
     }

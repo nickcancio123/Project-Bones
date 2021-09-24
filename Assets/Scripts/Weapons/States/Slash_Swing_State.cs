@@ -6,7 +6,7 @@ public class Slash_Swing_State : FeatureState
 {
     SlashAttackFeature wFeature;
     WeaponController wController;
-    Vector3 mouseSwipe = Vector3.zero;
+    Vector3 slashDirection = Vector3.zero;
 
     float slashDistance = 0;
     float slashAngle = 0;
@@ -49,10 +49,10 @@ public class Slash_Swing_State : FeatureState
 
     void Initialize()
     {
-        wFeature = GetComponent<SlashAttackFeature>();
+        wFeature = (SlashAttackFeature) GetComponent<WeaponController>()?.GetActiveFeatureAsComponent();
         wController = wFeature.weaponController;
 
-        mouseSwipe = wFeature.mouseSwipe;
+        slashDirection = wFeature.slashDirection;
         slashDistance = wFeature.slashDistance;
         slashAngle = wFeature.slashAngle;
         slashDuration = wFeature.slashDuration;
@@ -61,7 +61,7 @@ public class Slash_Swing_State : FeatureState
     void SlashToPosition(float slashProgress)
     {
         //Calculate target world position
-        Vector3 localDelta = new Vector3(mouseSwipe.x * slashDistance, mouseSwipe.y * slashDistance, 0);
+        Vector3 localDelta = new Vector3(slashDirection.x * slashDistance, slashDirection.y * slashDistance, 0);
         Vector3 targetLocalPos = wController.defaultPosition + localDelta;
         Transform playerTransform = wController.ownerPlayer.transform;
         Vector3 targetWorldPos = playerTransform.position + playerTransform.TransformDirection(targetLocalPos);
@@ -74,7 +74,7 @@ public class Slash_Swing_State : FeatureState
     void SlashToRotation()
     {
         //Calculate rotation about local X-axis
-        float rotateDirection = (mouseSwipe.x > 0) ? -1 : 1;
+        float rotateDirection = (slashDirection.x >= 0) ? -1 : 1;
         float rotationRate = (Time.deltaTime * slashAngle) / slashDuration;
         float deltaX = rotateDirection * rotationRate;
 

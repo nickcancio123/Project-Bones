@@ -27,6 +27,10 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         playButton.SetActive(false);
         joiningRoomText.SetActive(false);
+        
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        
         Connect();
     }
 

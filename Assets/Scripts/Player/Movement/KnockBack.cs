@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class KnockBack : ForceReceiver
@@ -18,9 +19,15 @@ public class KnockBack : ForceReceiver
         base.Update();
     }
 
-    public void ApplyKnockBack(float force, Vector3 direction)
+    public void TakeKnockBack(Vector3 force)
+    {
+        photonView.RPC("RPC_TakeKnockBack", RpcTarget.All, force);
+    }
+
+    [PunRPC]
+    void RPC_TakeKnockBack(Vector3 force)
     {
         if (photonView.IsMine)
-            AddForce(force * direction);
+            AddForce(force);
     }
 }
