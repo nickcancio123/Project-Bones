@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Photon.Pun;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
@@ -10,14 +11,27 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        SpawnPlayer();
+    }
+
+    void SpawnPlayer()
+    {
         if (playerPrefab)
         {
-            Vector3 spawnPoint = new Vector3(Random.Range(-5, 5), 5, Random.Range(-5, 5));
+            //Spawn player
+            Vector3 spawnPoint = new Vector3(Random.Range(-10, 10), 5, Random.Range(-10, 10));
             GameObject player = PhotonNetwork.Instantiate(this.playerPrefab.name, spawnPoint, Quaternion.identity, 0);
 
             Health playerHealth = player.GetComponent<Health>();
             if (playerHealth)
                 playerHealth.deathEvent += OnPlayerDeath;
+            
+            //Spawn weapon
+            GameObject weapon = PhotonNetwork.Instantiate(PlayerWeaponInfo.selectedWeaponPrefab.name, Vector3.zero, Quaternion.identity);
+            weapon.transform.SetParent(player.transform, false);
+            IWeapon iWeapon = weapon.GetComponent<IWeapon>();
+            if (iWeapon)
+                iWeapon.SyncRefs(PhotonView.Get(player).ViewID);
         }
     }
 

@@ -31,11 +31,18 @@ public class WeaponController : MonoBehaviourPunCallbacks
 
     void CacheReferences()
     {
-        ownerPlayer = gameObject.transform.parent.gameObject;
+        IWeapon iWeapon = GetComponent<IWeapon>();
+        if (!iWeapon)
+            return;
+        ownerPlayer = iWeapon.ownerPlayer;
+        if (!ownerPlayer)
+        {
+            print("No owner player");
+            return;
+        }
         movementManager = ownerPlayer.GetComponent<MovementManager>();
         weaponAnimator = gameObject.GetComponent<Animator>();
     }
-
 
     #region Feature Phase Interface
     public void DisableFeatures(WeaponFeature callingFeature)

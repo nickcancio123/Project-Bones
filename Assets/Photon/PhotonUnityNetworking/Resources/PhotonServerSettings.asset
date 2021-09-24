@@ -46,6 +46,8 @@ MonoBehaviour:
   - RPC_PlayBlockEffects
   - RPC_PlayDamageEffects
   - RPC_TakeKnockBack
+  - RPC_SetupWeapon
+  - RPC_SyncRefs
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

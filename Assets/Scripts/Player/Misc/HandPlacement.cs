@@ -9,29 +9,19 @@ using UnityEngine;
 
 public class HandPlacement : MonoBehaviour
 {
-    [SerializeField] GameObject ownerSkely;
+    [SerializeField] GameObject ownerPlayer;
     [SerializeField] bool isLeftHand = true;
 
     Transform grip;
-
-    void Start()
-    {
-        if (!ownerSkely)
-        {
-            print("No ownerSkely ref");
-            return;
-        }
-
-        IWeapon weapon = ownerSkely.GetComponentInChildren<IWeapon>(true);
-        grip = isLeftHand ? weapon.leftGrip : weapon.rightGrip;
-    }
-
+    
     void LateUpdate()
     {
         if (!grip)
         {
-            print("No grip ref");
-            return;
+            IWeapon weapon = ownerPlayer?.GetComponentInChildren<IWeapon>(true);
+            if (!weapon)
+                return;
+            grip = isLeftHand ? weapon.leftGrip : weapon.rightGrip;
         }
 
         this.transform.position = grip.position;

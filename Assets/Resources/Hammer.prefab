@@ -271,6 +271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da16883ac2d084443b7e6c543639c89e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ownerPlayer: {fileID: 0}
   leftGrip: {fileID: 6827275315762009126}
   rightGrip: {fileID: 4934649885647435209}
 --- !u!114 &724721445304039155
@@ -312,7 +313,7 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
-  m_UseLocal: 1
+  m_UseLocal: 0
 --- !u!114 &3155621827466087753
 MonoBehaviour:
   m_ObjectHideFlags: 0
