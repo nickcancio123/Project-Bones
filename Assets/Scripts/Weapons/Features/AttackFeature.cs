@@ -10,7 +10,7 @@ public enum AttackType
     Jab
 }
 
-public abstract class AttackFeature : WeaponFeature
+public abstract class AttackFeature : WeaponFeature, IPunObservable
 {
     #region Public Interface
     [Header("Attack")]
@@ -32,10 +32,10 @@ public abstract class AttackFeature : WeaponFeature
         healthComponent?.TakeWeaponDamage(attackDamage, photonView.ViewID);
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    public virtual void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
-        {
+        {   
             stream.SendNext(attackAngle);
         }
         else

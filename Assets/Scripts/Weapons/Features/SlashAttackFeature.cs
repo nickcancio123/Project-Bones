@@ -11,7 +11,7 @@ using Photon.Pun;
 >Slash direction should align with local Y-axis. Then rotate around X-axis to swing
 */
 
-public class SlashAttackFeature : AttackFeature
+public class SlashAttackFeature : AttackFeature, IPunObservable
 {
     public GameObject slashTrails;
     [HideInInspector] public Vector3 slashDirection = Vector3.zero;
@@ -81,20 +81,17 @@ public class SlashAttackFeature : AttackFeature
     }
 
 
-    public new void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         base.OnPhotonSerializeView(stream, info);
-
+        
         if (stream.IsWriting)
         {
             stream.SendNext(slashTrails.activeInHierarchy);
         }
         else
         {
-            if (!photonView.IsMine)
-            {
-                slashTrails.SetActive((bool)stream.ReceiveNext());
-            }
+            slashTrails.SetActive((bool)stream.ReceiveNext());
         }
     }
 

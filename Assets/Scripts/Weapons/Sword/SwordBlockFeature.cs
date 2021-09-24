@@ -8,7 +8,7 @@ public class SwordBlockFeature : BlockFeature
     public Vector3 defaultBlockPosition;
     public Vector3 defaultBlockRotation;
     public Transform swordMidPoint;
-    [SerializeField] float angleToHitCuttoff = 1;
+    [SerializeField] float maxIncidentAngleToHit = 1;
     [SerializeField] float maxAngleToFaceAttackerToBeHit = 1;
     [HideInInspector] public float blockAngle = 0;
 
@@ -57,7 +57,7 @@ public class SwordBlockFeature : BlockFeature
         {
             case AttackType.Slash:
                 {
-                    damageTaken = BlockSwipeAttack(maxDamageAmount, attackFeature, attackerPosition);
+                    damageTaken = BlockSlashAttack(maxDamageAmount, attackFeature, attackerPosition);
                     break;
                 }
 
@@ -67,16 +67,16 @@ public class SwordBlockFeature : BlockFeature
                 }
         }
 
-        if (damageTaken > 0)
+        if (damageTaken == 0)   //Block successful
         {
-            GameObject attacker = photonView.gameObject;   
+            GameObject attacker = attackerPV.gameObject;   
             PlayBlockEffects(attacker);
         }
 
         return damageTaken;
     }
 
-    float BlockSwipeAttack(float maxDamageAmount, AttackFeature attackFeature, Vector3 attackerPosition)
+    float BlockSlashAttack(float maxDamageAmount, AttackFeature attackFeature, Vector3 attackerPosition)
     {
         //If not facing enemy, take full damage
         Transform playerTransform = weaponController.ownerPlayer.transform;
@@ -91,15 +91,15 @@ public class SwordBlockFeature : BlockFeature
         }
 
         //Negated to make local space
-        float attackAngle = -attackFeature.attackAngle;
-
+        float attackAngle = attackFeature.attackAngle;
+        
         float incidentAngle = Mathf.Abs(blockAngle - attackAngle);
 
         if (incidentAngle > 90)
             incidentAngle = Mathf.Abs(180 - incidentAngle);
 
-        bool gotHit = (incidentAngle < angleToHitCuttoff) ? true : false;
-
+        bool gotHit = incidentAngle < maxIncidentAngleToHit;
+        
         return (gotHit) ? maxDamageAmount : 0;
     }
     #endregion

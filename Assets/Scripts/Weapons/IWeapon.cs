@@ -21,7 +21,6 @@ public class IWeapon : MonoBehaviourPunCallbacks
     [PunRPC]    //Needed because refs between weapon and player are not synced automatically
     void RPC_SyncRefs(int playerViewID)
     {
-        print("RPC Called");
         GameObject player = PhotonView.Find(playerViewID).gameObject;
         ownerPlayer = player;
         transform.SetParent(player.transform, false);

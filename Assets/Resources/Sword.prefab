@@ -5609,7 +5609,7 @@ MonoBehaviour:
   defaultBlockPosition: {x: 0, y: 0.35, z: 0.75}
   defaultBlockRotation: {x: -80, y: 0, z: 90}
   swordMidPoint: {fileID: 9185000480764449679}
-  angleToHitCuttoff: 40
+  maxIncidentAngleToHit: 45
   maxAngleToFaceAttackerToBeHit: 100
   blockAngle: 0
   drawDuration: 0.12

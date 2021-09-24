@@ -10,7 +10,7 @@ public class BlockFeature : WeaponFeature
     [SerializeField] List<AudioClip> audioClips;
     [SerializeField] AudioClip blockAudioClip;
     [SerializeField] ParticleSystem blockParticles;
-    [SerializeField] float knockBackForce = 400;
+    [SerializeField] float knockBackForce = 600;
     
     
     [HideInInspector] public bool isBlocking = false;
@@ -41,7 +41,7 @@ public class BlockFeature : WeaponFeature
         blockParticles.gameObject.SetActive(true);
         blockParticles.Play();
         
-        //Knock back
+        //Knock back attacker
         KnockBack attackerKnockBack = attacker?.GetComponent<KnockBack>();
         if (attackerKnockBack)
         {

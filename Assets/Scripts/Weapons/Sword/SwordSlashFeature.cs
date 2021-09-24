@@ -5,7 +5,7 @@ using UnityEngine;
 using Photon.Pun;
 
 
-public class SwordSlashFeature : SlashAttackFeature, IPunObservable
+public class SwordSlashFeature : SlashAttackFeature
 {
 
 }
