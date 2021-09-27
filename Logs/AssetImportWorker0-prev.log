@@ -1,0 +1,132 @@
+Using pre-set license
+Built from '2021.1/staging' branch; Version is '2021.1.6f1 (c0fade0cc7e9) revision 12647134'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10 Home; OS build 19042.1237; Version 2009; 64bit' Language: 'en' Physical Memory: 7981 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+ COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\2021.1.6f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+C:/Users/Owner/Documents/Unity Projects/Down to The Bone
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+63180
+Successfully changed project path to: C:/Users/Owner/Documents/Unity Projects/Down to The Bone
+C:/Users/Owner/Documents/Unity Projects/Down to The Bone
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 82.74 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2021.1.6f1 (c0fade0cc7e9)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2021.1.6f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/Owner/Documents/Unity Projects/Down to The Bone/Assets
+GfxDevice: creating device client; threaded=0; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: Intel(R) UHD Graphics 620 (ID=0x3ea0)
+    Vendor:   Intel
+    VRAM:     3990 MB
+    Driver:   27.20.100.8478
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2021.1.6f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2021.1.6f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2021.1.6f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56536
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.1.6f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.002207 seconds.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 94.08 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.386 seconds
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.005346 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.81 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.184 seconds
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.14 seconds
+Refreshing native plugins compatible for Editor in 0.62 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2928 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 127.6 MB.
+System memory in use after: 127.8 MB.
+
+Unloading 20 unused Assets to reduce memory usage. Loaded Objects now: 3407.
+Total: 2.424100 ms (FindLiveObjects: 0.270500 ms CreateObjectMapping: 0.127300 ms MarkObjects: 1.918200 ms  DeleteObjects: 0.107100 ms)
+
+========================================================================
+Received Import Request.
+  path: Assets/Resources/Sword.prefab
+  artifactKey: Guid(387261eae5328ce44a7d4515ddf1c77a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sword.prefab using Guid(387261eae5328ce44a7d4515ddf1c77a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '21ea16a99e965b81b118c19900f63003') in 0.276462 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 35.941546 seconds.
+  path: Assets/Resources/Sword.prefab
+  artifactKey: Guid(387261eae5328ce44a7d4515ddf1c77a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sword.prefab using Guid(387261eae5328ce44a7d4515ddf1c77a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4a7975c54fac27291d155fc44a90ed25') in 0.018453 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 19.093232 seconds.
+  path: Assets/Scripts/Weapons/Sword/SwordBlockFeature.cs
+  artifactKey: Guid(faea3ca96e15d5c43991af0becdf4988) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Weapons/Sword/SwordBlockFeature.cs using Guid(faea3ca96e15d5c43991af0becdf4988) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9fb95275874f59a475ee5319c7464f71') in 0.017411 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 16.982553 seconds.
+  path: Assets/Scripts/Weapons/States/Sword_Block_State.cs
+  artifactKey: Guid(895d3b01a9418eb4ea6ccb6731de4e0e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Weapons/States/Sword_Block_State.cs using Guid(895d3b01a9418eb4ea6ccb6731de4e0e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '63f27303f6145bc32ed2602efe69b7a0') in 0.005994 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 55.031458 seconds.
+  path: Assets/Resources/Sword.prefab
+  artifactKey: Guid(387261eae5328ce44a7d4515ddf1c77a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sword.prefab using Guid(387261eae5328ce44a7d4515ddf1c77a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5dc3d3abfc33bb0095f7e3a29ef0da5c') in 0.018088 seconds 
+========================================================================
+Received Prepare
+Refreshing native plugins compatible for Editor in 14.14 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 13 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 74.7 MB.
+System memory in use after: 74.9 MB.
+
+Unloading 13 unused Assets to reduce memory usage. Loaded Objects now: 3415.
+Total: 5.077200 ms (FindLiveObjects: 0.460600 ms CreateObjectMapping: 0.246200 ms MarkObjects: 3.910000 ms  DeleteObjects: 0.458600 ms)
+
+========================================================================
+Received Prepare
+Refreshing native plugins compatible for Editor in 3.75 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 13 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 74.7 MB.
+System memory in use after: 74.9 MB.
+
+Unloading 13 unused Assets to reduce memory usage. Loaded Objects now: 3415.
+Total: 3.608900 ms (FindLiveObjects: 0.290400 ms CreateObjectMapping: 0.161600 ms MarkObjects: 3.064600 ms  DeleteObjects: 0.090800 ms)
+
+========================================================================
+Received Prepare
+Refreshing native plugins compatible for Editor in 3.75 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 13 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 74.8 MB.
+System memory in use after: 75.0 MB.
+
+Unloading 13 unused Assets to reduce memory usage. Loaded Objects now: 3415.
+Total: 3.740000 ms (FindLiveObjects: 0.318500 ms CreateObjectMapping: 0.183000 ms MarkObjects: 3.148500 ms  DeleteObjects: 0.088800 ms)
+
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file

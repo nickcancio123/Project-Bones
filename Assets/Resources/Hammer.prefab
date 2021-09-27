@@ -470,7 +470,7 @@ MonoBehaviour:
   resetDuration: 0.3
   attackType: 0
   recoilDuration: 0.5
-  attackDamage: 28
+  attackDamage: 27
   attackAngle: 0
   drawnLocalPos: {x: 0, y: 0, z: 0}
   drawnLocalRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -481,9 +481,9 @@ MonoBehaviour:
   drawAngle: 90
   drawDuration: 0.45
   slashDistance: 1.5
-  slashAngle: 170
+  slashAngle: 165
   slashDuration: 0.3
-  knockBackForce: 1900
+  knockBackForce: 1800
 --- !u!114 &6972877963882067282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -500,16 +500,16 @@ MonoBehaviour:
   resetDuration: 0.4
   attackType: 0
   recoilDuration: 0.5
-  attackDamage: 38
+  attackDamage: 35
   attackAngle: 0
   drawnLocalPos: {x: 0, y: 0, z: 0}
   drawnLocalRotation: {x: 0, y: 0, z: 0, w: 0}
   canDealDamage: 0
   slashTrails: {fileID: 3048548526550780249}
   slashDirection: {x: 0, y: 0, z: 0}
-  drawDistance: 1
+  drawDistance: 1.1
   drawAngle: 100
-  drawDuration: 0.72
+  drawDuration: 0.8
   slashDistance: 1.5
   slashAngle: 170
   slashDuration: 0.35
