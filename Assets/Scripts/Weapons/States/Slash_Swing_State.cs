@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Slash_Swing_State : FeatureState
 {
+    protected WeaponController wController;
     SlashAttackFeature wFeature;
-    WeaponController wController;
     Vector3 slashDirection = Vector3.zero;
 
     float slashDistance = 0;

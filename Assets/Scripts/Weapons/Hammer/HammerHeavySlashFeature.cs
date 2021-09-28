@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
-public class HammerHeavySlashFeature : SlashAttackFeature
+public class HammerHeavySlashFeature : SlashAttackFeature, IPunObservable
 {
+    public ParticleSystem groundImpactParticles;
+    [HideInInspector] public bool canImpactGround = false;
+
     [Header("Knock Back")]
     [SerializeField] float knockBackForce = 3000;
 
@@ -12,11 +16,12 @@ public class HammerHeavySlashFeature : SlashAttackFeature
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             slashDirection = Vector3.down;
-                
             //***ACTIVATING FEATURE***
             Activate();
         }
     }
+
+    protected override void SetInitialState() => initialState = gameObject.AddComponent<Hammer_HeavySlash_Draw_State>();
 
     protected override void Attack(GameObject targetPlayer)
     {
@@ -34,4 +39,24 @@ public class HammerHeavySlashFeature : SlashAttackFeature
             
         targetKnockBack.TakeKnockBack(knockBackDirection * knockBackForce);
     }
+
+    
+
+    public override void OnWeaponCollision(Collider other)
+    {
+        base.OnWeaponCollision(other);
+        
+        if (!canImpactGround)
+            return;
+        if (!photonView.IsMine)
+            return;
+        
+        if (other.gameObject.CompareTag("Ground"))
+        {
+            photonView.RPC("RPC_PlayGroundImpactEffects", RpcTarget.All);
+        }
+    }
+    
+    [PunRPC]
+    void RPC_PlayGroundImpactEffects() => groundImpactParticles.Play();
 }

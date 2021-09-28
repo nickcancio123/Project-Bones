@@ -36,11 +36,7 @@ public class SlashAttackFeature : AttackFeature, IPunObservable
         weaponController.collisionEvent += OnWeaponCollision;
     }
 
-    protected override void SetInitialState()
-    {
-        draw_State = gameObject.AddComponent<Slash_Draw_State>();
-        initialState = draw_State;
-    }
+    protected override void SetInitialState() => initialState = gameObject.AddComponent<Slash_Draw_State>();
 
     protected override void Update()
     {
