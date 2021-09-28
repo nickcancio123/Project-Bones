@@ -15,6 +15,7 @@ public abstract class AttackFeature : WeaponFeature, IPunObservable
     #region Public Interface
     [Header("Attack")]
     public AttackType attackType;
+    public bool unblockable = false; 
     public float recoilDuration = 1;
     [SerializeField] protected float attackDamage = 1;
     
@@ -31,7 +32,7 @@ public abstract class AttackFeature : WeaponFeature, IPunObservable
     {
         //Override and call base to add functionality
         Health healthComponent = targetPlayer.GetComponent<Health>();
-        healthComponent?.TakeWeaponDamage(attackDamage, photonView.ViewID);
+        healthComponent?.TakeWeaponDamage(attackDamage, photonView.ViewID, unblockable);
     }
 
     

@@ -49,9 +49,9 @@ public class Health : MonoBehaviourPunCallbacks
     float GetCurrentHealth() { return currentHealth; }
     float GetMaxHealth() { return maxHealth; }
 
-    public void TakeWeaponDamage(float maxDamageAmount, int attackerID)
+    public void TakeWeaponDamage(float maxDamageAmount, int attackerID, bool isBlockeable)
     {
-        photonView.RPC("RPC_TakeWeaponDamage", RpcTarget.All, maxDamageAmount, attackerID);
+        photonView.RPC("RPC_TakeWeaponDamage", RpcTarget.All, maxDamageAmount, attackerID, isBlockeable);
     }
 
     public void TakeDamage(float damageAmount)
@@ -64,20 +64,21 @@ public class Health : MonoBehaviourPunCallbacks
 
     #region RPCs
     [PunRPC]
-    void RPC_TakeWeaponDamage(float maxDamageAmount, int attackerID)
+    void RPC_TakeWeaponDamage(float maxDamageAmount, int attackerID, bool unblockable)
     {
         if (!photonView.IsMine) { return; }
 
-        GameObject weapon = gameObject.GetComponentInChildren<IWeapon>()?.gameObject;
-        BlockFeature blockFeature = weapon?.GetComponent<BlockFeature>();
-
         float damageTaken = maxDamageAmount;
 
-        if (blockFeature)
+        //Process a block
+        if (!unblockable)
         {
-            damageTaken = blockFeature.BlockAttack(maxDamageAmount, attackerID);
+            GameObject weapon = gameObject.GetComponentInChildren<IWeapon>()?.gameObject;
+            BlockFeature blockFeature = weapon?.GetComponent<BlockFeature>();
+            if (blockFeature)
+                damageTaken = blockFeature.BlockAttack(maxDamageAmount, attackerID);
         }
-
+        
         photonView.RPC("RPC_TakeDamage", RpcTarget.All, damageTaken);
     }
 

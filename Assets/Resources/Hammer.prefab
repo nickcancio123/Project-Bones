@@ -5520,6 +5520,7 @@ MonoBehaviour:
   weaponController: {fileID: 8543544249710784078}
   resetDuration: 0.3
   attackType: 0
+  unblockable: 0
   recoilDuration: 0.5
   attackDamage: 27
   attackAngle: 0
@@ -5550,6 +5551,7 @@ MonoBehaviour:
   weaponController: {fileID: 8543544249710784078}
   resetDuration: 0.65
   attackType: 0
+  unblockable: 1
   recoilDuration: 0.5
   attackDamage: 35
   attackAngle: 0
