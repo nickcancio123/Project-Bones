@@ -49,6 +49,7 @@ MonoBehaviour:
   - RPC_SetupWeapon
   - RPC_SyncRefs
   - RPC_PlayGroundImpactEffects
+  - RPC_BeginRecoil
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

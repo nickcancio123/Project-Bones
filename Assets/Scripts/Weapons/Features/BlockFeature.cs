@@ -15,7 +15,8 @@ public class BlockFeature : WeaponFeature
     
     [HideInInspector] public bool isBlocking = false;
 
-    GameObject attacker = null;
+    protected GameObject attacker = null;
+    protected AttackFeature attackFeature = null;
 
     protected override void Update() => base.Update();
 
@@ -23,30 +24,26 @@ public class BlockFeature : WeaponFeature
 
     public virtual float BlockAttack(float maxDamageAmount, int attackerID) => maxDamageAmount;
 
-    protected void PlayBlockEffects(GameObject _attacker)
-    {
-        attacker = _attacker;
-        photonView.RPC("RPC_PlayBlockEffects", RpcTarget.All);
-    }
+    
+    
+    protected void PlayBlockEffects(int attackerID) => photonView.RPC("RPC_PlayBlockEffects", RpcTarget.All, attackerID);
 
     [PunRPC]
-    protected void RPC_PlayBlockEffects()
+    protected void RPC_PlayBlockEffects(int attackerID)
     {
+        if (photonView.IsMine)
+        {
+            //Initiate attacker recoil
+            PhotonView.Find(attackerID).RPC("RPC_BeginRecoil", RpcTarget.All, knockBackForce);
+        }
+        
         //Play Block SFX
         AudioSource weaponAudioSource = weaponController.weaponAudioSource;
         if (weaponAudioSource)
             weaponAudioSource.PlayOneShot(blockAudioClip);
 
-        //Play particle system
+        //Play particle effects
         blockParticles.gameObject.SetActive(true);
         blockParticles.Play();
-        
-        //Knock back attacker
-        KnockBack attackerKnockBack = attacker?.GetComponent<KnockBack>();
-        if (attackerKnockBack)
-        {
-            Vector3 force = knockBackForce * weaponController.ownerPlayer.transform.forward;            
-            attackerKnockBack.TakeKnockBack(force);
-        }
     }
 }

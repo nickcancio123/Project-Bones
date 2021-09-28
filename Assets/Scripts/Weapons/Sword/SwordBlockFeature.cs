@@ -49,34 +49,34 @@ public class SwordBlockFeature : BlockFeature
         float damageTaken = maxDamageAmount;
 
         PhotonView attackerPV = PhotonView.Find(attackerID);
-        GameObject weapon = attackerPV?.gameObject.GetComponentInChildren<IWeapon>()?.gameObject;
-        AttackFeature attackFeature = weapon?.GetComponentInChildren<AttackFeature>();
+        attacker = attackerPV.gameObject;
+        GameObject weapon = attacker.GetComponentInChildren<IWeapon>()?.gameObject;
+        attackFeature = weapon?.GetComponentInChildren<AttackFeature>();
         Vector3 attackerPosition = attackerPV.gameObject.transform.position;
         
         switch (attackFeature.attackType)
         {
             case AttackType.Slash:
                 {
-                    damageTaken = BlockSlashAttack(maxDamageAmount, attackFeature, attackerPosition);
+                    damageTaken = BlockSlashAttack(maxDamageAmount, attackerPosition);
                     break;
                 }
 
             case AttackType.Jab:
                 {
+                    //No jab attacks yet
                     break;
                 }
         }
 
-        if (damageTaken == 0)   //Block successful
-        {
-            GameObject attacker = attackerPV.gameObject;   
-            PlayBlockEffects(attacker);
-        }
+        //If block successful
+        if (damageTaken == 0)   
+            PlayBlockEffects(attackerID);
 
         return damageTaken;
     }
 
-    float BlockSlashAttack(float maxDamageAmount, AttackFeature attackFeature, Vector3 attackerPosition)
+    float BlockSlashAttack(float maxDamageAmount, Vector3 attackerPosition)
     {
         //If not facing enemy, take full damage
         Transform playerTransform = weaponController.ownerPlayer.transform;

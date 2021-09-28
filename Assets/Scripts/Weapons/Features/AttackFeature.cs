@@ -17,6 +17,7 @@ public abstract class AttackFeature : WeaponFeature, IPunObservable
     public AttackType attackType;
     public float recoilDuration = 1;
     [SerializeField] protected float attackDamage = 1;
+    
     [HideInInspector] public float attackAngle = 0;
     [HideInInspector] public Vector3 drawnLocalPos;
     [HideInInspector] public Quaternion drawnLocalRotation;
@@ -24,6 +25,7 @@ public abstract class AttackFeature : WeaponFeature, IPunObservable
     [HideInInspector] public bool canDealDamage = false;
     #endregion
 
+    protected override void Update() => base.Update();
 
     protected virtual void Attack(GameObject targetPlayer)
     {
@@ -32,6 +34,7 @@ public abstract class AttackFeature : WeaponFeature, IPunObservable
         healthComponent?.TakeWeaponDamage(attackDamage, photonView.ViewID);
     }
 
+    
     public virtual void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
@@ -43,14 +46,32 @@ public abstract class AttackFeature : WeaponFeature, IPunObservable
             attackAngle = (float)stream.ReceiveNext();
         }
     }
+    
 
-    public void BeginRecoil()
+    #region Recoil from block
+    [PunRPC]
+    public void RPC_BeginRecoil(float knockBackForce) => BeginRecoil(knockBackForce);
+
+    protected virtual void BeginRecoil(float knockBackForce)
     {
+        if (!photonView.IsMine)
+            return;
+        
+        //Set state
+        canDealDamage = false;
+
+        //Recoil
         Recoil_State recoil_state = gameObject.AddComponent<Recoil_State>();
         TransitionState(activeState, recoil_state);
+        
+        //Knock back from block
+        KnockBack knockBackComp = weaponController.ownerPlayer.GetComponent<KnockBack>();
+        if (knockBackComp)
+        {
+            Vector3 force = knockBackForce * -weaponController.ownerPlayer.transform.forward;            
+            knockBackComp.TakeKnockBack(force);
+        }
     }
-
-    protected override void Update() => base.Update();
-
+    #endregion
 
 }

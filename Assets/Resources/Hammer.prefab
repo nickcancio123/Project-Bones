@@ -5548,7 +5548,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponController: {fileID: 8543544249710784078}
-  resetDuration: 0.4
+  resetDuration: 0.65
   attackType: 0
   recoilDuration: 0.5
   attackDamage: 35
@@ -5563,7 +5563,7 @@ MonoBehaviour:
   drawDuration: 0.87
   slashDistance: 1.5
   slashAngle: 170
-  slashDuration: 0.35
+  slashDuration: 0.37
   groundImpactParticles: {fileID: 170502179499646103}
   canImpactGround: 0
   knockBackForce: 3200

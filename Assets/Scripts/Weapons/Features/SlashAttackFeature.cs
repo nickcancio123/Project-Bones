@@ -101,4 +101,10 @@ public class SlashAttackFeature : AttackFeature, IPunObservable
             Attack(other.gameObject);
         }
     }
+
+    protected override void BeginRecoil(float knockBackForce)
+    {
+        base.BeginRecoil(knockBackForce);
+        slashTrails.SetActive(false);
+    }
 }
