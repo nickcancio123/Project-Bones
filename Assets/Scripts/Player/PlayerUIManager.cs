@@ -67,12 +67,12 @@ public class PlayerUIManager : MonoBehaviourPunCallbacks
     #region Pause Menu
     void ManagePauseMenu()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             OpenPauseMenu();
         }
 
-        if (Input.GetKeyUp(KeyCode.Tab))
+        if (Input.GetKeyUp(KeyCode.Escape))
         {
             ClosePauseMenu();
         }

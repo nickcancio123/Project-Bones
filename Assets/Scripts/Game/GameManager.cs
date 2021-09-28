@@ -19,7 +19,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (playerPrefab)
         {
             //Spawn player
-            Vector3 spawnPoint = new Vector3(Random.Range(-10, 10), 5, Random.Range(-10, 10));
+            int spawnSide = Random.Range(0, 2);
+            Vector3 spawnPoint = new Vector3( Mathf.Pow(-1, spawnSide) * Random.Range(10, 20), 5, Random.Range(-20, 20));
+            
+            
             GameObject player = PhotonNetwork.Instantiate(this.playerPrefab.name, spawnPoint, Quaternion.identity, 0);
 
             Health playerHealth = player.GetComponent<Health>();
