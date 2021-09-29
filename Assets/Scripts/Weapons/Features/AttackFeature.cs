@@ -70,7 +70,7 @@ public abstract class AttackFeature : WeaponFeature, IPunObservable
         if (knockBackComp)
         {
             Vector3 force = knockBackForce * -weaponController.ownerPlayer.transform.forward;            
-            knockBackComp.TakeKnockBack(force);
+            knockBackComp.TakeKnockBack(force, unblockable);
         }
     }
     #endregion

@@ -19,15 +19,26 @@ public class KnockBack : ForceReceiver
         base.Update();
     }
 
-    public void TakeKnockBack(Vector3 force)
+    public void TakeKnockBack(Vector3 force, bool unblockable)
     {
-        photonView.RPC("RPC_TakeKnockBack", RpcTarget.All, force);
+        photonView.RPC("RPC_TakeKnockBack", RpcTarget.All, force, unblockable);
     }
 
     [PunRPC]
-    void RPC_TakeKnockBack(Vector3 force)
+    void RPC_TakeKnockBack(Vector3 force, bool unblockable)
     {
-        if (photonView.IsMine)
-            AddForce(force);
+        if (!photonView.IsMine)
+            return;
+
+        if (!unblockable)
+        {
+            GameObject weapon = gameObject.GetComponentInChildren<IWeapon>()?.gameObject;
+            BlockFeature blockFeature = weapon?.GetComponent<BlockFeature>();
+            if (blockFeature)
+                if (blockFeature.isBlocking)
+                    return;
+        }
+        
+        AddForce(force);
     }
 }

@@ -26,6 +26,6 @@ public class HammerLightSlashFeature : SlashAttackFeature
 
         Vector3 knockBackDirection = forward + right + up;
             
-        targetKnockBack.TakeKnockBack(knockBackDirection * knockBackForce);
+        targetKnockBack.TakeKnockBack(knockBackDirection * knockBackForce, unblockable);
     }
 }

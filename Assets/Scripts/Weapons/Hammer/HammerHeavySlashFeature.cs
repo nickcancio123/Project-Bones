@@ -37,7 +37,7 @@ public class HammerHeavySlashFeature : SlashAttackFeature, IPunObservable
         Transform playerTransform = weaponController.ownerPlayer.transform;
         Vector3 knockBackDirection = playerTransform.forward + playerTransform.up;
             
-        targetKnockBack.TakeKnockBack(knockBackDirection * knockBackForce);
+        targetKnockBack.TakeKnockBack(knockBackDirection * knockBackForce, unblockable);
     }
 
     

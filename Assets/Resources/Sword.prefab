@@ -5587,6 +5587,7 @@ MonoBehaviour:
   weaponController: {fileID: 2027545085585396907}
   resetDuration: 0.3
   attackType: 0
+  unblockable: 0
   recoilDuration: 0.5
   attackDamage: 15
   attackAngle: 0
@@ -5621,7 +5622,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 55fb277acd23e4e48870e85db77ceade, type: 3}
   blockAudioClip: {fileID: 8300000, guid: 55fb277acd23e4e48870e85db77ceade, type: 3}
   blockParticles: {fileID: 6910945204807252691}
-  knockBackForce: 1500
+  knockBackForce: 800
   isBlocking: 0
   defaultBlockPosition: {x: 0, y: 0.35, z: 0.75}
   defaultBlockRotation: {x: -80, y: 0, z: 90}
