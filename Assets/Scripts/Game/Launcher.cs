@@ -55,6 +55,12 @@ public class Launcher : MonoBehaviourPunCallbacks
         }
     }
 
+    public void QuitGame()
+    {
+        print("Quit");
+        Application.Quit();   
+    }
+
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         base.OnJoinRandomFailed(returnCode, message);
