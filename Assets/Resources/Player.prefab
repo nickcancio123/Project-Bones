@@ -5083,6 +5083,7 @@ GameObject:
   - component: {fileID: 5056551562191249568}
   - component: {fileID: 5465881070108690935}
   - component: {fileID: 5722072655149004363}
+  - component: {fileID: 3773926867290080337}
   - component: {fileID: 4929532452773966344}
   - component: {fileID: 1390537536433176007}
   - component: {fileID: 7586362622569129799}
@@ -5367,8 +5368,22 @@ MonoBehaviour:
   backwardRatio: 0.7
   runStaminaDrain: 8
   acceleration: 0.18
-  airDrag: 0.08
-  airTurnRate: 0.15
+--- !u!114 &3773926867290080337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1198865837923144447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19af766b823bee84ba2ce06e7101b938, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  compatibleModTypes: 
+  maxSpeedToAccel: 10
+  acceleration: 0.3
+  drag: 0.02
 --- !u!114 &4929532452773966344
 MonoBehaviour:
   m_ObjectHideFlags: 0

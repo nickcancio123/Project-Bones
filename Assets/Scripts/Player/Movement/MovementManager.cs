@@ -19,7 +19,7 @@ public class MovementManager : MonoBehaviourPunCallbacks
     List<MovementModifier> modifiers = new List<MovementModifier>();
 
     Camera mainCam;
-
+    
 
     public void AddModifier(MovementModifier modifier) => modifiers.Add(modifier);
     public void RemoveModifier(MovementModifier modifier) => modifiers.Remove(modifier);
@@ -33,7 +33,7 @@ public class MovementManager : MonoBehaviourPunCallbacks
     void Update()
     {
         if (!photonView.IsMine) { return; }
-
+        
         Move();
         Look();
     }

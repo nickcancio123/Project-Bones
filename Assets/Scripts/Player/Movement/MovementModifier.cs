@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,8 @@ public enum EMovementModType
     Force_Receiver,
     Gravity,
     Jump,
-    Knock_Back
+    Knock_Back,
+    Air_Control
 }
 
 public abstract class MovementModifier : MonoBehaviourPunCallbacks
@@ -19,6 +21,8 @@ public abstract class MovementModifier : MonoBehaviourPunCallbacks
     protected MovementManager movementManager;
 
     void Awake() => movementManager = GetComponent<MovementManager>();
+
+    protected virtual void Start() => SetModType();
 
     protected Vector3 value = Vector3.zero;
 

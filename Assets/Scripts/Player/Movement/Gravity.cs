@@ -8,9 +8,7 @@ public class Gravity : MovementModifier
 
     readonly float gravityMagnitude = Physics.gravity.y;
     bool wasGroundedLastFrame = false;
-
-    void Start() => SetModType();
-
+    
     protected override void SetModType() => modType = EMovementModType.Gravity;
 
     new void OnEnable() => movementManager.AddModifier(this);
