@@ -11,10 +11,10 @@ public class KnockBack : ForceReceiver
     new void OnDisable() => movementManager.RemoveModifier(this);
 
 
-    protected override void Update()
+    public override void ModifyUpdate()
     {
         if (!photonView.IsMine) { return; }
-        base.Update();
+        base.ModifyUpdate();
     }
 
     public void TakeKnockBack(Vector3 force, bool unblockable)

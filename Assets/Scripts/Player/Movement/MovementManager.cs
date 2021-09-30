@@ -19,7 +19,6 @@ public class MovementManager : MonoBehaviourPunCallbacks
     List<MovementModifier> modifiers = new List<MovementModifier>();
 
     Camera mainCam;
-    
 
     public void AddModifier(MovementModifier modifier) => modifiers.Add(modifier);
     public void RemoveModifier(MovementModifier modifier) => modifiers.Remove(modifier);
@@ -65,12 +64,14 @@ public class MovementManager : MonoBehaviourPunCallbacks
                 if (modifier == exclusiveMod || exclusiveMod.compatibleModTypes.Contains(modifier.GetModType()))
                 {
                     movement += modifier.GetValue();
+                    modifier.ModifyUpdate();
                 }
             }
             else
             {
                 //If no exclusive mod, every mod affects movement
                 movement += modifier.GetValue();
+                modifier.ModifyUpdate();
             }
         }
 

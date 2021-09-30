@@ -11,10 +11,11 @@ public class Jump : ForceReceiver
     new void OnEnable() => movementManager.AddModifier(this);
     new void OnDisable() => movementManager.RemoveModifier(this);
 
-    protected override void Update()
+    public override void ModifyUpdate()
     {
         if (!photonView.IsMine) { return; }
-        base.Update();
+        
+        base.ModifyUpdate();
         PollJump();
     }
 

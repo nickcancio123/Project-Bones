@@ -28,7 +28,8 @@ public abstract class MovementModifier : MonoBehaviourPunCallbacks
 
     public Vector3 GetValue() { return value; }
 
-    
+    public abstract void ModifyUpdate();
+
     //If a modifier is exclusive, it will be the only modifier to affect player 
     //movement with exception to modifiers of types compatibleModTypes
     protected bool isExclusive = false;

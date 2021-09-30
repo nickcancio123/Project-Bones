@@ -20,7 +20,7 @@ public class BasicLocomotion : MovementModifier
     new void OnEnable() => movementManager.AddModifier(this);
     new void OnDisable() => movementManager.RemoveModifier(this);
 
-    void Update()
+    public override void ModifyUpdate()
     {
         if (!photonView.IsMine) { return; }
         

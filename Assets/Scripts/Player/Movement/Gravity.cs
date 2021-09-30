@@ -14,7 +14,7 @@ public class Gravity : MovementModifier
     new void OnEnable() => movementManager.AddModifier(this);
     new void OnDisable() => movementManager.RemoveModifier(this);
 
-    void Update() => ApplyGravity();
+    public override void ModifyUpdate() => ApplyGravity();
 
     void ApplyGravity()
     {
