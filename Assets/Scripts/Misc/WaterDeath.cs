@@ -1,21 +1,25 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WaterDeath : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    [SerializeField] float killDelay = 1;
+
+    void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
-            StartCoroutine(KillPlayerDelay(other.gameObject));
+            StartCoroutine(DelayKillPlayer(other.gameObject));
     }
-    
-    IEnumerator KillPlayerDelay(GameObject player)
+
+    IEnumerator DelayKillPlayer(GameObject player)
     {
         Health health = player.GetComponent<Health>();
         if (health)
             health.TakeDamage(100);
-        yield return new WaitForSeconds(0.7f);
+        
+        yield return new WaitForSeconds(killDelay);
     }
 }

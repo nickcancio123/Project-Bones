@@ -5368,7 +5368,7 @@ MonoBehaviour:
   runStaminaDrain: 8
   acceleration: 0.18
   airDrag: 0.08
-  airTurnRate: 0.15
+  airAccel: 0.33
 --- !u!114 &4929532452773966344
 MonoBehaviour:
   m_ObjectHideFlags: 0
