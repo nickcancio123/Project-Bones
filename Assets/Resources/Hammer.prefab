@@ -5535,7 +5535,7 @@ MonoBehaviour:
   slashDistance: 1.5
   slashAngle: 165
   slashDuration: 0.3
-  knockBackForce: 1800
+  knockBackForce: 1500
 --- !u!114 &6972877963882067282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5568,7 +5568,7 @@ MonoBehaviour:
   slashDuration: 0.37
   groundImpactParticles: {fileID: 170502179499646103}
   canImpactGround: 0
-  knockBackForce: 3200
+  knockBackForce: 3000
 --- !u!1 &5492228407781420630
 GameObject:
   m_ObjectHideFlags: 0
