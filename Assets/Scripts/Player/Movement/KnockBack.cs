@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class KnockBack : ForceReceiver
 {
-    protected override void SetModType() => modType = EMovementModType.Knock_Back;
+    void Start() => SetModType();
+
+    protected override void SetModType() => modType = EMovementModType.Jump;
 
     new void OnEnable() => movementManager.AddModifier(this);
     new void OnDisable() => movementManager.RemoveModifier(this);

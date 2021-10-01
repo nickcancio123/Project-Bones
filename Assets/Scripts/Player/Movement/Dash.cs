@@ -20,13 +20,16 @@ public class Dash : MovementModifier, IPunObservable
     new void OnEnable() => movementManager.AddModifier(this);
     new void OnDisable() => movementManager.RemoveModifier(this);
 
-    protected override void Start()
+    void Start()
     {
-        base.Start();
+        SetModType();
         SetCompatibleModTypes();
     }
 
-    protected override void SetModType() => modType = EMovementModType.Dash;
+    protected override void SetModType()
+    {
+        modType = EMovementModType.Dash;
+    }
 
     void SetCompatibleModTypes()
     {
@@ -68,6 +71,7 @@ public class Dash : MovementModifier, IPunObservable
         {
             isDashing = false;
             isExclusive = false;
+            //dashTrails.SetActive(false);
         }
     }
 

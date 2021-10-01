@@ -5,7 +5,9 @@ using UnityEngine;
 public class Jump : ForceReceiver
 {
     [SerializeField] float jumpForce = 10;
-    
+
+    void Start() => SetModType();
+
     protected override void SetModType() => modType = EMovementModType.Jump;
 
     new void OnEnable() => movementManager.AddModifier(this);

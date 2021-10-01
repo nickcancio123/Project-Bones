@@ -6,8 +6,9 @@ public class ForceReceiver : MovementModifier
 {
     [SerializeField] protected float mass = 100;
     [SerializeField] protected float drag = 1;
-    
-    
+
+    void Start() => SetModType();
+
     protected override void SetModType() => modType = EMovementModType.Force_Receiver;
 
     new void OnEnable() => movementManager.AddModifier(this);
