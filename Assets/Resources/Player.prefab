@@ -5335,7 +5335,6 @@ MonoBehaviour:
   canMove: 1
   canRotate: 1
   isRunning: 0
-  isGrounded: 0
 --- !u!114 &5465881070108690935
 MonoBehaviour:
   m_ObjectHideFlags: 0

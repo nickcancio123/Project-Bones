@@ -13,7 +13,7 @@ public class ForceReceiver : MovementModifier
     new void OnEnable() => movementManager.AddModifier(this);
     new void OnDisable() => movementManager.RemoveModifier(this);
 
-    public override void ModifyUpdate()
+    protected virtual void Update()
     {
         if (!photonView.IsMine) { return; }
 

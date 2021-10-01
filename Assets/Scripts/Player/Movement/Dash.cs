@@ -30,11 +30,10 @@ public class Dash : MovementModifier, IPunObservable
 
     void SetCompatibleModTypes()
     {
-        compatibleModTypes.Add(EMovementModType.Knock_Back);
-        compatibleModTypes.Add(EMovementModType.Gravity);
+        compatibleModTypes.Add(EMovementModType.Force_Receiver);
     }
 
-    public override void ModifyUpdate() => Move();
+    void Update() => Move();
 
     void Move()
     {

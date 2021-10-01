@@ -4,10 +4,9 @@
     <list default="true" id="a6d2f109-c5c8-41b7-80f4-9dc1c632e8db" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Down to The Bone/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Down to The Bone/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Resources/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Player.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Lobby.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Lobby.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/Health.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/Health.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/Movement/AirControl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/Movement/AirControl.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/DEMO.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/DEMO/WaterDeath.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/DEMO/WaterDeath.cs.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/Movement/BasicLocomotion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/Movement/BasicLocomotion.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/Movement/Dash.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/Movement/Dash.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/Movement/ForceReceiver.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/Movement/ForceReceiver.cs" afterDir="false" />
@@ -16,20 +15,8 @@
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/Movement/KnockBack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/Movement/KnockBack.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/Movement/MovementManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/Movement/MovementManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/Movement/MovementModifier.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/Movement/MovementModifier.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerUIManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerUIManager.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/Stamina.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/Stamina.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/AssetImportWorker0-prev.log" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Logs/AssetImportWorker0.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/AssetImportWorker0.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-AssetImportWorker0.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/shadercompiler-AssetImportWorker0.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe1.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe1.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe2.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe2.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe3.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe4.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe5.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe6.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe7.log" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,8 +109,7 @@
       <workItem from="1632861071678" duration="8701000" />
       <workItem from="1632871143889" duration="3336000" />
       <workItem from="1632969758804" duration="24000" />
-      <workItem from="1632973850658" duration="15571000" />
-      <workItem from="1633034915013" duration="2528000" />
+      <workItem from="1632973850658" duration="14971000" />
     </task>
     <servers />
   </component>
