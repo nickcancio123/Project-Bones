@@ -11,13 +11,12 @@ using Photon.Pun;
 public class Health : MonoBehaviourPunCallbacks
 {
     [SerializeField] Slider healthBar;
-
-    [SerializeField] float maxHealth = 100;
-    float currentHealth = 0;
-
     [SerializeField] AudioSource playerAudioSource;
     [SerializeField] AudioClip damageAudioClip;
+    [SerializeField] ParticleSystem damageParticles;
+    [SerializeField] float maxHealth = 100;
 
+    float currentHealth = 0;
     public event Action deathEvent;
 
 
@@ -102,6 +101,7 @@ public class Health : MonoBehaviourPunCallbacks
     void RPC_PlayDamageEffects()
     {
         playerAudioSource.PlayOneShot(damageAudioClip);
+        damageParticles.Play();
     }
     #endregion    
 }
