@@ -69,7 +69,5 @@ public class BasicLocomotion : MovementModifier
     }
     
     bool CanRun() => staminaComp.CanDrainStaminaBy(runStaminaDrain * Time.deltaTime);
-
-    public float GetRunSpeed() => runSpeed;
 }
 
